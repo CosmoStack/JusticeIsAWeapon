@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Justice is a Weapon — Game Design Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #1a1a1e;
+            font-family: 'Segoe UI', 'Calibri', Roboto, sans-serif;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .document {
+            max-width: 1100px;
+            width: 100%;
+            background: #fcf9f5;
+            padding: 60px 70px;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            line-height: 1.6;
+            color: #1e1e24;
+        }
+
+        /* TYPOGRAPHY */
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            border-bottom: 3px solid #c0392b;
+            padding-bottom: 12px;
+            margin-top: 0;
+            margin-bottom: 6px;
+            color: #1a1a2e;
+        }
+        .subtitle {
+            font-size: 18px;
+            font-weight: 400;
+            color: #4a4a5a;
+            margin-bottom: 28px;
+            display: block;
+        }
+        .meta {
+            background: #f0ede8;
+            padding: 14px 20px;
+            border-radius: 8px;
+            margin: 20px 0 30px 0;
+            font-size: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .meta span {
+            font-weight: 600;
+        }
+        .meta .label {
+            font-weight: 400;
+            color: #5a5a6a;
+        }
+
+        h2 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-top: 48px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 6px;
+            color: #1a1a2e;
+        }
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            color: #2c2c3a;
+        }
+        h4 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            color: #3a3a4a;
+        }
+        p {
+            margin-bottom: 14px;
+        }
+        ul, ol {
+            margin: 10px 0 18px 28px;
+        }
+        li {
+            margin-bottom: 6px;
+        }
+
+        /* BLOCKQUOTE */
+        blockquote {
+            border-left: 5px solid #c0392b;
+            padding: 14px 24px;
+            margin: 22px 0;
+            background: #f5f0ea;
+            font-style: italic;
+            font-size: 18px;
+            border-radius: 0 8px 8px 0;
+            color: #2c2c3a;
+        }
+
+        /* TABLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 28px 0;
+            font-size: 15px;
+            background: #fff;
+            border: 1px solid #d0ccc8;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        th {
+            background: #2c2c3a;
+            color: #fff;
+            font-weight: 600;
+            padding: 10px 14px;
+            text-align: left;
+        }
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #e5e0da;
+            vertical-align: top;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover {
+            background: #f8f4ef;
+        }
+
+        /* CODE / ASCII BOXES */
+        .ascii {
+            background: #1e1e24;
+            color: #eaeaea;
+            padding: 18px 22px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 20px 0 24px 0;
+            border-left: 4px solid #c0392b;
+        }
+
+        .divider {
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #c0392b, #ddd, #c0392b);
+            margin: 40px 0 20px 0;
+        }
+
+        /* FOOTER */
+        .footer-note {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 2px solid #ddd;
+            font-size: 14px;
+            color: #6a6a7a;
+            text-align: center;
+        }
+        .confidential {
+            font-weight: 600;
+            color: #c0392b;
+            letter-spacing: 1px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 700px) {
+            .document {
+                padding: 24px 18px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .meta {
+                flex-direction: column;
+                gap: 6px;
+            }
+            table {
+                font-size: 13px;
+            }
+            th, td {
+                padding: 6px 10px;
+            }
+            .ascii {
+                font-size: 12px;
+                padding: 12px 14px;
+            }
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .document { box-shadow: none; border-radius: 0; padding: 40px 50px; }
+        }
+    </style>
+</head>
+<body>
+<div class="document">
+
+    <!-- TITLE -->
+    <h1>JUSTICE IS A WEAPON</h1>
+    <span class="subtitle">Complete Game Design Document — Version 3.0</span>
+
+    <div class="meta">
+        <span><span class="label">Team:</span> Team Yeagerist</span>
+        <span><span class="label">Date:</span> TBD</span>
+        <span><span class="label">Status:</span> Final Game Development Document</span>
+        <span><span class="label">Confidentiality:</span> 🔒 Confidential</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>TABLE OF CONTENTS</h2>
+    <ul>
+        <li><a href="#sec1">1. Executive Summary</a></li>
+        <li><a href="#sec2">2. Game Concept &amp; Vision</a></li>
+        <li><a href="#sec3">3. Scope &amp; Roadmap</a></li>
+        <li><a href="#sec4">4. Core Mechanics Deep Dive</a></li>
+        <li><a href="#sec5">5. Gameplay Walkthrough</a></li>
+        <li><a href="#sec6">6. Main Features &amp; USP</a></li>
+        <li><a href="#sec7">7. Core Loop Addictiveness Analysis</a></li>
+        <li><a href="#sec8">8. Competitive Analysis</a></li>
+        <li><a href="#sec9">9. Target Audience &amp; Market</a></li>
+        <li><a href="#sec10">10. Art &amp; Visual Direction</a></li>
+        <li><a href="#sec11">11. Audio Design</a></li>
+        <li><a href="#sec12">12. User Interface &amp; Controls</a></li>
+        <li><a href="#sec13">13. Monetization Strategy</a></li>
+        <li><a href="#sec14">14. Expandability &amp; Live Operations</a></li>
+        <li><a href="#sec15">15. Post-Launch Roadmap</a></li>
+        <li><a href="#sec16">16. Technical Requirements</a></li>
+        <li><a href="#sec17">17. Risks &amp; Mitigation</a></li>
+        <li><a href="#sec18">18. Conclusion</a></li>
+        <li><a href="#sec19">19. Glossary</a></li>
+        <li><a href="#sec20">20. Development Milestones &amp; Work Division</a></li>
+        <li><a href="#sec21">21. Complete UI Screen Inventory</a></li>
+        <li><a href="#sec22">22. Initial Release: Settings, Backgrounds &amp; Cases</a></li>
+    </ul>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec1">1. EXECUTIVE SUMMARY</h2>
+    <p><strong>Justice is a Weapon</strong> is a 2.5D detective mystery adventure for Android (primary) and Windows (secondary) where players investigate crimes using a supernatural ability to observe past events—at the cost of their eyesight. Unlike traditional detective games where clues are freely available, every piece of information comes with a permanent consequence. Players must strategically decide how much of their vision they're willing to sacrifice to solve each case.</p>
+    <p>The game targets mystery enthusiasts aged 16+ and employs a hybrid monetization model (free-to-try with premium unlock) with significant DLC expansion potential. Built on Unity 6.3 LTS + URP, the single-player offline experience is technically achievable while offering a fresh take on the genre.</p>
+
+    <h3>Key Strengths</h3>
+    <table>
+        <thead><tr><th>Category</th><th>Strength</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Concept</strong></td><td>Unique vision-sacrifice mechanic creates genuine tension</td></tr>
+            <tr><td><strong>Gameplay</strong></td><td>Risk/reward decisions at every investigation step</td></tr>
+            <tr><td><strong>Technical</strong></td><td>Feasible scope, appropriate engine, offline model</td></tr>
+            <tr><td><strong>Market</strong></td><td>Dedicated niche audience with expansion potential</td></tr>
+            <tr><td><strong>Monetization</strong></td><td>Multiple revenue streams with player-friendly model</td></tr>
+            <tr><td><strong>Expandability</strong></td><td>Infinite content generation potential</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec2">2. GAME CONCEPT &amp; VISION</h2>
+    <h3>2.1 Core Idea</h3>
+    <blockquote>"The truth is out there. But how much are you willing to lose to find it?"</blockquote>
+    <p>The player assumes the role of a world-renowned private detective possessing a unique supernatural ability: <strong>the power to observe past events</strong>. When investigating a crime, the detective can travel back to key moments surrounding the incident and witness events unfold in real-time.</p>
+    <p><strong>THE CATCH:</strong> Every use of this power permanently damages the detective's eyesight.</p>
+    <p>The player must carefully balance gathering enough evidence to solve the case while preserving their vision long enough to make the correct accusation. Go blind too early, and you'll never see the full picture. But hesitate to use your power, and the killer walks free.</p>
+
+    <h3>2.2 Vision Statement</h3>
+    <p>Traditional detective games often focus on collecting clues without meaningful consequences. Players can investigate endlessly until the solution becomes obvious—eliminating tension and reducing deduction to a checklist.</p>
+    <p><strong>Justice is a Weapon</strong> reimagines investigation by making <strong>information itself a limited resource.</strong> Every attempt to uncover additional evidence comes at a permanent cost. Players must decide whether the risk of losing their vision is worth gaining another clue.</p>
+
+    <h3>2.3 Philosophical Foundation</h3>
+    <ul>
+        <li><strong>Sacrifice:</strong> How much are you willing to give up for truth?</li>
+        <li><strong>Obsession:</strong> The line between justice and self-destruction</li>
+        <li><strong>Consequence:</strong> Every choice has a cost, even passive ones</li>
+        <li><strong>Trust:</strong> Can you trust your own perception as it degrades?</li>
+    </ul>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec3">3. SCOPE &amp; ROADMAP</h2>
+    <h3>3.1 MVP Scope (Google Play Open Beta)</h3>
+    <table>
+        <thead><tr><th>Component</th><th>Details</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Cases</strong></td><td>5 unique crime cases total — Case 1-3 free in Open Beta, Cases 3–5 unlocked with Premium purchase</td></tr>
+            <tr><td><strong>Detectives</strong></td><td>1 playable detective (Eyesight sacrifice mechanic)</td></tr>
+            <tr><td><strong>Suspects</strong></td><td>5 suspects per case</td></tr>
+            <tr><td><strong>Clues per case</strong></td><td>5 total (3 initial + 2 from time vision)</td></tr>
+            <tr><td><strong>Time Stages</strong></td><td>4 per case (Before/Preparation/Execution/Aftermath)</td></tr>
+            <tr><td><strong>Endings</strong></td><td>5 outcomes (see <a href="#sec6">Section 6</a> for full definitions)</td></tr>
+            <tr><td><strong>Game Modes</strong></td><td>Single-player offline</td></tr>
+            <tr><td><strong>Save System</strong></td><td>Auto-save per case, manual save menu</td></tr>
+            <tr><td><strong>Tutorial</strong></td><td>Integrated interactive tutorial</td></tr>
+        </tbody>
+    </table>
+
+    <h3>3.2 MVP Timeline</h3>
+    <table>
+        <thead><tr><th>Phase</th><th>Deliverables</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Pre-Production</strong></td><td>Design finalization, prototyping, art direction</td></tr>
+            <tr><td><strong>Core Systems</strong></td><td>Investigation, time vision, evidence database</td></tr>
+            <tr><td><strong>Case Development</strong></td><td>5 cases with full writing, suspect logic, endings</td></tr>
+            <tr><td><strong>Art &amp; Audio</strong></td><td>Production art, UI, sound design, voice direction</td></tr>
+            <tr><td><strong>Polish &amp; QA</strong></td><td>Bug fixing, optimization, playtesting, certification</td></tr>
+            <tr><td><strong>Open Beta</strong></td><td>Google Play Open Beta release</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Total MVP Timeline:</strong> TBD</p>
+
+    <h3>3.3 Post-Launch Expansion Roadmap</h3>
+    <table>
+        <thead><tr><th>Phase</th><th>Deliverables</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Full Release (v1.0)</strong></td><td>All 5 cases unlocked, Normal &amp; Hard difficulty, Achievements system, Cloud save</td></tr>
+            <tr><td><strong>DLC 1: "Shadows &amp; Whispers"</strong></td><td>3 additional cases (Normal), Detective 2: "The Listener"</td></tr>
+            <tr><td><strong>DLC 2: "Foresight"</strong></td><td>3 additional cases (Hard), Detective 3: "The Premonitionist"</td></tr>
+            <tr><td><strong>DLC 3: "Procedural"</strong></td><td>Procedural Mystery Mode, Community case sharing</td></tr>
+            <tr><td><strong>DLC 4: "The Campaign"</strong></td><td>Story Campaign (5 connected cases), Detective 4: "The Empath"</td></tr>
+            <tr><td><strong>Long-Term Vision</strong></td><td>8-10 detectives, 20+ cases, Community tools, Cooperative mode</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec4">4. CORE MECHANICS DEEP DIVE</h2>
+    <h3>4.1 Investigation Phase</h3>
+    <h4>Present Day Investigation</h4>
+    <p>The player arrives at a crime scene in the present and gathers initial information through:</p>
+    <ul>
+        <li><strong>A. Environment Examination</strong> — Tap interactive objects, read documents, photograph scenes, discover physical evidence.</li>
+        <li><strong>B. Witness Interviews</strong> — Question witnesses, each has 2-3 statements, contradictions, body language cues.</li>
+        <li><strong>C. Police Reports</strong> — Case files, autopsy reports, timeline, suspect list.</li>
+    </ul>
+
+    <h3>4.2 Time Vision Mechanic</h3>
+    <h4>Activation Process</h4>
+    <ol>
+        <li>Player selects a location or object at the crime scene</li>
+        <li>Detective focuses their ability</li>
+        <li><strong>Screen effect:</strong> Color drain, temporal distortion</li>
+        <li>Player witnesses the past event</li>
+        <li><strong>Vision degradation</strong> occurs immediately after viewing</li>
+        <li>One major clue is revealed</li>
+    </ol>
+
+    <h4>Four Observation Stages</h4>
+    <table>
+        <thead><tr><th>Stage</th><th>Information Gathered</th></tr></thead>
+        <tbody>
+            <tr><td><strong>1. Before the Crime</strong></td><td>Victim's routine, location state, potential motives</td></tr>
+            <tr><td><strong>2. Crime Preparation</strong></td><td>Culprit's actions, tools gathered, planning evidence</td></tr>
+            <tr><td><strong>3. Crime Execution</strong></td><td>The act itself (perpetrator obscured)</td></tr>
+            <tr><td><strong>4. Aftermath &amp; Witnesses</strong></td><td>Reactions, cover-up attempts, witnesses fleeing</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Note:</strong> The killer's identity is always hidden through masks, shadows, or visual distortions—preventing players from instantly solving the mystery. This ensures deduction remains essential.</p>
+
+    <h4>Vision Quality Degradation</h4>
+    <table>
+        <thead><tr><th>Vision Use</th><th>Quality</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td>1st (Initial)</td><td>Crystal Clear</td><td>Full clarity, vibrant colors</td></tr>
+            <tr><td>2nd</td><td>Minor Blur</td><td>Slight edge distortion, muted colors</td></tr>
+            <tr><td>3rd</td><td>Moderate Blur</td><td>Significant softness, difficulty reading</td></tr>
+            <tr><td>4th</td><td>Severe Blur</td><td>Shapes only, colors wash out</td></tr>
+            <tr><td>5th</td><td>Near Blindness</td><td>Silhouettes, extreme blur</td></tr>
+            <tr><td>6th+</td><td>Complete Blindness</td><td>Black screen, audio-only</td></tr>
+        </tbody>
+    </table>
+
+    <h3>4.3 Difficulty Scaling</h3>
+    <table>
+        <thead><tr><th>Difficulty</th><th>Suspects</th><th>Required Clues</th><th>Safe Visions</th><th>Blindness Trigger</th><th>Bonus</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Easy</strong></td><td>5</td><td>3/5</td><td>3 visions (2 revisits)</td><td>4th vision</td><td>5% margin for error</td></tr>
+            <tr><td><strong>Normal</strong></td><td>7</td><td>4/7</td><td>4 visions (3 revisits)</td><td>5th vision</td><td>Standard deduction</td></tr>
+            <tr><td><strong>Hard</strong></td><td>10</td><td>5/10</td><td>5 visions (4 revisits)</td><td>6th vision</td><td>No margin for error</td></tr>
+            <tr><td><strong>Expert</strong></td><td>12</td><td>6/12</td><td>5 visions (4 revisits)</td><td>6th vision</td><td>False clues included</td></tr>
+        </tbody>
+    </table>
+
+    <h4>Clue Acquisition Flow</h4>
+    <div class="ascii">
+Initial Investigation
+    │
+    ├─ Finds 1-2 physical clues (no vision cost)
+    │
+    └─ Can choose to use Time Vision
+          │
+          ├─ Vision 1 (Free): 1 major clue
+          │
+          ├─ Vision 2 (Cost): +1 clue
+          │
+          ├─ Vision 3 (Cost): +1 clue
+          │
+          └─ Vision 4+ (Cost): Each vision adds +1 clue but degrades vision further
+    </div>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec5">5. GAMEPLAY WALKTHROUGH</h2>
+    <h3>5.1 Complete Case Flow</h3>
+    <h4>Step 1: Crime Scene Arrival</h4>
+    <ul>
+        <li>Player arrives at the crime scene</li>
+        <li>Briefing from police contact</li>
+        <li>Initial environment scan</li>
+        <li>5 suspects introduced</li>
+        <li>2 initial clues available (no cost)</li>
+    </ul>
+    <h4>Step 2: Present Day Investigation</h4>
+    <ul>
+        <li>Examine environment (tap interactive objects)</li>
+        <li>Interview witnesses (3 available)</li>
+        <li>Review police reports</li>
+        <li>Collect 1 additional physical clue</li>
+        <li>Total clues: 3/5 required</li>
+    </ul>
+    <h4>Step 3: Time Vision (First Use — Free)</h4>
+    <ul>
+        <li>Focus on location of interest</li>
+        <li>Observe the "Before the Crime" stage</li>
+        <li>Witness critical detail</li>
+        <li>Vision remains clear</li>
+        <li>Gain clue, total: 4/5</li>
+    </ul>
+    <h4>Step 4: Risk Decision Point</h4>
+    <ul>
+        <li>Do you use another vision? Cost: permanent vision degradation</li>
+        <li>Alternative: Deduce with current clues</li>
+        <li>Risk: Wrong accusation or blind before solving</li>
+    </ul>
+    <h4>Step 5: Additional Investigation</h4>
+    <p><strong>OPTION A:</strong> Use Time Vision (Cost) — Observe "Crime Preparation", see suspect, vision degrades, gain clue.</p>
+    <p><strong>OPTION B:</strong> Don't use vision — Review existing clues, cross-reference, attempt deduction with 4/5 clues.</p>
+    <h4>Step 6: Deduction Phase</h4>
+    <ul>
+        <li>Review all collected clues</li>
+        <li>Review suspect alibis</li>
+        <li>Identify contradictions</li>
+        <li>Make deduction</li>
+    </ul>
+    <h4>Step 7: Accusation &amp; Verdict</h4>
+    <ul>
+        <li>Select the suspect you believe committed the crime</li>
+        <li>Present evidence to support accusation</li>
+        <li>Receives one of five verdicts — from Perfect Justice to Wrongful Accusation (see <a href="#sec6">Section 6</a> for full definitions)</li>
+    </ul>
+
+    <h3>5.2 Prototype — Current Build (Initial Gameplay)</h3>
+    <p>The current prototype covers the initial gameplay loop: Crime Scene Arrival → Present Day Investigation → first Time Vision use. It does not yet implement the Deduction or Accusation phases. The wireframe below illustrates the flow implemented in the prototype.</p>
+
+    <!-- Prototype Flow Diagram (SVG inline) -->
+    <div style="background:#1e1e24;border-radius:10px;padding:24px;margin:20px 0;border-left:4px solid #c0392b;overflow-x:auto;">
+    <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:760px;font-family:'Courier New',monospace;">
+      <!-- Background -->
+      <rect width="760" height="340" fill="#1e1e24"/>
+
+      <!-- Phase boxes -->
+      <!-- Box 1: Crime Scene Arrival -->
+      <rect x="20" y="130" width="140" height="70" rx="6" fill="#2c2c3a" stroke="#c0392b" stroke-width="2"/>
+      <text x="90" y="158" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">CRIME SCENE</text>
+      <text x="90" y="173" text-anchor="middle" fill="#aaa" font-size="10">ARRIVAL</text>
+      <text x="90" y="188" text-anchor="middle" fill="#888" font-size="9">Briefing + 5 suspects</text>
+
+      <!-- Arrow -->
+      <line x1="160" y1="165" x2="185" y2="165" stroke="#c0392b" stroke-width="2"/>
+      <polygon points="185,160 195,165 185,170" fill="#c0392b"/>
+
+      <!-- Box 2: Present Investigation -->
+      <rect x="195" y="130" width="140" height="70" rx="6" fill="#2c2c3a" stroke="#c0392b" stroke-width="2"/>
+      <text x="265" y="158" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">PRESENT DAY</text>
+      <text x="265" y="173" text-anchor="middle" fill="#aaa" font-size="10">INVESTIGATION</text>
+      <text x="265" y="188" text-anchor="middle" fill="#888" font-size="9">Examine + Interview</text>
+
+      <!-- Arrow -->
+      <line x1="335" y1="165" x2="360" y2="165" stroke="#c0392b" stroke-width="2"/>
+      <polygon points="360,160 370,165 360,170" fill="#c0392b"/>
+
+      <!-- Box 3: Time Vision -->
+      <rect x="370" y="130" width="140" height="70" rx="6" fill="#2c2c3a" stroke="#E94560" stroke-width="2.5"/>
+      <text x="440" y="158" text-anchor="middle" fill="#E94560" font-size="11" font-weight="bold">TIME VISION</text>
+      <text x="440" y="173" text-anchor="middle" fill="#aaa" font-size="10">ACTIVATION</text>
+      <text x="440" y="188" text-anchor="middle" fill="#888" font-size="9">Observe past event</text>
+
+      <!-- Arrow down from Time Vision -->
+      <line x1="440" y1="200" x2="440" y2="230" stroke="#E94560" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <polygon points="435,230 440,240 445,230" fill="#E94560"/>
+
+      <!-- Box: Vision Degrades -->
+      <rect x="370" y="240" width="140" height="50" rx="6" fill="#1a1a2e" stroke="#E94560" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="440" y="262" text-anchor="middle" fill="#E94560" font-size="10">VISION DEGRADES</text>
+      <text x="440" y="278" text-anchor="middle" fill="#888" font-size="9">Permanent cost applied</text>
+
+      <!-- Arrow right from box 3 -->
+      <line x1="510" y1="165" x2="535" y2="165" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <polygon points="535,160 545,165 535,170" fill="#888"/>
+
+      <!-- Box 4: Deduction (COMING SOON) -->
+      <rect x="545" y="130" width="140" height="70" rx="6" fill="#111" stroke="#555" stroke-width="1.5" stroke-dasharray="5,4"/>
+      <text x="615" y="155" text-anchor="middle" fill="#666" font-size="11">DEDUCTION</text>
+      <text x="615" y="170" text-anchor="middle" fill="#555" font-size="9">[Not yet in prototype]</text>
+      <text x="615" y="186" text-anchor="middle" fill="#444" font-size="9">Coming in next build</text>
+
+      <!-- PROTOTYPE BRACKET label -->
+      <rect x="20" y="104" width="490" height="8" rx="2" fill="none" stroke="#c0392b" stroke-width="1"/>
+      <text x="20" y="98" fill="#c0392b" font-size="10">◀─── PROTOTYPE COVERS THIS RANGE ───▶</text>
+
+      <!-- Legend -->
+      <rect x="20" y="290" width="12" height="12" fill="#2c2c3a" stroke="#c0392b" stroke-width="1.5"/>
+      <text x="38" y="301" fill="#aaa" font-size="10">Implemented</text>
+      <rect x="130" y="290" width="12" height="12" fill="#111" stroke="#555" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="148" y="301" fill="#666" font-size="10">Planned — not yet built</text>
+      <rect x="310" y="290" width="12" height="12" fill="#1a1a2e" stroke="#E94560" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <text x="328" y="301" fill="#aaa" font-size="10">Side effect / consequence</text>
+
+      <!-- Title -->
+      <text x="380" y="24" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">JUSTICE IS A WEAPON — PROTOTYPE SCOPE</text>
+      <text x="380" y="44" text-anchor="middle" fill="#888" font-size="11">v0.1 — Initial Gameplay Loop Only</text>
+    </svg>
+    </div>
+    <p style="font-size:13px;color:#5a5a6a;margin-top:-10px;"><em>Figure 5.1 — Prototype build covers Crime Scene Arrival through first Time Vision use. Deduction and Accusation phases are scoped for the next build sprint.</em></p>
+
+    <h3>5.3 Sample Case: "The Midnight Gallery"</h3>
+    <table>
+        <thead><tr><th>Aspect</th><th>Detail</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Title</strong></td><td>The Midnight Gallery</td></tr>
+            <tr><td><strong>Victim</strong></td><td>Marcus Webb, Art Curator</td></tr>
+            <tr><td><strong>Location</strong></td><td>Webb Contemporary Art Gallery</td></tr>
+            <tr><td><strong>Time of Death</strong></td><td>11:47 PM</td></tr>
+            <tr><td><strong>Cause</strong></td><td>Blunt force trauma (statue to head)</td></tr>
+            <tr><td><strong>Weapon</strong></td><td>Missing bronze sculpture</td></tr>
+        </tbody>
+    </table>
+    <h4>Suspects</h4>
+    <table>
+        <thead><tr><th>#</th><th>Name</th><th>Role</th><th>Motive</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Elena Vance</td><td>Rival Gallery Owner</td><td>Business competition, debts</td></tr>
+            <tr><td>2</td><td>Thomas Webb</td><td>Victim's Brother</td><td>Inheritance dispute</td></tr>
+            <tr><td>3</td><td>Yuki Tanaka</td><td>Assistant Curator</td><td>Recent firing threat</td></tr>
+            <tr><td>4</td><td>Marcus Cole</td><td>Security Guard</td><td>Passed over for promotion</td></tr>
+            <tr><td>5</td><td>Dr. Sarah Reeves</td><td>Art Restorer</td><td>Ethics complaint from victim</td></tr>
+        </tbody>
+    </table>
+    <h4>Time Vision Stages</h4>
+    <table>
+        <thead><tr><th>Stage</th><th>What You See</th><th>Clue Gained</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Before</strong></td><td>10:30 PM — Marcus closes gallery, speaks with brother Thomas</td><td>"Thomas argued about inheritance"</td></tr>
+            <tr><td><strong>Preparation</strong></td><td>11:00 PM — Figure in shadow enters via back door</td><td>"Back door lock was tampered with"</td></tr>
+            <tr><td><strong>Execution</strong></td><td>11:45 PM — Struggle, statue is swung, figure fleeing</td><td>"Statue missing — used as weapon"</td></tr>
+            <tr><td><strong>Aftermath</strong></td><td>12:00 AM — Yuki arrives for her shift, finds body</td><td>"Yuki had key access to gallery"</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec6">6. MAIN FEATURES &amp; USP</h2>
+    <h3>6.1 Unique Selling Points</h3>
+    <h4>1. Vision Sacrifice Mechanic</h4>
+    <ul>
+        <li><strong>Information costs vision</strong> — every clue degrades your sight</li>
+        <li><strong>Permanent consequences</strong> — no way to restore vision</li>
+        <li><strong>Psychological tension</strong> — "Should I risk another look?"</li>
+    </ul>
+    <h4>2. Unique Time Investigation</h4>
+    <ul>
+        <li><strong>Observe, don't change</strong> — no altering the past, only witnessing it</li>
+        <li><strong>4 crime stages</strong> — Before, Preparation, Execution, Aftermath</li>
+        <li><strong>Hidden identity</strong> — killer always obscured, requiring deduction</li>
+    </ul>
+    <h4>3. Difficulty-Based Risk Scaling</h4>
+    <table>
+        <thead><tr><th>Difficulty</th><th>Risk Level</th><th>Appeal</th></tr></thead>
+        <tbody>
+            <tr><td>Easy</td><td>Low</td><td>Casual mystery fans, first-time players</td></tr>
+            <tr><td>Normal</td><td>Medium</td><td>Standard detective challenge</td></tr>
+            <tr><td>Hard</td><td>High</td><td>Experienced deduction players</td></tr>
+            <tr><td>Expert</td><td>Extreme</td><td>True mystery masters</td></tr>
+        </tbody>
+    </table>
+    <h4>4. Multiple Future Detectives</h4>
+    <ul>
+        <li>Each with unique ability and unique drawback</li>
+        <li>Different gameplay strategies required</li>
+        <li>Replay existing cases with new mechanics</li>
+    </ul>
+    <h4>5. No Combat Gameplay</h4>
+    <ul>
+        <li>Entire experience focuses on deduction and investigation</li>
+        <li>Accessible to narrative game fans</li>
+        <li>Unique in the action-heavy mobile market</li>
+    </ul>
+    <h4>6. Dynamic Mystery Solving</h4>
+    <ul>
+        <li>Solve cases with different amounts of evidence</li>
+        <li>Multiple valid deduction paths</li>
+        <li>No "right" way to play</li>
+    </ul>
+    <h4>7. Multiple Endings</h4>
+    <table>
+        <thead><tr><th>Ending</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Perfect Justice</strong></td><td>All clues found, no blindness, correct killer</td></tr>
+            <tr><td><strong>Justice Served</strong></td><td>Correct killer, some blindness</td></tr>
+            <tr><td><strong>Partial Justice</strong></td><td>Correct killer, but some doubt remains</td></tr>
+            <tr><td><strong>Wrongful Accusation</strong></td><td>Accused innocent person</td></tr>
+            <tr><td><strong>Unsolvable</strong></td><td>Blind before deducing, case remains open</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec7">7. CORE LOOP ADDICTIVENESS ANALYSIS</h2>
+    <h3>7.1 The Core Loop Breakdown</h3>
+    <h4>Loop 1: The Investigation Cycle (2-3 minutes)</h4>
+    <div class="ascii">
+┌─────────────────────────────────────────────────────────────┐
+│                                                             │
+│   ┌─────────┐     ┌─────────┐     ┌─────────┐             │
+│   │ DISCOVER│────▶│  CHOOSE │────▶│  RISK   │             │
+│   │   NEW   │     │  ACTION │     │ REWARD  │             │
+│   │  CLUE   │     │         │     │         │             │
+│   └─────────┘     └─────────┘     └─────────┘             │
+│        ▲               │               │                    │
+│        │               ▼               ▼                    │
+│   ┌─────────┐     ┌─────────┐     ┌─────────┐             │
+│   │ DEDUCE  │◀────│  GAIN   │◀────│ ANALYZE │             │
+│   │ MEANING │     │  CLUE   │     │ RESULT  │             │
+│   └─────────┘     └─────────┘     └─────────┘             │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+    </div>
+    <ul>
+        <li><strong>Discovery</strong> releases dopamine — new information is intrinsically rewarding</li>
+        <li><strong>Choice</strong> creates agency and engagement</li>
+        <li><strong>Risk/Reward</strong> generates adrenaline and suspense</li>
+        <li><strong>Analysis</strong> activates problem-solving satisfaction</li>
+        <li><strong>Deduction</strong> provides completion gratification</li>
+    </ul>
+
+    <h4>Loop 2: The Case Arc (15-25 minutes)</h4>
+    <div class="ascii">
+INVESTIGATE  ▶  QUESTION  ▶  TIME VISION  ▶  DEDUCE
+    ↑                                         │
+    └─────────────── REPEAT ◀─────────────────┘
+
+INSERTIONS OF TENSION:
+• "Should I use Time Vision?"
+• "Can I trust this witness?"
+• "Is this clue a red herring?"
+• "Am I going blind too fast?"
+    </div>
+
+    <h4>Loop 3: The Mastery Cycle (Multiple Cases)</h4>
+    <div class="ascii">
+START EASY  ▶  LEARN SYSTEM  ▶  BUILD CONFIDENCE
+    ↓                               │
+TRY HARDER  ◀──────────────────────┘
+    ↓
+MASTER MECHANICS
+    ↓
+REPLAY WITH NEW DETECTIVE
+    ↓
+UNLOCK ACHIEVEMENTS
+    ↓
+PROCEDURAL CASES
+    </div>
+
+    <h3>7.2 Addictiveness Pillars</h3>
+    <h4>Pillar 1: Variable Reward Schedule</h4>
+    <table>
+        <thead><tr><th>Action</th><th>Reward Type</th><th>Why Addictive</th></tr></thead>
+        <tbody>
+            <tr><td>Find initial clue</td><td>Small dopamine hit</td><td>Always a surprise what you find</td></tr>
+            <tr><td>Use Time Vision</td><td>Major clue</td><td>You don't know what you'll see</td></tr>
+            <tr><td>Interview witness</td><td>Information</td><td>Witnesses may lie or be helpful</td></tr>
+            <tr><td>Solve case</td><td>Big dopamine hit</td><td>Different endings possible</td></tr>
+            <tr><td>Get achievement</td><td>Accomplishment</td><td>Different challenges to unlock</td></tr>
+        </tbody>
+    </table>
+    <h4>Pillar 2: Progressive Difficulty</h4>
+    <p>Skill requirements increase gradually, ensuring players are always challenged but never frustrated. Each difficulty level unlocks new strategic considerations.</p>
+    <h4>Pillar 3: Meaningful Choices</h4>
+    <p>Every decision has weight. There's no "correct" answer — multiple valid strategies exist. Consequences build emotional investment.</p>
+    <h4>Pillar 4: The "One More Try" Effect</h4>
+    <table>
+        <thead><tr><th>Moment</th><th>Psychological Trigger</th></tr></thead>
+        <tbody>
+            <tr><td>Vision at 60%</td><td>Loss aversion — "I can afford one more look"</td></tr>
+            <tr><td>Missing 1 clue</td><td>Completionism — "I'm so close"</td></tr>
+            <tr><td>Wrong accusation</td><td>Challenge — "I know I can do better"</td></tr>
+            <tr><td>After solving</td><td>Mastery — "I could do that better on Hard"</td></tr>
+        </tbody>
+    </table>
+    <h4>Pillar 5: Social Motivation</h4>
+    <ul>
+        <li>Share wrongful accusations with friends</li>
+        <li>Brag about perfect solutions</li>
+        <li>Compare difficulty completion</li>
+        <li>Debate who the real killer was</li>
+    </ul>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec8">8. COMPETITIVE ANALYSIS</h2>
+    <h3>8.1 Direct Competitors</h3>
+    <table>
+        <thead><tr><th>Game</th><th>Similarity</th><th>Our Advantage</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Return of the Obra Dinn</strong></td><td>Investigation and deduction, time-based viewing</td><td>Vision sacrifice; modern crime setting</td></tr>
+            <tr><td><strong>The Case of the Golden Idol</strong></td><td>Evidence-based deduction</td><td>Time observation mechanic creates strategic risk</td></tr>
+            <tr><td><strong>Her Story</strong></td><td>Piecing together fragmented clues</td><td>Interactive time travel investigation; full crime scenes</td></tr>
+            <tr><td><strong>Ace Attorney</strong></td><td>Solving crimes, identifying culprits</td><td>More serious and immersive detective simulation</td></tr>
+        </tbody>
+    </table>
+    <h3>8.2 Competitive Advantage Matrix</h3>
+    <table>
+        <thead><tr><th>Factor</th><th>Obra Dinn</th><th>Golden Idol</th><th>Ace Attorney</th><th><strong>Justice</strong></th></tr></thead>
+        <tbody>
+            <tr><td>Time Manipulation</td><td>✓</td><td>✗</td><td>✗</td><td>✓</td></tr>
+            <tr><td>Permanent Consequences</td><td>✗</td><td>✗</td><td>✗</td><td>✓</td></tr>
+            <tr><td>Crime Scene Exploration</td><td>Limited</td><td>Limited</td><td>None</td><td>✓</td></tr>
+            <tr><td>Multiple Difficulty</td><td>✗</td><td>✗</td><td>✗</td><td>✓</td></tr>
+            <tr><td>Mobile Native</td><td>✗</td><td>✓</td><td>✗</td><td>✓</td></tr>
+            <tr><td>No Combat</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Sacrifice Mechanic</td><td>✗</td><td>✗</td><td>✗</td><td>✓</td></tr>
+            <tr><td>Procedural Content</td><td>✗</td><td>✗</td><td>✗</td><td>✓</td></tr>
+        </tbody>
+    </table>
+    <h3>8.3 Market Gap Analysis</h3>
+    <p><strong>What's Missing in Current Detective Games:</strong></p>
+    <ol>
+        <li><strong>Consequences for investigation</strong> — No game punishes you for gathering clues</li>
+        <li><strong>Tension beyond the story</strong> — Risk isn't just "who did it"</li>
+        <li><strong>Replayability through difficulty</strong> — Different clue requirements change strategy</li>
+        <li><strong>Mobile-first detective experiences</strong> — Few serious detective games on Android</li>
+    </ol>
+    <p><strong>Our Solution:</strong></p>
+    <ul>
+        <li>Vision sacrifice creates consequences</li>
+        <li>Every choice has tension</li>
+        <li>Difficulty changes gameplay significantly</li>
+        <li>Built specifically for mobile touch controls</li>
+    </ul>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec9">9. TARGET AUDIENCE &amp; MARKET</h2>
+    <h3>9.1 Primary Audience</h3>
+    <table>
+        <thead><tr><th>Segment</th><th>Description</th><th>% of Market</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Mystery Enthusiasts</strong></td><td>Fans of detective fiction, true crime, puzzle games</td><td>35%</td></tr>
+            <tr><td><strong>Narrative Gamers</strong></td><td>Players seeking story-driven experiences</td><td>30%</td></tr>
+            <tr><td><strong>Mobile Gamers</strong></td><td>Looking for premium, non-casual experiences</td><td>20%</td></tr>
+            <tr><td><strong>Streamers/Content Creators</strong></td><td>High engagement, shareable content</td><td>10%</td></tr>
+            <tr><td><strong>Students/Educators</strong></td><td>Critical thinking and deduction practice</td><td>5%</td></tr>
+        </tbody>
+    </table>
+    <h3>9.2 Demographics</h3>
+    <table>
+        <thead><tr><th>Attribute</th><th>Detail</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Primary Age</strong></td><td>16-45</td></tr>
+            <tr><td><strong>Secondary Age</strong></td><td>45+ (classic detective fans)</td></tr>
+            <tr><td><strong>Gender Split</strong></td><td>30% Female, 70% Male</td></tr>
+            <tr><td><strong>Geography</strong></td><td>English-speaking markets (US, UK, Canada, Australia)</td></tr>
+            <tr><td><strong>Income</strong></td><td>Middle to upper-middle</td></tr>
+            <tr><td><strong>Gaming Habits</strong></td><td>2-5 hours/week, evening/before bed play</td></tr>
+        </tbody>
+    </table>
+    <h3>9.3 Engagement Metrics</h3>
+    <table>
+        <thead><tr><th>Metric</th><th>Target</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Average Play Session</strong></td><td>15-25 minutes (1 case)</td></tr>
+            <tr><td><strong>Daily Active Users</strong></td><td>15-20% of total</td></tr>
+            <tr><td><strong>Completion Rate</strong></td><td>75%</td></tr>
+            <tr><td><strong>Replay Rate</strong></td><td>40% (harder difficulties)</td></tr>
+            <tr><td><strong>DLC Conversion</strong></td><td>15-20%</td></tr>
+        </tbody>
+    </table>
+
+    <h3>9.4 How Our Game Targets Each Audience Segment</h3>
+    <table>
+        <thead><tr><th>Segment</th><th>What They Want</th><th>How We Deliver</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Mystery Enthusiasts</strong></td>
+                <td>Genuine deduction, narrative depth, satisfying reveals</td>
+                <td>Multi-stage time vision, 5+ suspects with individual motives, four distinct endings tied to evidence quality — including a "Wrongful Accusation" that feels like a real failure, not a soft reset</td>
+            </tr>
+            <tr>
+                <td><strong>Narrative Gamers</strong></td>
+                <td>Emotional stakes, character with personality, cinematic feel</td>
+                <td>Noir art direction with Sin City-inspired palette, Jazz/Orchestral score that shifts with tension, detective lore that deepens across DLCs — the detective is not a blank avatar</td>
+            </tr>
+            <tr>
+                <td><strong>Mobile Gamers (Premium)</strong></td>
+                <td>Polished experience, offline play, no intrusive monetization</td>
+                <td>Free Case 1 as a demo, offline-first architecture, no ads ever, one-time unlock at $3.99 — premium positioning removes the frustration loop entirely</td>
+            </tr>
+            <tr>
+                <td><strong>Streamers / Content Creators</strong></td>
+                <td>Shareable moments, unpredictable outcomes, viewer engagement</td>
+                <td>"Wrongful Accusation" endings create clip-worthy failures; viewers can second-guess hosts in real time; difficulty settings allow speedrun and blindrun challenges</td>
+            </tr>
+            <tr>
+                <td><strong>Students / Educators</strong></td>
+                <td>Critical thinking practice, logical deduction, low-pressure</td>
+                <td>Easy difficulty with forgiving vision limits makes the game accessible; the case structure mirrors scientific reasoning (hypothesis → evidence → conclusion)</td>
+            </tr>
+            <tr>
+                <td><strong>True Crime Fans</strong></td>
+                <td>Realistic investigation, grounded stakes, procedural feel</td>
+                <td>Police reports, autopsy details, witness contradictions, and a culprit who always has a specific method and motive — not an arbitrary "random killer" system</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>9.5 Psychographic Targeting</h3>
+    <table>
+        <thead><tr><th>Psychographic Trait</th><th>Game Element That Hooks Them</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Loss Aversion</strong></td><td>Permanent vision degradation — they can't undo mistakes, driving careful decision-making</td></tr>
+            <tr><td><strong>Completionism</strong></td><td>Achievement system, 100% case clue collection, "Perfect Justice" ending as the ultimate badge</td></tr>
+            <tr><td><strong>Curiosity Loops</strong></td><td>Time Vision always reveals something you couldn't predict — variable reward per activation</td></tr>
+            <tr><td><strong>Mastery Seekers</strong></td><td>Four difficulty tiers and new detectives provide a continuous skill ladder over months of play</td></tr>
+            <tr><td><strong>Social Comparison</strong></td><td>Shareable endings and difficulty completions fuel natural word-of-mouth</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec10">10. ART &amp; VISUAL DIRECTION</h2>
+    <h3>10.1 Style Overview</h3>
+    <ul>
+        <li><strong>Style:</strong> 2.5D Noir-Inspired Detective Aesthetic</li>
+        <li><strong>Inspirations:</strong> Sin City, Blade Runner, The Wolf Among Us, Disco Elysium</li>
+    </ul>
+    <h3>10.2 Color Palettes</h3>
+    <p>Three distinct palettes shift the player's emotional state across game phases. Palette transitions are never instantaneous — a 0.6-second animated fade signals the shift between realities.</p>
+    <h4>Present Day: Cold, Clinical</h4>
+    <table>
+        <thead><tr><th>Color</th><th>Hex</th><th>Usage</th></tr></thead>
+        <tbody>
+            <tr><td>Deep Navy</td><td>#1A1A2E</td><td>Night Sky</td></tr>
+            <tr><td>Dark Blue</td><td>#16213E</td><td>Shadows</td></tr>
+            <tr><td>Crimson</td><td>#E94560</td><td>Blood/Accents</td></tr>
+            <tr><td>Steel Blue</td><td>#0F3460</td><td>Interiors</td></tr>
+            <tr><td>White</td><td>#FFFFFF</td><td>Highlights</td></tr>
+        </tbody>
+    </table>
+    <!-- Present Day Swatches -->
+    <div style="display:flex;gap:10px;margin:12px 0 24px 0;flex-wrap:wrap;">
+        <div style="flex:1;min-width:100px;height:64px;background:#1A1A2E;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#aaa;font-family:monospace;">#1A1A2E<br>Deep Navy</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#16213E;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#aaa;font-family:monospace;">#16213E<br>Dark Blue</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#E94560;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#fff;font-family:monospace;">#E94560<br>Crimson</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#0F3460;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#aaa;font-family:monospace;">#0F3460<br>Steel Blue</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#FFFFFF;border:1px solid #ddd;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#999;font-family:monospace;">#FFFFFF<br>White</span></div>
+    </div>
+    <h4>Time Vision: Sepia/Warm</h4>
+    <table>
+        <thead><tr><th>Color</th><th>Hex</th><th>Usage</th></tr></thead>
+        <tbody>
+            <tr><td>Warm Sepia</td><td>#8B7355</td><td>Primary</td></tr>
+            <tr><td>Amber</td><td>#D4A574</td><td>Highlights</td></tr>
+            <tr><td>Dark Sepia</td><td>#6B4F3A</td><td>Shadows</td></tr>
+            <tr><td>Wheat</td><td>#F5DEB3</td><td>Light sources</td></tr>
+        </tbody>
+    </table>
+    <!-- Time Vision Swatches -->
+    <div style="display:flex;gap:10px;margin:12px 0 24px 0;flex-wrap:wrap;">
+        <div style="flex:1;min-width:100px;height:64px;background:#8B7355;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#fff;font-family:monospace;">#8B7355<br>Warm Sepia</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#D4A574;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#333;font-family:monospace;">#D4A574<br>Amber</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#6B4F3A;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#fff;font-family:monospace;">#6B4F3A<br>Dark Sepia</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#F5DEB3;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#555;font-family:monospace;">#F5DEB3<br>Wheat</span></div>
+    </div>
+    <h4>Blind Phase: Dark/High Contrast</h4>
+    <table>
+        <thead><tr><th>Color</th><th>Hex</th><th>Usage</th></tr></thead>
+        <tbody>
+            <tr><td>Pure Black</td><td>#000000</td><td>Background</td></tr>
+            <tr><td>White</td><td>#FFFFFF</td><td>Silhouettes/Text</td></tr>
+            <tr><td>Gray</td><td>#808080</td><td>Atmosphere</td></tr>
+            <tr><td>Gold</td><td>#FFD700</td><td>Interface highlights</td></tr>
+        </tbody>
+    </table>
+    <!-- Blind Phase Swatches -->
+    <div style="display:flex;gap:10px;margin:12px 0 24px 0;flex-wrap:wrap;">
+        <div style="flex:1;min-width:100px;height:64px;background:#000000;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#888;font-family:monospace;">#000000<br>Pure Black</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#FFFFFF;border:1px solid #ddd;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#999;font-family:monospace;">#FFFFFF<br>White</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#808080;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#fff;font-family:monospace;">#808080<br>Gray</span></div>
+        <div style="flex:1;min-width:100px;height:64px;background:#FFD700;border-radius:8px;display:flex;align-items:flex-end;padding:6px;"><span style="font-size:11px;color:#333;font-family:monospace;">#FFD700<br>Gold</span></div>
+    </div>
+    <h3>10.3 Vision Degradation — Art Direction</h3>
+    <p>Vision degradation is defined mechanically in <a href="#sec4">Section 4.2</a>. Below are the <strong>art direction specifications</strong> for how each degradation stage should be rendered visually:</p>
+    <table>
+        <thead><tr><th>Stage</th><th>Shader / Filter</th><th>Color Saturation</th><th>Edge Treatment</th><th>UI Readability</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Clear</strong></td><td>None — native render</td><td>100%</td><td>Sharp</td><td>Full</td></tr>
+            <tr><td><strong>Minor Blur</strong></td><td>Gaussian blur radius 2px</td><td>90% — slight desaturate</td><td>Soft halo on edges</td><td>Full</td></tr>
+            <tr><td><strong>Moderate</strong></td><td>Gaussian blur radius 6px + chromatic aberration</td><td>70% — cool shift</td><td>Double-vision on bright edges</td><td>Strained — larger text recommended</td></tr>
+            <tr><td><strong>Severe</strong></td><td>Heavy blur 14px + vignette 60%</td><td>40% — near grayscale</td><td>Shapes only, detail lost</td><td>Icons only, text illegible</td></tr>
+            <tr><td><strong>Blind</strong></td><td>Full black overlay — fade over 1.2s</td><td>0%</td><td>None</td><td>Audio description mode activates</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec11">11. AUDIO DESIGN</h2>
+    <blockquote>"Sound is the final sense to go. When you're blind, audio becomes your only window to the truth."</blockquote>
+    <h3>11.1 Philosophy</h3>
+    <p>Audio in <strong>Justice is a Weapon</strong> is not decoration — it is information. As the player's vision degrades, the soundscape must be rich enough to carry the investigation. Every audio decision serves function first, atmosphere second.</p>
+    <h3>11.2 Audio Components</h3>
+    <h4>Ambient Sound Design</h4>
+    <table>
+        <thead><tr><th>State</th><th>Audio Description</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Present Day</strong></td><td>Low city hum, distant traffic, rain on windows</td></tr>
+            <tr><td><strong>Crime Scene</strong></td><td>Echoey space, tape flapping, officer chatter</td></tr>
+            <tr><td><strong>Time Vision</strong></td><td>Muffled, distorted, time-stretched ambient sounds</td></tr>
+            <tr><td><strong>Blind Phase</strong></td><td>Audio becomes primary, spatial audio indicates clues</td></tr>
+            <tr><td><strong>Deduction</strong></td><td>Pensive music, pen writing, page turning</td></tr>
+            <tr><td><strong>Accusation</strong></td><td>Dramatic music, heartbeat, reveal sound</td></tr>
+        </tbody>
+    </table>
+    <h4>Sound Effects</h4>
+    <table>
+        <thead><tr><th>Action</th><th>Sound</th><th>Purpose</th></tr></thead>
+        <tbody>
+            <tr><td>Clue discovery</td><td>Chime/ding</td><td>Reward dopamine hit</td></tr>
+            <tr><td>Vision use</td><td>Whoosh/echo</td><td>Cost weight</td></tr>
+            <tr><td>Vision degradation</td><td>Glitch/static</td><td>Tension increase</td></tr>
+            <tr><td>Wrong accusation</td><td>Low buzzer</td><td>Punishment</td></tr>
+            <tr><td>Correct accusation</td><td>Triumphant chord</td><td>Satisfaction</td></tr>
+        </tbody>
+    </table>
+    <h4>Musical Themes</h4>
+    <table>
+        <thead><tr><th>Situation</th><th>Music Style</th><th>Emotion</th><th>Reference Point</th></tr></thead>
+        <tbody>
+            <tr><td>Investigation</td><td>Jazz noir, muted trumpet</td><td>Curiosity</td><td><em>Blade Runner Blues (Vangelis)</em> — brooding, patient</td></tr>
+            <tr><td>Time Vision</td><td>Ambient, distorted, reverse reverb</td><td>Mystery</td><td><em>The Witness (Max Richter)</em> — fragmented, haunting</td></tr>
+            <tr><td>Danger/Tension</td><td>Dissonant strings, rising tempo</td><td>Anxiety</td><td><em>Bernard Herrmann / Hitchcock style</em> — jagged, breathless</td></tr>
+            <tr><td>Deduction</td><td>Solo piano, contemplative</td><td>Focus</td><td><em>The Grand Budapest Hotel OST (Desplat)</em> — precise, ticking</td></tr>
+            <tr><td>Resolution</td><td>Full orchestral swell</td><td>Satisfaction</td><td><em>Sherlock Holmes (Hans Zimmer)</em> — triumphant, earned</td></tr>
+            <tr><td>Blindness Phase</td><td>Silence with sparse audio cues</td><td>Dread</td><td><em>Don't Breathe (Roque Baños)</em> — spatial audio only</td></tr>
+        </tbody>
+    </table>
+
+    <h3>11.3 Audio Mood Board</h3>
+    <div class="ascii">
+INVESTIGATION PHASE
+─────────────────────────────────────────
+Instrumentation : Muted trumpet, upright bass, brushed snare
+Tempo           : 60–75 BPM (slow, deliberate)
+Key/Mode        : Minor (Dm, Bm) — melancholy but alert
+Dynamics        : Low-volume ambient base; swells when clue found
+Feel            : Rain-slicked streets, cigarette smoke, cold case files
+
+TIME VISION PHASE
+─────────────────────────────────────────
+Instrumentation : Reversed piano, pitch-shifted cello, tape delay FX
+Tempo           : No fixed tempo — follows scene pacing
+Key/Mode        : Atonal / modal (Phrygian)
+Dynamics        : Starts low, peaks at key reveal, cuts abruptly
+Feel            : Watching memories through broken glass
+
+BLIND PHASE
+─────────────────────────────────────────
+Instrumentation : SILENCE + spatial SFX only
+Logic           : Footsteps, breathing, ambient hum used as navigation aids
+Audio cues      : High-pitched chime = clue nearby; low rumble = suspect
+Feel            : Sound becomes the only truth left
+    </div>
+
+    <h3>11.4 Sound Identity Keywords</h3>
+    <p>Every audio decision should be evaluated against these four words: <strong>Cold. Deliberate. Fragile. Earned.</strong></p>
+    <ul>
+        <li><strong>Cold</strong> — the world is not warm; the palette and music agree</li>
+        <li><strong>Deliberate</strong> — no unnecessary cues; every sound carries meaning</li>
+        <li><strong>Fragile</strong> — as vision degrades, so does the score's fullness</li>
+        <li><strong>Earned</strong> — the orchestral resolution only hits hard because the silence before it was real</li>
+    </ul>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec12">12. USER INTERFACE &amp; CONTROLS</h2>
+    <h3>12.1 Android Touch Controls</h3>
+    <h4>Main Interface Layout</h4>
+    <div class="ascii">
+┌─────────────────────────────────────────────────────────────┐
+│  ╔═══╗  ╔═══╗  ╔═══╗  ╔═══╗  ╔═══╗                       │
+│  ║ 1 ║  ║ 2 ║  ║ 3 ║  ║ 4 ║  ║ 5 ║                       │
+│  ╚═══╝  ╚═══╝  ╚═══╝  ╚═══╝  ╚═══╝                       │
+│                                                             │
+│  ┌─────────────────────────────────────────────┐           │
+│  │   CRIME SCENE: [LOCATION NAME]             │           │
+│  │   [Scene rendering with interactive points]│           │
+│  │                                             │           │
+│  │   ● Interactive object 1                   │           │
+│  │   ● Interactive object 2                   │           │
+│  │   ● Interactive object 3                   │           │
+│  └─────────────────────────────────────────────┘           │
+│                                                             │
+│  [Clues: X/Y]  [Suspects: X]  [Vision Uses: X/Y]        │
+│                                                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐ │
+│  │  JOURNAL │  │  REVIEW  │  │ TIME VISION│  │ACCUSE   │ │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘ │
+└─────────────────────────────────────────────────────────────┘
+    </div>
+    <h4>Gesture Controls</h4>
+    <table>
+        <thead><tr><th>Gesture</th><th>Function</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Tap</strong></td><td>Interact with objects, select options</td></tr>
+            <tr><td><strong>Double Tap</strong></td><td>Enter Time Vision at location</td></tr>
+            <tr><td><strong>Swipe Left/Right</strong></td><td>Navigate between scenes</td></tr>
+            <tr><td><strong>Swipe Up</strong></td><td>Open evidence journal</td></tr>
+            <tr><td><strong>Pinch</strong></td><td>Zoom in/out on crime scene</td></tr>
+            <tr><td><strong>Long Press</strong></td><td>Examine object in detail</td></tr>
+        </tbody>
+    </table>
+    <h4>Accessibility Controls</h4>
+    <table>
+        <thead><tr><th>Feature</th><th>Description</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Color Blind Mode</strong></td><td>Alternative color palettes</td></tr>
+            <tr><td><strong>Text Size</strong></td><td>Adjustable font sizes</td></tr>
+            <tr><td><strong>Audio Description</strong></td><td>Voice reads text when blind</td></tr>
+            <tr><td><strong>High Contrast UI</strong></td><td>Enhanced visibility</td></tr>
+            <tr><td><strong>Haptic Feedback</strong></td><td>Vibration for clues/discoveries</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec13">13. MONETIZATION STRATEGY</h2>
+    <blockquote>"Players should feel like they're paying for value, not being exploited."</blockquote>
+    <h3>13.1 Philosophy</h3>
+    <p>Every monetization decision is evaluated against one rule: players should always feel they received more value than they spent. No pay-to-win, no loot boxes, no ads. Every purchase is optional content — never a gate on core gameplay.</p>
+    <h3>13.2 Revenue Streams Overview</h3>
+    <table>
+        <thead><tr><th>Stream</th><th>Type</th><th>Implementation</th></tr></thead>
+        <tbody>
+            <tr><td>1. Premium Unlock</td><td>One-time purchase</td><td>Full game access — all 5 MVP cases</td></tr>
+            <tr><td>2. DLC Cases</td><td>Expansion packs</td><td>New cases + settings + story content</td></tr>
+            <tr><td>3. Detective Packs</td><td>Character unlocks</td><td>New detectives with unique abilities</td></tr>
+            <tr><td>4. Story Campaign</td><td>Premium narrative</td><td>5 connected cases + finale</td></tr>
+            <tr><td>5. Cosmetic Items</td><td>Optional aesthetics</td><td>Themes, UI skins, detective outfits</td></tr>
+            <tr><td>6. Battle Pass</td><td>Seasonal subscription</td><td>Exclusive cosmetics + bonus cases per season</td></tr>
+            <tr><td>7. Clue Packs</td><td>Optional consumable</td><td>Purchase additional Time Vision charges for a case</td></tr>
+        </tbody>
+    </table>
+    <h3>13.3 Monetization Model: Free-to-Try with Premium Unlock</h3>
+    <h4>The Funnel Approach</h4>
+    <p><strong>FREE PLAYERS (100%)</strong><br>
+    Download game for free · Play Case 1 complete · Full tutorial · Easy difficulty · Time Vision fully available</p>
+    <p><strong>↓</strong></p>
+    <p><strong>PREMIUM UNLOCK ($3.99)</strong><br>
+    All 5 MVP cases · Normal &amp; Hard difficulties · All 5 endings · Cloud save · No ads</p>
+    <p><strong>↓</strong></p>
+    <p><strong>DLC PURCHASES ($1.99–$2.99)</strong><br>
+    Additional case packs · New detectives · Story campaign · Procedural Mode</p>
+
+    <h3>13.4 Pricing Strategy</h3>
+    <table>
+        <thead><tr><th>Region</th><th>Price</th></tr></thead>
+        <tbody>
+            <tr><td>US Market</td><td>$3.99</td></tr>
+            <tr><td>Europe</td><td>€3.49</td></tr>
+            <tr><td>UK</td><td>£2.99</td></tr>
+            <tr><td>Australia</td><td>$5.99 AUD</td></tr>
+            <tr><td>Canada</td><td>$4.99 CAD</td></tr>
+            <tr><td>Emerging Markets</td><td>$1.99–$2.99</td></tr>
+        </tbody>
+    </table>
+    <table>
+        <thead><tr><th>DLC Type</th><th>Content</th><th>Price</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Case Pack</strong></td><td>3 new cases + 1 new setting</td><td>$2.99</td></tr>
+            <tr><td><strong>Detective Pack</strong></td><td>1 detective + 2 cases</td><td>$2.49</td></tr>
+            <tr><td><strong>Story Campaign</strong></td><td>5 connected cases + finale</td><td>$4.99</td></tr>
+            <tr><td><strong>Procedural Mode</strong></td><td>Infinite cases</td><td>$3.99</td></tr>
+            <tr><td><strong>Cosmetic Pack</strong></td><td>5 themes + UI skins</td><td>$0.99</td></tr>
+        </tbody>
+    </table>
+    <h3>13.5 Battle Pass — "Season of Shadows"</h3>
+    <blockquote>"A seasonal pass that rewards dedication without locking critical gameplay behind it."</blockquote>
+    <p>Each season runs for <strong>8 weeks</strong>. The Battle Pass is entirely cosmetic and quality-of-life — it never gates cases, detectives, or required gameplay.</p>
+    <table>
+        <thead><tr><th>Tier</th><th>Price</th><th>Contents</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Free Track</strong></td><td>$0.00</td><td>3 cosmetic items (UI frames, journal covers) + 1 bonus procedural case</td></tr>
+            <tr><td><strong>Pass Track</strong></td><td>$2.99/season</td><td>20 tiers: detective skins, vision-effect themes, UI sound packs, exclusive case + "Season Finale" bonus case</td></tr>
+        </tbody>
+    </table>
+    <h4>Sample Battle Pass Tier Rewards (Season 1: "Shattered Light")</h4>
+    <table>
+        <thead><tr><th>Tier</th><th>Free</th><th>Pass</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Journal Cover: "Worn Leather"</td><td>Detective Skin: "Rain Coat"</td></tr>
+            <tr><td>5</td><td>—</td><td>Vision Effect: "Amber Burn" (sepia variant)</td></tr>
+            <tr><td>10</td><td>Bonus Procedural Case</td><td>UI Sound Pack: "Vinyl Static"</td></tr>
+            <tr><td>15</td><td>—</td><td>Detective Skin: "Trench Coat Noir"</td></tr>
+            <tr><td>20</td><td>—</td><td>Exclusive Case: "The Shattered Frame" + Season Badge</td></tr>
+        </tbody>
+    </table>
+    <p><em>Battle Pass design principle: A player who skips the pass must never feel like they missed gameplay. They missed style.</em></p>
+
+    <h3>13.6 Clue Packs — "Get Clues" System — "Get Clues" System</h3>
+    <p>Clue Packs are a <strong>player-friendly consumable</strong> that provides additional Time Vision charges for a single case. This is specifically designed for players stuck on Hard/Expert difficulty, or those who want to 100% a case without losing their grade.</p>
+    <table>
+        <thead><tr><th>Pack</th><th>Contents</th><th>Price</th><th>Use Case</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Vision Boost</strong></td><td>+1 Time Vision charge for current case</td><td>$0.49</td><td>Stuck on Hard, need one more look</td></tr>
+            <tr><td><strong>Investigator Bundle</strong></td><td>+3 Vision charges, usable across any 3 cases</td><td>$0.99</td><td>Power player who wants to perfect cases</td></tr>
+            <tr><td><strong>Case Starter Pack</strong></td><td>+5 Vision charges</td><td>$1.49</td><td>Players new to Expert difficulty</td></tr>
+        </tbody>
+    </table>
+    <h4>Anti-Exploitation Safeguards</h4>
+    <ul>
+        <li>Clue Packs do not affect difficulty rating — using them flags the run as "Assisted" in statistics</li>
+        <li>Achievements requiring "No Vision Purchase" remain cleanly attainable</li>
+        <li>Clue Packs are <strong>never</strong> required — the game is fully solvable without them on every difficulty</li>
+        <li>Maximum cap: +3 charges per case, regardless of packs purchased</li>
+    </ul>
+    <p><em>Note: Projections are estimates and may vary based on market conditions.</em></p>
+    <h4>Industry Benchmarks</h4>
+    <table>
+        <thead><tr><th>Metric</th><th>Industry Average</th><th>Our Target</th></tr></thead>
+        <tbody>
+            <tr><td>Download-to-Premium Rate</td><td>3-8%</td><td>15-20%</td></tr>
+            <tr><td>DLC Conversion Rate</td><td>10-15%</td><td>15-20%</td></tr>
+            <tr><td>Player Lifetime Value (LTV)</td><td>$1-3</td><td>$5-8</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec14">14. EXPANDABILITY &amp; LIVE OPERATIONS</h2>
+    <h3>14.1 Three-Pillar Expansion Framework</h3>
+    <p>The current roadmap has been restructured around three independent expansion pillars. Each pillar can grow without waiting for the others — content releases don't block each other.</p>
+    <div class="ascii">
+╔══════════════════════════════════════════════════════════════╗
+║             THREE-PILLAR EXPANSION FRAMEWORK                 ║
+╠══════════════════════╦═══════════════════╦═══════════════════╣
+║  PILLAR 1: STORY     ║  PILLAR 2: SYSTEM ║  PILLAR 3: LIVE   ║
+║  (Authored Content)  ║  (Mechanics)      ║  (Ongoing)        ║
+╠══════════════════════╬═══════════════════╬═══════════════════╣
+║ Individual DLC cases ║ New detectives    ║ Battle Pass       ║
+║ Detective story arcs ║ New abilities     ║ Daily cases       ║
+║ Campaign storylines  ║ New drawbacks     ║ Seasonal events   ║
+║ Setting variety      ║ Difficulty mods   ║ Community cases   ║
+║ Villain arcs         ║ Case type variety ║ Leaderboards      ║
+╚══════════════════════╩═══════════════════╩═══════════════════╝
+    </div>
+
+    <h3>14.1b Expandability Concept: New Gameplay Dimensions</h3>
+    <p>The original roadmap added cases and detectives but didn't introduce new <em>types</em> of gameplay. The following are concrete expansion concepts that each add a genuinely different experience — not just more of the same.</p>
+    <table>
+        <thead><tr><th>Expansion Concept</th><th>What's New</th><th>Target Phase</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Verdict Tribunal Mode</strong></td>
+                <td>Instead of accusing one person, the player must assemble a case file — selecting the right clues, a motive, and a method. Wrong clue selections lead to acquittal. Changes the endgame from a single accusation to a "build the case" puzzle.</td>
+                <td>DLC 2 (Full Release)</td>
+            </tr>
+            <tr>
+                <td><strong>Witness Corruption System</strong></td>
+                <td>Witnesses can be bribed or scared into silence. Some interviews lock after too many questions. Forces players to prioritize who they interrogate first, adding social resource management.</td>
+                <td>DLC 2 (Hard difficulty)</td>
+            </tr>
+            <tr>
+                <td><strong>Multi-Location Cases</strong></td>
+                <td>A single case spans two linked crime scenes. Time Vision charges carry over between locations but degrade faster. Requires travel decisions — some clues are exclusive to each site.</td>
+                <td>DLC 3 "Foresight"</td>
+            </tr>
+            <tr>
+                <td><strong>Cold Case Mode</strong></td>
+                <td>Cases from decades ago. Time Vision has a maximum of 2 uses due to the detective's worsening condition. Evidence has degraded — some clues are missing or corrupted. Higher mystery, lower information.</td>
+                <td>DLC 3 (Hard/Expert)</td>
+            </tr>
+            <tr>
+                <td><strong>Co-Investigator Mode (2 Players)</strong></td>
+                <td>One player handles Time Vision; the other handles physical investigation and witnesses. Vision charges are shared — coordination required. Each player sees partial information and must communicate.</td>
+                <td>Year 2 Cooperative DLC</td>
+            </tr>
+            <tr>
+                <td><strong>Villain Arc — "The Copycat"</strong></td>
+                <td>A cross-case narrative where a recurring criminal appears across 5 cases. Solving each case unlocks a piece of the villain's identity. Culminates in an Expert-only final case with no vision charges available at all.</td>
+                <td>Year 2 Story Campaign</td>
+            </tr>
+            <tr>
+                <td><strong>Community Case Editor</strong></td>
+                <td>Players design and publish their own cases. Includes: suspect creator, dialogue tree editor, clue placement, time vision stage scripting. Featured cases get highlighted in a weekly "Community Spotlight."</td>
+                <td>Procedural DLC</td>
+            </tr>
+            <tr>
+                <td><strong>Seasonal Themes</strong></td>
+                <td>Each Battle Pass season reskins the noir world into a new aesthetic — e.g., 1920s Prohibition, Cold War espionage, near-future cyberpunk. Art and audio change; core mechanics remain identical. Keeps the game visually fresh without a redesign.</td>
+                <td>Ongoing (Live Ops)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>14.1c New Case Type Variety</h3>
+    <p>Initial release focuses on <strong>Murder</strong> cases. Expansion packs add fundamentally different crime types, each with different investigation logic:</p>
+    <table>
+        <thead><tr><th>Crime Type</th><th>Core Difference</th><th>New Mechanic</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Murder</strong> (MVP)</td><td>Identify who, how, and why</td><td>Standard Time Vision flow</td></tr>
+            <tr><td><strong>Art Theft / Fraud</strong></td><td>No body — track an object's movement</td><td>Time Vision can observe objects, not just locations</td></tr>
+            <tr><td><strong>Disappearance</strong></td><td>Victim may be alive; don't reveal wrong information</td><td>Incorrect accusation can endanger the missing person</td></tr>
+            <tr><td><strong>Poisoning</strong></td><td>Many suspects had access; motive less obvious</td><td>Forensic report mini-game to identify substance</td></tr>
+            <tr><td><strong>Corporate Espionage</strong></td><td>Multiple perpetrators; partial guilt</td><td>Accusation screen allows multiple arrests with confidence ratings</td></tr>
+        </tbody>
+    </table>
+
+    <h3>14.2 Procedural Content System</h3>
+    <h4>Generation Parameters</h4>
+    <ul>
+        <li>Case type (Murder/Theft/Disappearance/Fraud)</li>
+        <li>Difficulty (Easy/Normal/Hard/Expert)</li>
+        <li>Location (Gallery/Mansion/Office/Park/Hotel)</li>
+        <li>Victim profile</li>
+        <li>Number of suspects (5-12)</li>
+        <li>Number of clues (3-7)</li>
+    </ul>
+    <h4>Content Pools</h4>
+    <ul>
+        <li>Suspect names: 200+</li>
+        <li>Motives: 50+</li>
+        <li>Alibis: 100+</li>
+        <li>Evidence: 150+</li>
+        <li>Witness statements: 200+</li>
+        <li>Locations: 20+</li>
+        <li>Time Vision events: 300+</li>
+    </ul>
+    <h3>14.3 Community Content System</h3>
+    <ul>
+        <li><strong>Creation Tools:</strong> Case template, suspect creation, evidence placement, dialogue writing</li>
+        <li><strong>Sharing &amp; Rating:</strong> Community gallery, 1–5 star ratings, play count, featured cases</li>
+    </ul>
+    <h3>14.4 Live Operations Calendar</h3>
+    <table>
+        <thead><tr><th>Month</th><th>Event</th><th>Purpose</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Beta Launch</strong></td><td>Open Beta</td><td>Gather feedback</td></tr>
+            <tr><td><strong>Month 3</strong></td><td>Full Release</td><td>Launch campaign</td></tr>
+            <tr><td><strong>Month 4</strong></td><td>"Shadows &amp; Whispers"</td><td>First DLC launch</td></tr>
+            <tr><td><strong>Month 5</strong></td><td>"Shadow Week"</td><td>Limited-time cosmetics</td></tr>
+            <tr><td><strong>Month 6</strong></td><td>"Whisper Contest"</td><td>Community engagement</td></tr>
+            <tr><td><strong>Month 7</strong></td><td>"Foresight"</td><td>Second DLC launch</td></tr>
+            <tr><td><strong>Month 8</strong></td><td>"Time Trial"</td><td>Speedrun challenge</td></tr>
+            <tr><td><strong>Month 9</strong></td><td>"Procedural Beta"</td><td>Feature preview</td></tr>
+            <tr><td><strong>Month 10</strong></td><td>"Procedural"</td><td>Major feature launch</td></tr>
+            <tr><td><strong>Month 11</strong></td><td>"Best of"</td><td>Community competition</td></tr>
+            <tr><td><strong>Month 12</strong></td><td>"Campaign Teaser"</td><td>Next major update</td></tr>
+        </tbody>
+    </table>
+    <h4>Engagement Strategies</h4>
+    <table>
+        <thead><tr><th>Strategy</th><th>Frequency</th><th>Reward</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Daily Case</strong></td><td>Every day</td><td>1 new procedural case</td></tr>
+            <tr><td><strong>Weekly Challenge</strong></td><td>Every Friday</td><td>Special achievement</td></tr>
+            <tr><td><strong>Monthly Contest</strong></td><td>Every month</td><td>Cosmetic rewards</td></tr>
+            <tr><td><strong>Holiday Events</strong></td><td>Major holidays</td><td>Themed cases</td></tr>
+            <tr><td><strong>Community Spotlight</strong></td><td>Bi-weekly</td><td>Featured cases</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec15">15. POST-LAUNCH ROADMAP</h2>
+    <h3>15.1 Year 1 Content Plan</h3>
+    <table>
+        <thead><tr><th>Phase</th><th>Content</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Open Beta</strong></td><td>5 Easy cases, Detective 1: "The Visionary", Feedback collection</td></tr>
+            <tr><td><strong>Beta Iteration</strong></td><td>Bug fixes, UI improvements, Balance adjustments</td></tr>
+            <tr><td><strong>Full Release</strong></td><td>5 cases unlocked, Normal difficulty, Achievements (20+)</td></tr>
+            <tr><td><strong>DLC 1: "Shadows &amp; Whispers"</strong></td><td>3 new cases (Normal), Detective 2: "The Listener"</td></tr>
+            <tr><td><strong>DLC 2: "Foresight"</strong></td><td>3 new cases (Hard), Detective 3: "The Premonitionist"</td></tr>
+            <tr><td><strong>DLC 3: "Procedural"</strong></td><td>Procedural Mystery Mode, Community case sharing</td></tr>
+            <tr><td><strong>DLC 4: "The Campaign"</strong></td><td>Story Campaign (5 connected cases), Detective 4: "The Empath"</td></tr>
+        </tbody>
+    </table>
+    <p><strong>All timelines TBD.</strong></p>
+    <h3>15.2 Year 2+ Expansion Possibilities</h3>
+    <table>
+        <thead><tr><th>Expansion</th><th>Content</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Season Pass / Battle Pass</strong></td><td>Yearly content subscription — see <a href="#sec13">Section 13.4b</a> for Battle Pass details</td></tr>
+            <tr><td><strong>Detective Packs</strong></td><td>4 new detectives</td></tr>
+            <tr><td><strong>Case Packs</strong></td><td>8-10 new cases</td></tr>
+            <tr><td><strong>Procedural 2.0</strong></td><td>Enhanced procedural generation</td></tr>
+            <tr><td><strong>Cooperative</strong></td><td>2-player investigations (detailed spec in <a href="#sec14">Section 14.1b</a>)</td></tr>
+            <tr><td><strong>Console Port</strong></td><td>Nintendo Switch, PlayStation, Xbox</td></tr>
+            <tr><td><strong>Mobile Sequel</strong></td><td>Justice is a Weapon 2</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec16">16. TECHNICAL REQUIREMENTS</h2>
+    <h3>16.1 Locked Tech Stack</h3>
+    <table>
+        <thead><tr><th>Component</th><th>Technology</th><th>Justification</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Engine</strong></td><td>Unity 6.3 LTS + URP</td><td>Stable, Android-optimized</td></tr>
+            <tr><td><strong>Primary Platform</strong></td><td>Android (Google Play Open Beta)</td><td>Largest mobile market</td></tr>
+            <tr><td><strong>Secondary Platform</strong></td><td>Windows</td><td>Steam potential</td></tr>
+            <tr><td><strong>Network</strong></td><td>Single-player, offline</td><td>No server costs</td></tr>
+            <tr><td><strong>Programming</strong></td><td>C# scripting</td><td>Unity standard</td></tr>
+            <tr><td><strong>Rendering</strong></td><td>Universal Render Pipeline</td><td>Mobile optimization</td></tr>
+            <tr><td><strong>Audio</strong></td><td>Unity Audio Mixer</td><td>Spatial audio support</td></tr>
+            <tr><td><strong>Save System</strong></td><td>JSON serialization</td><td>Simple, reliable</td></tr>
+        </tbody>
+    </table>
+    <h3>16.2 System Requirements</h3>
+    <h4>Android Requirements</h4>
+    <table>
+        <thead><tr><th>Category</th><th>Minimum</th><th>Recommended</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Android Version</strong></td><td>8.0 (API 26)</td><td>11.0 (API 30)</td></tr>
+            <tr><td><strong>RAM</strong></td><td>3GB</td><td>4GB+</td></tr>
+            <tr><td><strong>GPU</strong></td><td>Adreno 506/ Mali-G51</td><td>Adreno 612+</td></tr>
+            <tr><td><strong>Storage</strong></td><td>500MB</td><td>1GB</td></tr>
+        </tbody>
+    </table>
+    <h4>Windows Requirements</h4>
+    <table>
+        <thead><tr><th>Category</th><th>Minimum</th><th>Recommended</th></tr></thead>
+        <tbody>
+            <tr><td><strong>OS</strong></td><td>Windows 10 64-bit</td><td>Windows 11</td></tr>
+            <tr><td><strong>Processor</strong></td><td>Intel i3-4150</td><td>Intel i5-6400+</td></tr>
+            <tr><td><strong>RAM</strong></td><td>4GB</td><td>8GB</td></tr>
+            <tr><td><strong>Storage</strong></td><td>500MB</td><td>1GB</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec17">17. RISKS &amp; MITIGATION</h2>
+    <h3>17.1 Technical Risks</h3>
+    <table>
+        <thead><tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Mitigation</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Vision blur performance</strong></td><td>Medium</td><td>High</td><td>Use shader-based effects, test on low-end devices</td></tr>
+            <tr><td><strong>Save corruption</strong></td><td>Low</td><td>High</td><td>Implement backup saves, cloud saves</td></tr>
+            <tr><td><strong>Touch input precision</strong></td><td>Medium</td><td>Medium</td><td>44dp minimum tap targets</td></tr>
+            <tr><td><strong>Android fragmentation</strong></td><td>High</td><td>Medium</td><td>Test on 10+ devices</td></tr>
+        </tbody>
+    </table>
+    <h3>17.2 Design Risks</h3>
+    <table>
+        <thead><tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Mitigation</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Time Vision too easy</strong></td><td>Medium</td><td>High</td><td>Playtesting, adjust difficulty scaling</td></tr>
+            <tr><td><strong>Blindness too punishing</strong></td><td>Medium</td><td>Medium</td><td>Test balance, add accessibility options</td></tr>
+            <tr><td><strong>Cases too short</strong></td><td>Medium</td><td>Medium</td><td>Add content, more complexity</td></tr>
+            <tr><td><strong>Replayability low</strong></td><td>Medium</td><td>High</td><td>Procedural content, achievements</td></tr>
+        </tbody>
+    </table>
+    <h3>17.3 Market Risks</h3>
+    <table>
+        <thead><tr><th>Risk</th><th>Probability</th><th>Impact</th><th>Mitigation</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Premium pricing rejection</strong></td><td>Medium</td><td>High</td><td>Free-to-try model, periodic sales</td></tr>
+            <tr><td><strong>Competitor launches</strong></td><td>Medium</td><td>Medium</td><td>Unique USP, strong marketing</td></tr>
+            <tr><td><strong>Poor reviews</strong></td><td>Low</td><td>High</td><td>Quality polish, responsive support</td></tr>
+            <tr><td><strong>Low downloads</strong></td><td>Medium</td><td>High</td><td>ASO optimization, content creators</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec18">18. CONCLUSION</h2>
+    <h3>18.1 Summary of Value Proposition</h3>
+    <p><strong>Justice is a Weapon</strong> delivers:</p>
+    <h4>For Players</h4>
+    <ul>
+        <li>Unique vision sacrifice mechanic creating genuine tension</li>
+        <li>Risk/reward decisions with permanent consequences</li>
+        <li>Deep detective gameplay without combat</li>
+        <li>Multiple difficulty levels for all skill levels</li>
+        <li>High replayability through new detectives and procedural content</li>
+        <li>Fair, player-friendly monetization</li>
+        <li>No pay-to-win, no ads, no exploitation</li>
+    </ul>
+    <h4>For Judges/Investors</h4>
+    <ul>
+        <li>Unique IP with strong differentiation</li>
+        <li>Realistic technical scope with achievable timeline</li>
+        <li>Multiple revenue streams with proven model</li>
+        <li>Long-term expansion potential (years of content)</li>
+        <li>Market gap in mobile detective genre</li>
+    </ul>
+    <h3>18.2 Final Verdict</h3>
+    <blockquote>
+        <strong>Justice is a Weapon</strong> stands out as a genuinely innovative detective game that solves the problem of consequence-free investigation. By making information a limited resource, it creates a tense, strategic experience that keeps players engaged through risk, reward, and meaningful choices. The monetization model is player-friendly and sustainable, while the expansion pipeline ensures longevity. This is a game with a clear vision, achievable scope, and strong market potential.
+    </blockquote>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec19">19. GLOSSARY</h2>
+    <p>This section defines all core entities and terms used throughout the design document, for clarity across team members and evaluators.</p>
+    <table>
+        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Time Vision</strong></td><td>The detective's supernatural ability to observe past events at a crime scene location. Each use costs one permanent Vision Charge. The core risk/reward mechanic of the game.</td></tr>
+            <tr><td><strong>Vision Charge</strong></td><td>A single use of the Time Vision ability. Charges are consumed permanently — they do not regenerate during a case. Starting charges vary by difficulty.</td></tr>
+            <tr><td><strong>Vision Degradation</strong></td><td>The progressive loss of visual clarity that occurs with each Time Vision use. Tracked in five stages: Clear → Minor Blur → Moderate → Severe → Blind.</td></tr>
+            <tr><td><strong>Blind Phase</strong></td><td>The game state in which the player has exhausted all Vision Charges and the screen goes dark. Navigation is audio-only. The case can still be solved from this state with sufficient prior clues.</td></tr>
+            <tr><td><strong>Case</strong></td><td>A single self-contained crime investigation. Each case has a unique victim, location, set of suspects, clues, and a definitive killer. Cases take 15–25 minutes to complete.</td></tr>
+            <tr><td><strong>Suspect</strong></td><td>A character present in a case who may or may not be the killer. Every suspect has a name, role, motive, and alibi. Suspects vary in number by difficulty (5–12).</td></tr>
+            <tr><td><strong>Clue</strong></td><td>A piece of evidence collected during investigation. Clues are either Physical (free, from crime scene) or Vision Clues (cost a Vision Charge). Each case requires a minimum number of clues to support an accusation.</td></tr>
+            <tr><td><strong>Accusation</strong></td><td>The final act of a case: the player selects a suspect and presents their case. Results in one of five possible endings.</td></tr>
+            <tr><td><strong>Detective</strong></td><td>The player-controlled character. The MVP features one detective ("The Visionary"). Future DLCs add new detectives, each with a unique ability and a different cost mechanic.</td></tr>
+            <tr><td><strong>The Visionary</strong></td><td>Detective 1. The MVP protagonist. Ability: Time Vision. Drawback: Vision Degradation per use. Archetype: Brooding, methodical, driven by obsession with truth.</td></tr>
+            <tr><td><strong>The Listener</strong></td><td>Detective 2 (DLC 1). Ability: Hear past conversations at a location. Drawback: Hearing degrades — later audio is muffled and unclear.</td></tr>
+            <tr><td><strong>The Premonitionist</strong></td><td>Detective 3 (DLC 2). Ability: View brief flashes of the near future at a location. Drawback: Each premonition causes a headache, reducing available investigation time.</td></tr>
+            <tr><td><strong>The Empath</strong></td><td>Detective 4 (DLC 4 Campaign). Ability: Feel the emotional state of anyone in a location at a given time. Drawback: Emotional overload causes memory loss — clues can be forgotten.</td></tr>
+            <tr><td><strong>Verdict</strong></td><td>The outcome of an Accusation. Five possible verdicts: Perfect Justice, Justice Served, Partial Justice, Wrongful Accusation, Unsolvable.</td></tr>
+            <tr><td><strong>Difficulty</strong></td><td>One of four game modes (Easy / Normal / Hard / Expert) that controls suspect count, required clues, Vision Charge limit, and whether false clues are present.</td></tr>
+            <tr><td><strong>DLC (Downloadable Content)</strong></td><td>A paid post-launch content pack adding new cases, detectives, or features. Priced between $1.99–$4.99.</td></tr>
+            <tr><td><strong>Battle Pass</strong></td><td>A seasonal (8-week) optional content subscription. Provides cosmetic rewards and one bonus case per season. Never gates core gameplay.</td></tr>
+            <tr><td><strong>Clue Pack</strong></td><td>A purchasable consumable providing additional Vision Charges for a single case. Marks the run as "Assisted" in statistics. Optional — never required.</td></tr>
+            <tr><td><strong>Procedural Mode</strong></td><td>A post-launch game mode generating cases algorithmically from content pools. Provides theoretically infinite replayability. Released as DLC 3.</td></tr>
+            <tr><td><strong>Case File / Journal</strong></td><td>The in-game menu where players review collected clues, suspect notes, and evidence. Accessible at any point during investigation.</td></tr>
+            <tr><td><strong>Crime Scene</strong></td><td>The primary investigation location for a case. Contains interactive objects, witness characters, and Time Vision hotspots.</td></tr>
+            <tr><td><strong>Time Stage</strong></td><td>One of four observable periods in a past event: Before the Crime / Crime Preparation / Crime Execution / Aftermath. Each stage reveals different information.</td></tr>
+            <tr><td><strong>MVP (Minimum Viable Product)</strong></td><td>The initial release build: 5 cases, 1 detective, Easy/Normal difficulty, offline single-player.</td></tr>
+            <tr><td><strong>Open Beta</strong></td><td>The first public release on Google Play, offering Case 1 free and soliciting community feedback before Full Release.</td></tr>
+            <tr><td><strong>Unity 6.3 LTS + URP</strong></td><td>The game engine used for development. LTS = Long-Term Support (stable). URP = Universal Render Pipeline (mobile-optimized graphics).</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec20">20. DEVELOPMENT MILESTONES &amp; WORK DIVISION</h2>
+    <p>Work is distributed based on individual technical capabilities within Team Yeagerist. Members with limited participation history receive proportionally scoped tasks. The goal is to match each person to where they can contribute most effectively — not to distribute work "fairly" by headcount.</p>
+
+    <h3>20.1 Team Roles</h3>
+    <table>
+        <thead><tr><th>Role</th><th>Responsibilities</th><th>Core Skills Required</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Project Lead / Game Designer</strong></td><td>Overall vision, case writing, game systems design, document maintenance, playtesting coordination</td><td>Game design, writing, project management</td></tr>
+            <tr><td><strong>Lead Programmer (Systems)</strong></td><td>Core mechanics: Time Vision system, vision degradation, save/load, difficulty scaling, input handling</td><td>C#, Unity, game architecture</td></tr>
+            <tr><td><strong>UI/UX Programmer</strong></td><td>All screen implementations (see sec21), UI animations, journal/evidence system, Android touch controls</td><td>Unity UI Toolkit / uGUI, C#, UX design</td></tr>
+            <tr><td><strong>Art Lead</strong></td><td>Visual style direction, crime scene art, character portraits, UI asset creation, color palette enforcement</td><td>2D illustration, Photoshop/Procreate, sprite art</td></tr>
+            <tr><td><strong>Audio Designer</strong></td><td>Sound effects (discovery, vision, degradation), ambient audio, music direction, Unity Audio Mixer integration</td><td>Audio production, Unity Audio, DAW skills</td></tr>
+            <tr><td><strong>Case Writer</strong></td><td>Writing all 5 MVP cases: suspect profiles, dialogue trees, clue text, time stage descriptions, endings</td><td>Narrative writing, logic puzzle design</td></tr>
+            <tr><td><strong>QA / Playtester</strong></td><td>Bug reporting, difficulty calibration feedback, accessibility testing, device testing (Android fragmentation)</td><td>Systematic testing, documentation, Android devices</td></tr>
+        </tbody>
+    </table>
+
+    <h3>20.2 MVP Development Milestones</h3>
+    <table>
+        <thead><tr><th>Milestone</th><th>Deliverables</th><th>Primary Owner</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td><strong>M0 — Pre-Production</strong></td><td>GDD finalized, art style confirmed, engine setup, repo initialized</td><td>Project Lead + Art Lead</td><td>In Progress</td></tr>
+            <tr><td><strong>M1 — Core Systems</strong></td><td>Time Vision logic, vision degradation shader, save system, case state machine</td><td>Lead Programmer</td><td>Pending</td></tr>
+            <tr><td><strong>M2 — Prototype Case</strong></td><td>One fully playable case (Easy), crime scene scene, 5 suspects, accusation screen</td><td>All Programmers + Case Writer</td><td>Partial (prototype exists)</td></tr>
+            <tr><td><strong>M3 — UI Framework</strong></td><td>All primary screens implemented and navigable (see sec21), journal system, touch controls</td><td>UI Programmer + Art Lead</td><td>Pending</td></tr>
+            <tr><td><strong>M4 — 5 Cases Complete</strong></td><td>All 5 MVP cases written, implemented, and playable on Easy</td><td>Case Writer + Lead Programmer</td><td>Pending</td></tr>
+            <tr><td><strong>M5 — Audio Integration</strong></td><td>All SFX and ambient tracks in-engine, music state machine working</td><td>Audio Designer</td><td>Pending</td></tr>
+            <tr><td><strong>M6 — Art Pass</strong></td><td>All placeholder art replaced with production assets</td><td>Art Lead</td><td>Pending</td></tr>
+            <tr><td><strong>M7 — Polish + QA</strong></td><td>Bug fixes, difficulty tuning, accessibility features, Android device testing</td><td>QA + All members</td><td>Pending</td></tr>
+            <tr><td><strong>M8 — Open Beta</strong></td><td>Google Play Open Beta release — Case 1 free, feedback collection begins</td><td>Project Lead</td><td>Pending</td></tr>
+        </tbody>
+    </table>
+
+    <h3>20.3 Work Division Principle</h3>
+    <ul>
+        <li><strong>Members with strong active participation</strong> own the critical path: Core Systems, UI Framework, and Case Development.</li>
+        <li><strong>Members with moderate participation</strong> own scoped sub-tasks: individual case writing, specific screens, or asset categories.</li>
+        <li><strong>Members with limited participation</strong> receive bounded tasks with clear scope: QA checklists, writing one case's suspect dialogue, or specific asset types.</li>
+        <li><strong>No bottleneck dependencies</strong> — each milestone should be completable by its owner without blocking another team member.</li>
+    </ul>
+    <p><em>Note: Final assignment of team members to roles to be confirmed in the next team meeting based on individual skills assessment.</em></p>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec21">21. COMPLETE UI SCREEN INVENTORY</h2>
+    <p>A full listing of every screen, panel, and overlay in the game. For MVP, all screens marked <strong>[MVP]</strong> must be implemented before Open Beta.</p>
+
+    <h3>21.1 Main Navigation Screens</h3>
+    <table>
+        <thead><tr><th>Screen</th><th>Purpose</th><th>Key Elements</th><th>Phase</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Splash Screen</strong></td><td>Loading + studio branding</td><td>Team Yeagerist logo, game title, loading bar</td><td>[MVP]</td></tr>
+            <tr><td><strong>Main Menu</strong></td><td>Primary entry point</td><td>New Game, Continue, Settings, Credits, Quit</td><td>[MVP]</td></tr>
+            <tr><td><strong>Detective Select</strong></td><td>Choose active detective</td><td>Detective card, ability description, lore blurb, lock state</td><td>[MVP] (1 detective)</td></tr>
+            <tr><td><strong>Case Select</strong></td><td>Browse available cases</td><td>Case card (title, difficulty, status: locked/complete/in-progress), filter by difficulty</td><td>[MVP]</td></tr>
+            <tr><td><strong>Save Slot Select</strong></td><td>Load or start new save</td><td>3 save slots with case name, difficulty, progress %, timestamp</td><td>[MVP]</td></tr>
+            <tr><td><strong>Settings Menu</strong></td><td>All game settings</td><td>Audio sliders (Music/SFX/Ambient), Color Blind Mode, Text Size, Haptics toggle, Language, Credits link</td><td>[MVP]</td></tr>
+            <tr><td><strong>Credits Screen</strong></td><td>Team attribution</td><td>Scrolling credits, game version, Anthropic/engine attribution</td><td>[MVP]</td></tr>
+        </tbody>
+    </table>
+
+    <h3>21.2 Gameplay Screens</h3>
+    <table>
+        <thead><tr><th>Screen</th><th>Purpose</th><th>Key Elements</th><th>Phase</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Case Intro Screen</strong></td><td>Case briefing</td><td>Case title, police report summary, victim info, initial briefing dialogue</td><td>[MVP]</td></tr>
+            <tr><td><strong>Crime Scene View</strong></td><td>Primary investigation canvas</td><td>2.5D scene art, interactive hotspots (tap targets), suspect presence indicators, Vision Use counter, clue counter</td><td>[MVP]</td></tr>
+            <tr><td><strong>Object Examine Panel</strong></td><td>Inspect a specific object</td><td>Object close-up art, description text, "Add to Journal" button, dismiss button</td><td>[MVP]</td></tr>
+            <tr><td><strong>Witness Interview Screen</strong></td><td>Dialogue with NPC witnesses</td><td>Character portrait, dialogue bubble, statement options (tap to ask), body language indicator, exit option</td><td>[MVP]</td></tr>
+            <tr><td><strong>Time Vision Activation Screen</strong></td><td>Pre-vision confirmation</td><td>Warning prompt ("This will cost 1 Vision Charge"), confirm / cancel buttons, current vision % display</td><td>[MVP]</td></tr>
+            <tr><td><strong>Time Vision Playback Screen</strong></td><td>View past event</td><td>Sepia/warm color overlay, animated scene, "Clue Revealed" notification, vision degradation visual applied after</td><td>[MVP]</td></tr>
+            <tr><td><strong>Journal / Evidence Screen</strong></td><td>Review all clues</td><td>Clue cards (scrollable), suspect list, clue-to-suspect link UI, filter tabs (All / Physical / Vision / Witness)</td><td>[MVP]</td></tr>
+            <tr><td><strong>Suspect Profile Screen</strong></td><td>Review single suspect</td><td>Portrait, name, role, motive, alibi, clues linked to them, "Accuse" button</td><td>[MVP]</td></tr>
+            <tr><td><strong>Deduction Board</strong></td><td>Connect clues to suspects</td><td>Pin-board visual, drag-and-connect UI, suspect photos, clue cards, "Ready to Accuse" button when threshold met</td><td>[MVP]</td></tr>
+            <tr><td><strong>Accusation Confirmation Screen</strong></td><td>Final accusation</td><td>Selected suspect portrait, evidence list the player chose, "Present Evidence" button, cancel/go-back option</td><td>[MVP]</td></tr>
+            <tr><td><strong>Verdict Screen</strong></td><td>Case outcome reveal</td><td>Animated verdict reveal, ending title (e.g., "Perfect Justice"), case summary, score breakdown, replay / next case buttons</td><td>[MVP]</td></tr>
+        </tbody>
+    </table>
+
+    <h3>21.3 Blind Phase Overlays</h3>
+    <table>
+        <thead><tr><th>Screen/Overlay</th><th>Purpose</th><th>Key Elements</th><th>Phase</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Vision Warning Overlay</strong></td><td>Alert when vision is critical</td><td>Red vignette border, "Vision Critical — X% remaining" text, can be dismissed</td><td>[MVP]</td></tr>
+            <tr><td><strong>Blind Phase Screen</strong></td><td>Full-darkness state</td><td>Black screen, spatial audio cues, minimalist UI (icon-only), audio description voice-over toggle</td><td>[MVP]</td></tr>
+        </tbody>
+    </table>
+
+    <h3>21.4 Post-Launch Screens (Not MVP)</h3>
+    <table>
+        <thead><tr><th>Screen</th><th>Purpose</th><th>Phase</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Achievements Screen</strong></td><td>Track and view earned achievements</td><td>Full Release</td></tr>
+            <tr><td><strong>Battle Pass Screen</strong></td><td>View seasonal pass tiers and rewards</td><td>Post-Launch Live Ops</td></tr>
+            <tr><td><strong>Store Screen</strong></td><td>Purchase DLCs, Clue Packs, Cosmetics</td><td>Full Release</td></tr>
+            <tr><td><strong>Community Case Gallery</strong></td><td>Browse, rate, play player-created cases</td><td>Procedural DLC</td></tr>
+            <tr><td><strong>Case Editor</strong></td><td>Build and publish custom cases</td><td>Procedural DLC</td></tr>
+            <tr><td><strong>Statistics Screen</strong></td><td>Personal stats: cases solved, perfect justice count, accusations made</td><td>Full Release</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- ============================================================ -->
+    <h2 id="sec22">22. INITIAL RELEASE: SETTINGS, BACKGROUNDS &amp; CASES</h2>
+    <p>This section specifies exactly what ships with the Open Beta and Full Release. Scope is locked to three cases for Open Beta, expanding to five at Full Release.</p>
+
+    <h3>22.1 Settings Available at Launch</h3>
+    <table>
+        <thead><tr><th>Setting Category</th><th>Options</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Audio</strong></td><td>Music Volume (0–100), SFX Volume (0–100), Ambient Volume (0–100), Mute All toggle</td></tr>
+            <tr><td><strong>Accessibility</strong></td><td>Color Blind Mode (Off / Deuteranopia / Protanopia / Achromatopsia), Text Size (Small / Normal / Large / XL), High Contrast UI toggle, Haptic Feedback toggle, Audio Description toggle (Blind Phase)</td></tr>
+            <tr><td><strong>Gameplay</strong></td><td>Auto-save (always on), Clue Highlight toggle (underlines interactable objects), Vision Warning Threshold (25% / 50% — when to alert), Accusation Confirm prompt (On/Off)</td></tr>
+            <tr><td><strong>Display</strong></td><td>Screen Brightness (uses device setting), Frame Rate (30fps / 60fps), Reduce Motion toggle (disables non-essential animations)</td></tr>
+            <tr><td><strong>Language</strong></td><td>English (MVP). Additional languages planned post-launch.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>22.2 Backgrounds / Environments at Launch</h3>
+    <table>
+        <thead><tr><th>Environment</th><th>Used In</th><th>Visual Mood</th><th>Key Art Elements</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Webb Contemporary Art Gallery</strong></td>
+                <td>Case 1: "The Midnight Gallery"</td>
+                <td>Cold clinical white, broken by shadow. Night exterior visible through skylights.</td>
+                <td>Marble floors, mounted artwork, shattered bronze pedestal, security cameras, yellow police tape</td>
+            </tr>
+            <tr>
+                <td><strong>The Hargrove Estate</strong></td>
+                <td>Case 2: "Last Will"</td>
+                <td>Old money decay. Velvet drapes, wood panel walls, dim candlelight.</td>
+                <td>Grand staircase, locked study, reading chair, antique writing desk, fireplace with missing poker</td>
+            </tr>
+            <tr>
+                <td><strong>Dockside Warehouse District</strong></td>
+                <td>Case 3: "Cold Harbor"</td>
+                <td>Industrial grit. Fog, salt air, flickering overhead lights, puddles on concrete.</td>
+                <td>Shipping containers, rusted chains, dock office, abandoned forklift, cargo manifests</td>
+            </tr>
+            <tr>
+                <td><strong>Meridian Hotel — Floor 11</strong></td>
+                <td>Case 4: "Room 1147" (Full Release)</td>
+                <td>Mid-range luxury. Corporate anonymity. Every room looks the same — except one.</td>
+                <td>Corridor with identical doors, room with signs of struggle, hotel bar, CCTV monitor station</td>
+            </tr>
+            <tr>
+                <td><strong>City Park — Glenmore Gardens</strong></td>
+                <td>Case 5: "The Witness Tree" (Full Release)</td>
+                <td>Public space gone wrong. Daylight, but nobody saw anything.</td>
+                <td>Old oak tree, park bench, empty fountain, groundskeeper shed, child's bicycle left behind</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>22.3 Initial Three Cases — Open Beta Scope</h3>
+    <table>
+        <thead><tr><th>Case</th><th>Title</th><th>Difficulty</th><th>Setting</th><th>Unique Hook</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Case 1</strong></td>
+                <td>"The Midnight Gallery"</td>
+                <td>Easy (Tutorial)</td>
+                <td>Webb Art Gallery</td>
+                <td>The Tutorial Case. Every system is introduced here. 5 suspects, 3 clearly distinguishable motives, one red herring. Time Vision stages are richly detailed. Used as the Free Demo case in the Free-to-Try model. <em>(Full case breakdown in <a href="#sec5">Section 5.3</a>.)</em></td>
+            </tr>
+            <tr>
+                <td><strong>Case 2</strong></td>
+                <td>"Last Will"</td>
+                <td>Easy / Normal</td>
+                <td>The Hargrove Estate</td>
+                <td>The victim was universally despised. Every suspect had motive — the challenge is alibis, not motives. Introduces contradictory witness statements and the concept of a "protective lie."</td>
+            </tr>
+            <tr>
+                <td><strong>Case 3</strong></td>
+                <td>"Cold Harbor"</td>
+                <td>Normal</td>
+                <td>Dockside Warehouse</td>
+                <td>Crime committed in near-darkness — some Time Vision stages are also dark, requiring more careful use of limited vision charges. Introduces the concept of "staged crime scenes" where evidence has been tampered with.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>22.4 Open Beta vs. Full Release Unlock Table</h3>
+    <table>
+        <thead><tr><th>Feature</th><th>Open Beta (Free)</th><th>Full Release (Unlock)</th></tr></thead>
+        <tbody>
+            <tr><td>Cases available</td><td>Case 1 (free), Cases 2–3 (locked)</td><td>All 5 cases</td></tr>
+            <tr><td>Difficulties</td><td>Easy only</td><td>Easy, Normal, Hard</td></tr>
+            <tr><td>Detectives</td><td>The Visionary only</td><td>The Visionary only (others via DLC)</td></tr>
+            <tr><td>Achievements</td><td>Not included</td><td>20+ achievements</td></tr>
+            <tr><td>Cloud Save</td><td>Not included</td><td>Included</td></tr>
+            <tr><td>Ads</td><td>None</td><td>None</td></tr>
+            <tr><td>Endings per case</td><td>All 5 endings playable</td><td>All 5 endings playable</td></tr>
+        </tbody>
+    </table>
+    <hr class="divider" />
+
+    <!-- APPENDIX -->
+    <h2>APPENDIX</h2>
+    <h3>A. Document Revision History</h3>
+    <table>
+        <thead><tr><th>Version</th><th>Date</th><th>Changes</th></tr></thead>
+        <tbody>
+            <tr><td>1.0</td><td>TBD</td><td>Initial proposal</td></tr>
+            <tr><td>2.0</td><td>TBD</td><td>Complete document with monetization, expandability, and core loop sections</td></tr>
+            <tr><td>3.0</td><td>TBD</td><td>Final pitch additions: expanded expandability (8 new concepts), color palette visuals, audio mood board, prototype flow diagram, Glossary, Development Milestones &amp; Work Division, Complete UI Screen Inventory, Initial Release spec (3 cases, 5 environments, settings), Battle Pass + Clue Pack monetization, Target Audience deep-dive</td></tr>
+        </tbody>
+    </table>
+    <h3>B. Team Contact Information</h3>
+    <table>
+        <thead><tr><th>Role</th><th>Name</th><th>Contact</th></tr></thead>
+        <tbody>
+            <tr><td>Project Lead</td><td>TBD</td><td>TBD</td></tr>
+            <tr><td>Design Lead</td><td>TBD</td><td>TBD</td></tr>
+            <tr><td>Tech Lead</td><td>TBD</td><td>TBD</td></tr>
+            <tr><td>Art Lead</td><td>TBD</td><td>TBD</td></tr>
+        </tbody>
+    </table>
+
+    <div class="footer-note">
+        <p><span class="confidential">CONFIDENTIAL</span> — This document is for internal review only. Do not distribute without permission.</p>
+        <p><strong>End of Document</strong></p>
+    </div>
+
+</div>
+</body>
+</html>

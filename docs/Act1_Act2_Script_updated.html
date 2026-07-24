@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Justice is a Weapon — Act I & II Script</title>
+<style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        background:#0d0d12;
+        font-family:'Segoe UI','Calibri',Roboto,sans-serif;
+        padding:40px 20px;
+        display:flex;
+        justify-content:center;
+    }
+    .document {
+        max-width:1050px;
+        width:100%;
+        background:#fcf9f5;
+        padding:60px 70px;
+        border-radius:12px;
+        box-shadow:0 20px 60px rgba(0,0,0,0.75);
+        line-height:1.65;
+        color:#1e1e24;
+    }
+    h1 {
+        font-size:32px;
+        font-weight:700;
+        letter-spacing:-0.5px;
+        border-bottom:3px solid #c0392b;
+        padding-bottom:12px;
+        margin-bottom:6px;
+        color:#1a1a2e;
+    }
+    .subtitle {
+        font-size:18px;
+        font-weight:400;
+        color:#4a4a5a;
+        margin-bottom:24px;
+        display:block;
+        font-style:italic;
+    }
+    .meta {
+        background:#f0ede8;
+        padding:14px 20px;
+        border-radius:8px;
+        margin:20px 0 30px 0;
+        font-size:14px;
+        display:flex;
+        flex-wrap:wrap;
+        gap:26px;
+    }
+    .meta .label { font-weight:400; color:#5a5a6a; }
+    .meta span:not(.label) { font-weight:600; }
+
+    h2 {
+        font-size:25px;
+        font-weight:700;
+        margin-top:50px;
+        margin-bottom:16px;
+        padding:10px 16px;
+        background:#1a1a2e;
+        color:#fcf9f5;
+        border-left:6px solid #c0392b;
+        border-radius:4px;
+    }
+    h3 {
+        font-size:19px;
+        font-weight:600;
+        margin-top:30px;
+        margin-bottom:10px;
+        color:#8b2f24;
+        border-bottom:1px solid #ddd;
+        padding-bottom:5px;
+    }
+    h4 {
+        font-size:16px;
+        font-weight:600;
+        margin-top:20px;
+        margin-bottom:6px;
+        color:#3a3a4a;
+    }
+    p { margin-bottom:12px; }
+    ul, ol { margin:8px 0 16px 26px; }
+    li { margin-bottom:6px; }
+
+    .toc { background:#f0ede8; border-radius:8px; padding:20px 26px; margin-bottom:10px; }
+    .toc ul { list-style:none; margin:0; }
+    .toc > ul > li { margin-bottom:8px; font-weight:600; }
+    .toc ul ul { margin:4px 0 10px 20px; }
+    .toc ul ul li { font-weight:400; font-size:14px; }
+    .toc a { color:#1a1a2e; text-decoration:none; }
+    .toc a:hover { color:#c0392b; }
+
+    .divider {
+        border:none;
+        height:2px;
+        background:linear-gradient(to right,#c0392b,#ddd,#c0392b);
+        margin:36px 0 10px 0;
+    }
+
+    /* CAST CARDS */
+    .cast-grid { display:flex; flex-direction:column; gap:12px; margin:16px 0 24px 0; }
+    .cast-card {
+        background:#f5f0ea;
+        border-left:4px solid #16213e;
+        border-radius:0 8px 8px 0;
+        padding:14px 20px;
+    }
+    .cast-card.victim { border-left-color:#c0392b; }
+    .cast-card .name { font-weight:700; font-size:16px; color:#1a1a2e; }
+    .cast-card .role { font-size:13px; color:#8b7355; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+    .cast-card .desc { font-size:14px; margin-top:6px; color:#2c2c3a; }
+
+    /* LOCATION TAGS */
+    .loc-row { display:flex; flex-wrap:wrap; gap:10px; margin:14px 0 22px 0; }
+    .loc-tag {
+        background:#0f3460;
+        color:#fff;
+        padding:6px 14px;
+        border-radius:20px;
+        font-size:13px;
+        font-weight:600;
+    }
+    .loc-tag.locked { background:#3a3a4a; opacity:0.55; }
+
+    /* PANEL / CINEMATIC BLOCKS */
+    .panel {
+        background:#1a1a2e;
+        color:#eee;
+        border-radius:10px;
+        padding:18px 22px;
+        margin:16px 0;
+        border-left:4px solid #E94560;
+    }
+    .panel .panel-num {
+        display:inline-block;
+        background:#E94560;
+        color:#fff;
+        font-size:11px;
+        font-weight:700;
+        padding:3px 10px;
+        border-radius:12px;
+        margin-bottom:8px;
+        letter-spacing:0.5px;
+    }
+    .panel .panel-title { font-weight:700; font-size:16px; margin-bottom:8px; color:#fff; }
+    .panel .panel-label { font-size:11px; text-transform:uppercase; letter-spacing:0.5px; color:#D4A574; font-weight:700; margin-top:10px; }
+    .panel p { color:#d8d8e0; font-size:14px; margin-top:4px; margin-bottom:0; }
+
+    /* DIALOGUE */
+    .dialogue {
+        background:#f5f0ea;
+        border-left:4px solid #8B7355;
+        border-radius:0 8px 8px 0;
+        padding:10px 18px;
+        margin:12px 0;
+    }
+    .dialogue .speaker { font-weight:700; color:#1a1a2e; font-size:13px; text-transform:uppercase; letter-spacing:0.5px; }
+    .dialogue p { font-style:italic; margin:4px 0 0 0; color:#2c2c3a; }
+
+    blockquote {
+        border-left:5px solid #c0392b;
+        padding:14px 24px;
+        margin:18px 0;
+        background:#f5f0ea;
+        font-style:italic;
+        font-size:16px;
+        border-radius:0 8px 8px 0;
+        color:#2c2c3a;
+    }
+
+    /* CLUE BOX */
+    .clue-box {
+        background:#fdf6ec;
+        border:1.5px solid #D4A574;
+        border-radius:8px;
+        padding:12px 18px;
+        margin:14px 0;
+    }
+    .clue-box .clue-label {
+        display:inline-block;
+        background:#8B7355;
+        color:#fff;
+        font-size:11px;
+        font-weight:700;
+        padding:2px 10px;
+        border-radius:10px;
+        margin-bottom:6px;
+        letter-spacing:0.5px;
+    }
+    .clue-box .clue-title { font-weight:700; color:#6B4F3A; font-size:15px; }
+    .clue-box .clue-note { font-size:13px; color:#4a4a5a; margin-top:4px; }
+
+    /* MECHANIC NOTE */
+    .mech-note {
+        background:#e9edf3;
+        border-left:4px solid #0F3460;
+        border-radius:0 8px 8px 0;
+        padding:10px 18px;
+        margin:14px 0;
+        font-size:14px;
+        color:#1a1a2e;
+    }
+    .mech-note .mech-label { font-weight:700; font-size:12px; text-transform:uppercase; color:#0F3460; letter-spacing:0.5px; }
+
+    /* TABLE */
+    table {
+        width:100%;
+        border-collapse:collapse;
+        margin:16px 0 24px 0;
+        font-size:14px;
+        background:#fff;
+        border:1px solid #d0ccc8;
+        border-radius:6px;
+        overflow:hidden;
+    }
+    th { background:#2c2c3a; color:#fff; font-weight:600; padding:9px 12px; text-align:left; }
+    td { padding:9px 12px; border-bottom:1px solid #e5e0da; vertical-align:top; }
+    tr:last-child td { border-bottom:none; }
+
+    .act-title-card {
+        text-align:center;
+        background:#1a1a2e;
+        color:#E94560;
+        padding:30px 20px;
+        border-radius:10px;
+        margin:30px 0;
+        letter-spacing:2px;
+        font-weight:700;
+        font-size:22px;
+        border:1px solid #c0392b;
+    }
+    .act-title-card .sub { display:block; color:#D4A574; font-size:13px; margin-top:8px; letter-spacing:1px; font-weight:400; }
+
+    .footer-note {
+        margin-top:40px;
+        padding-top:20px;
+        border-top:2px solid #ddd;
+        font-size:13px;
+        color:#6a6a7a;
+        text-align:center;
+    }
+    .confidential { font-weight:600; color:#c0392b; letter-spacing:1px; }
+
+    @media (max-width:700px){
+        .document{ padding:24px 18px; }
+        h1{ font-size:26px; }
+        .meta{ flex-direction:column; gap:6px; }
+    }
+</style>
+</head>
+<body>
+<div class="document">
+
+    <h1>JUSTICE IS A WEAPON</h1>
+    <span class="subtitle">"The Midnight Gallery" — Act I &amp; Act II Full Narrative &amp; Scene Script</span>
+
+    <div class="meta">
+        <span><span class="label">Case:</span> Case 1 — Tutorial</span>
+        <span><span class="label">Reference:</span> GDD v3.0</span>
+        <span><span class="label">Status:</span> Ready for Implementation</span>
+    </div>
+
+    <div class="toc">
+        <ul>
+            <li><a href="#cast">Cast of Characters</a></li>
+            <li><a href="#locations">Locations</a></li>
+            <li><a href="#act1">Act I — The Public Failure &amp; The Roadblock</a>
+                <ul>
+                    <li><a href="#a1-opening">1.1 The Cinematic Opening</a></li>
+                    <li><a href="#a1-control">1.2 Taking Control (Called In Immediately)</a></li>
+                    <li><a href="#a1-hall">1.3 The Exhibition Hall</a></li>
+                    <li><a href="#a1-witness">1.4 The Witness Interviews</a></li>
+                    <li><a href="#a1-transition">1.5 Transition to Act II</a></li>
+                </ul>
+            </li>
+            <li><a href="#act2">Act II — Unlocking the Paper Trail</a>
+                <ul>
+                    <li><a href="#a2-office">2.1 The Private Office</a></li>
+                    <li><a href="#a2-elena">2.2 The Confrontation: Breaking Elena Vance</a></li>
+                    <li><a href="#a2-autopsy">2.3 The Autopsy Discrepancy</a></li>
+                    <li><a href="#a2-transition">2.4 Transition to Act III</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <hr class="divider" />
+
+    <!-- CAST -->
+    <h2 id="cast">CAST OF CHARACTERS</h2>
+    <div class="cast-grid">
+        <div class="cast-card victim">
+            <div class="name">Marcus Webb — The Victim</div>
+            <div class="role">Curator &amp; Owner, Marcus Art Gallery</div>
+            <div class="desc">Brilliant, obsessive, secretly bankrupt. Pinned his last hope for survival on winning the Great Art Exhibition's Grand Prize. Found dead in his Private Office, staged to look like a suicide.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Yuki Tanaka — The Assistant Curator</div>
+            <div class="role">Suspect / Killer</div>
+            <div class="desc">Outwardly composed but visibly shaken hours after finding the body — too composed, if you're paying attention. Was accused of theft by Marcus and about to be publicly fired. Claims she found the body that night.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Thomas Webb — The Brother</div>
+            <div class="role">Suspect</div>
+            <div class="desc">Sweating, aggressive, using grief as a shield. Drowning in gambling debt; wanted Marcus to liquidate family prints from the Archive Room.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Elena Vance — The Rival</div>
+            <div class="role">Suspect</div>
+            <div class="desc">Ex-wife and rival gallery owner. Icy, legally guarded, corporate. Used an old key to enter the office Tuesday night with a liquidation ultimatum.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Victor Hasting — Chief Security Officer</div>
+            <div class="role">Witness</div>
+            <div class="desc">Defensive about his security protocol. Blindly trusts the night guard's false report, refusing to entertain a breach.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Damian Cross — Night-Shift Guard</div>
+            <div class="role">Side-Suspect (Act III)</div>
+            <div class="desc">Disgruntled after being passed over for promotion. Faked a camera glitch to sneak out to the diner during his shift.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Detective Miller</div>
+            <div class="role">Partner</div>
+            <div class="desc">Officially assigned to the case alongside the investigator, not a superior handing it down. Carries the Restricted Master Key as standard issue — no risk, no drama. Stays with the player through interrogations, asking suspects about whatever clues the player drags onto his tab; peels off during physical searches to chase security logs and background details.</div>
+        </div>
+
+        <div class="cast-card">
+            <div class="name">Leo Finch — Archive Assistant</div>
+            <div class="role">Supporting Suspect (Act III)</div>
+            <div class="desc">Runs the all-night digitization shift in the Archive Room — genuinely heard and saw nothing (soundproofed, headphones on). But Time Vision exposes him stealing a large sum of gallery cash Tuesday afternoon and falsifying the ledgers to blame Yuki, directly triggering Marcus's accusation of theft. His opportunism set the chain of events in motion.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">"Mac" MacIntyre — Diner Owner</div>
+            <div class="role">Witness / Deliberate Liar</div>
+            <div class="desc">Claims he was too busy to notice anything Tuesday night. He lied to protect his diner from murder-case association. Once confronted with security booth data, he folds — and reveals he saw the hooded figure who sat silently in the corner at 11:10 PM, ordered nothing, and slipped out a few minutes later.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Julian Sterling — Auction Coordinator</div>
+            <div class="role">Supporting Character (Act III+)</div>
+            <div class="desc">Assigned by the convention to manage bidding logistics for the Great Art Exhibition. Worked alongside Laura Schmitz to lock down the Webb booth at 9:00 PM Tuesday. His surface role is procedural, but he and Laura share a history that runs deeper than their titles — both quietly involved in the same back-channel dealings orbiting the exhibition's high-value sales.</div>
+        </div>
+        <div class="cast-card">
+            <div class="name">Laura Schmitz — Temporary Booth Manager</div>
+            <div class="role">Supporting Character (Act III+)</div>
+            <div class="desc">Brought in to manage the Webb Gallery's convention booth. She and Marcus locked it down at 9:00 PM — after which she had no official reason to be near the gallery. Laura and Julian moved in the same circles long before this case, and their shared role in the convention's unofficial dealings puts them both in frame when the investigator starts tracing the money.</div>
+        </div>
+    </div>
+    <hr class="divider" />
+
+    <!-- LOCATIONS -->
+    <h2 id="locations">LOCATIONS</h2>
+    <p>Scene access is gated across the two acts. Locations unlock in this order as the player progresses:</p>
+    <div class="loc-row">
+        <span class="loc-tag">Grand Convention Hall (cinematic only)</span>
+        <span class="loc-tag">Exhibition Hall</span>
+        <span class="loc-tag">Interrogation Room (witness sessions)</span>
+        <span class="loc-tag">Restricted Corridor</span>
+        <span class="loc-tag">Private Office</span>
+        <span class="loc-tag locked">Security Booth (Act III)</span>
+        <span class="loc-tag locked">Back Alley (Act III)</span>
+        <span class="loc-tag locked">24/7 Diner (Act III)</span>
+        <span class="loc-tag locked">Archive Room (Act III)</span>
+    </div>
+    <hr class="divider" />
+
+    <!-- ================= ACT 1 ================= -->
+    <h2 id="act1">ACT I — THE PUBLIC FAILURE &amp; THE ROADBLOCK</h2>
+    <p><strong>Locations available:</strong> Grand Convention Hall (cinematic), Exhibition Hall &nbsp;|&nbsp; <strong>Time Vision:</strong> Locked</p>
+
+    <h3 id="a1-opening">1.1 The Cinematic Opening</h3>
+    <p>The game opens on a passive observer, not the detective, watching the high-society downfall play out as a stylized comic-panel cutscene. Narrative is delivered through dialogue boxes, not on-screen text or voiceover.</p>
+
+    <div class="panel">
+        <span class="panel-num">PANEL 1</span>
+        <div class="panel-title">The Apex of High Society</div>
+        <span class="panel-label">Visuals</span>
+        <p>Sweeping shots across a glamorous, black-tie convention hall — warm lighting, tuxedos, evening gowns, the wealthy elite in full chatter.</p>
+        <span class="panel-label">Narrative</span>
+        <p>The house microphone crackles — the judges are ready to crown the evening's Grand Prize.</p>
+    </div>
+
+    <div class="panel">
+        <span class="panel-num">PANEL 2</span>
+        <div class="panel-title">The Reluctant Acceptance</div>
+        <span class="panel-label">Visuals</span>
+        <p>Wide shot of the crowd as the announcer calls "The Marcus Art Gallery" to dead silence — twice. Just as it curdles into scandal, Thomas Webb rises from his seat and walks to the stage, forcing a practiced smile as he accepts the trophy on the gallery's behalf.</p>
+        <span class="panel-label">Narrative</span>
+        <p>Tight cuts of rivals trading knowing glances — the confusion over Marcus's absence turning into a different kind of curiosity now that it's the brother holding the prize.</p>
+    </div>
+
+    <div class="panel">
+        <span class="panel-num">PANEL 3</span>
+        <div class="panel-title">The Panicked Call</div>
+        <span class="panel-label">Visuals</span>
+        <p>Backstage at the convention hall — moments after Thomas steps off the stage, trophy still in hand. His phone buzzes. His hands start shaking as he answers.</p>
+        <span class="panel-label">Narrative</span>
+        <p>Yuki Tanaka's voice bursts through in panicked, breathless tears: <em>"Thomas. The police are here… you need to come back."</em> Thomas sprints out of the convention hall.</p>
+    </div>
+
+    <div class="panel">
+        <span class="panel-num">PANEL 4</span>
+        <div class="panel-title">Running</div>
+        <span class="panel-label">Visuals</span>
+        <p>Thomas running from the convention hall toward the Webb Gallery — trophy still tucked under one arm, splash SFX driving the urgency. The player just watched him on stage, so his identity is fully established. The gallery comes into view, wrapped in police tape.</p>
+    </div>
+
+    <div class="panel">
+        <span class="panel-num">PANEL 5 — OPTIONAL</span>
+        <div class="panel-title">The Immediate Handover</div>
+        <span class="panel-label">Visuals</span>
+        <p>Hard cut from Thomas's run — no time skip, this is the same night. The palette drains to cold and dreary. Detective Miller is already standing outside the yellow tape under flashing blue lights, called to the scene the moment the case was flagged for his and the investigator's joint assignment.</p>
+    </div>
+    <div class="mech-note">
+        <span class="mech-label">Design Note — Thomas Takes the Prize</span><br/>
+        Marcus stays a no-show, but the gallery still wins — so instead of a third unanswered call and an empty stage, Thomas steps up and accepts the trophy for the family. This gives the player a face and a name before the panicked call, raises the stakes on Thomas's public image right before he becomes a suspect, and gives the opening cinematic a stronger beat. The call from Yuki now happens backstage at the convention hall rather than on a random street.
+    </div>
+    <div class="mech-note"><span class="mech-label">Design Note</span><br/>If Panel 5 is cut, show a plain "Case Handed Over" title card and hand control to the player directly.</div>
+
+    <h3 id="a1-control">1.2 Taking Control (Called In Immediately)</h3>
+    <p>The player officially takes control of the investigator the moment the scene opens on Detective Miller outside the gallery tape.</p>
+
+    <h4>The Briefing &amp; The Roadblock</h4>
+    <p>Miller — now officially the investigator's partner on this case, not a superior handing it down — outlines two hurdles they're up against together:</p>
+    <ul>
+        <li><strong>Political Pressure:</strong> The city council is forcing a "Suicide Attempt/Act due to financial distress" verdict by end of day, to avoid a high-society scandal that could freeze the art trade.</li>
+        <li><strong>Evidence Dead End:</strong> No forced entry. Every high-profile suspect has an ironclad verbal alibi — nothing solid enough to make an arrest, and no physical evidence pointing anywhere yet.</li>
+    </ul>
+    <p>The case was never Miller's to hand over in the first place. An oversight authority above the local precinct reached out directly to both Miller and the investigator, assigning them to the case as a two-person team before local politics could bury it any further. Miller isn't risking anything by working it — he's just as officially attached to this case as the investigator is, and he's sticking around for the whole thing, not just the doorway.</p>
+
+    <div class="mech-note">
+        <span class="mech-label">Design Note — Why the Three-Day Delay Was Cut</span><br/>
+        We moved the handover from "three days later" to the same night the body is found. Story reason: the gallery's reputation is on the line and the city council wants a verdict fast, so there's no realistic world where the case sits untouched for three days before our investigator gets it. Mechanical reasons: it keeps the physical evidence and witness statements fresh instead of stale and picked-over, it removes the awkward question of why regular detectives or police didn't already solve an easy case in three days, and it stops other detectives from potentially making progress on — or contaminating — evidence before we ever see it. Suspects are now interviewed in shock within hours of the murder rather than after days of police fatigue, which shifts their "tells" from rehearsed exhaustion to first-pass composure.
+    </div>
+
+    <div class="mech-note">
+        <span class="mech-label">Design Note — Miller as Partner, Not Superior</span><br/>
+        Miller's role changed from a lone cop risking his badge to a fellow investigator assigned to the case alongside the player by an authority above the local precinct. That means no more "missing evidence bag" drama over the Restricted Master Key — he's carrying it as standard issue from day one. He's not a gameplay system in his own right; he's a narrative presence who stays with the player during interrogations (where the player drags gathered clues onto his Interrogation tab and he does the actual questioning) and peels off during physical evidence-hunting to handle the legwork: security logs, background checks, and rounding up whoever needs to be in a room next.
+    </div>
+
+    <div class="mech-note">
+        <span class="mech-label">Design Note — Camera Glitch Moved to Act 3</span><br/>
+        Miller does <em>not</em> mention the corrupted camera footage during the Act I briefing. He describes the case as stuck — no forced entry, no leads, ironclad alibis — without explaining why the footage is missing. The player discovers that fact themselves in Act 3 by using Time Vision inside the Security Booth and watching Damian Cross trigger the glitch in real time. This keeps the Security Booth scene from feeling redundant and makes the camera discovery something the player earns.
+    </div>
+    <div class="mech-note">
+        <span class="mech-label">Mechanic — Preliminary Case File</span><br/>
+        Handed to the player during the briefing; sits in a dedicated UI slot, readable any time. As the player interviews NPCs in the Exhibition Hall, their statements can be compared against this official (flawed) report.
+    </div>
+
+    <h3 id="a1-hall">1.3 The Exhibition Hall</h3>
+    <p>Ducking under the tape together, Miller and the player enter a space designed to be a pristine showroom, now a sterile tomb — harsh track lighting, police markers on the hardwood floor, uncomfortable quiet.</p>
+    <div class="mech-note"><span class="mech-label">Mechanic</span><br/>Time Vision is locked here. This is a grounded, traditional-detective-work-only phase — no supernatural systems yet.</div>
+
+    <h4>Points of Interest</h4>
+    <table>
+        <thead><tr><th>Object</th><th>Interaction / Payoff</th></tr></thead>
+        <tbody>
+            <tr><td><strong>The Empty Displays</strong></td><td>Blank walls, empty pedestals. Investigator notes how fast the 12 multi-million dollar pieces were shipped out Tuesday afternoon — the gallery was hollowed out before the murder even happened.</td></tr>
+            <tr><td><strong>The Scattered Gala Programs</strong></td><td>Glossy promotional pamphlets reveal winning the Grand Prize was a do-or-die marketing stunt, not vanity.</td></tr>
+            <tr><td><strong>The Discarded Champagne Flutes</strong></td><td>Dark-humor flavor text — the elite fled a crime scene without finishing their drinks.</td></tr>
+            <tr><td><strong>The Restricted Corridor Door</strong></td><td>Requires a specialized master key. Sets up the need to talk to Victor before anything else can open.</td></tr>
+        </tbody>
+    </table>
+    <div class="clue-box">
+        <span class="clue-label">CLUE — FREE</span>
+        <div class="clue-title">Winning the gala was the last effort to save the gallery from financial ruin.</div>
+    </div>
+
+    <h3 id="a1-witness">1.4 The Witness Interviews</h3>
+    <div class="mech-note">
+        <span class="mech-label">Mechanic — The Deduction Clipboard</span><br/>
+        Witnesses are brought into a separate interrogation room offsite — no suspects watching each other in the gallery, no overlap with the physical evidence search. A location card reads "Interrogation Room" before the camera settles on the witness across a plain table. The Deduction Clipboard slides in with its scrollable clue hotbar; the player selects or drags a clue onto the Interrogation tab, and Miller — seated across from the suspect — asks the question directly. Early on there are no clues to drag, so Miller can only run baseline Alibi / Timeline / Relationship to Victim questions, and every one of them dead-ends — this is intentional friction.
+    </div>
+    <p>All four suspects are being questioned within hours of the murder, not days later — dialogue should read as shocked, guarded, or defensive rather than fatigued.</p>
+
+    <h4>Yuki Tanaka — The Rehearsed Victim</h4>
+    <div class="dialogue"><span class="speaker">Yuki</span><p>"Because Marcus demanded perfection, and the gala files weren't going to organize themselves. Why does that matter right now?"</p></div>
+    <p><strong>The Tell:</strong> Her account is too clean for someone who found a body only hours ago — no stumbling, no cracks. That composure, this soon, is the red flag only the investigator (and player) clocks.</p>
+
+    <h4>Victor Hasting — The Defensive Guard</h4>
+    <div class="dialogue"><span class="speaker">Victor</span><p>"My system didn't fail. Marcus held the only master keys. The night guard checked the physical locks at 7:00 AM. Nobody went in, nobody came out. Whatever happened in there, he brought on himself."</p></div>
+    <p><strong>The Tell:</strong> He blindly trusts Damian's false report to protect his own reputation.</p>
+
+    <h4>Thomas Webb — The Aggressive Griever</h4>
+    <div class="dialogue"><span class="speaker">Thomas</span><p>"My brother is dead on the floor, and you're asking where I was? I was at the gala — accepting a prize he should have been there to take himself. Call the entire convention hall; they all watched me on that stage. Do your job and find out who actually did this instead of harassing his family."</p></div>
+    <p><strong>The Tell:</strong> He steers hard away from any question about gallery finances or the Archive Room prints.</p>
+
+    <h4>Elena Vance — The Untouchable Stakeholder</h4>
+    <div class="dialogue"><span class="speaker">Elena</span><p>"It is a devastating loss for the art community. Marcus and I had a perfectly fine working relationship... My statements regarding the gallery's portfolio are on file with Detective Miller. If you'll excuse me, I have a board meeting to salvage."</p></div>
+    <p><strong>The Tell:</strong> Total lack of humanity — she's already treating the death as a logistics problem.</p>
+
+    <h3 id="a1-transition">1.5 Transition to Act II</h3>
+    <ol>
+        <li><strong>Exhausting the interviews:</strong> The player cannot progress until the Clipboard has logged the official statements of all four baseline characters — Yuki, Victor, Thomas, and Elena — each brought in for a session in the interrogation room. Every tree is a dead end by design.</li>
+        <li><strong>The Restricted Door:</strong> Inspection reveals an unpickable electronic-physical hybrid lock, requiring Marcus's specific master key. Miller carries a master key of his own, issued when the case was assigned, so the team isn't stuck waiting on it.</li>
+        <li><strong>Miller Makes the Call:</strong> With no hard evidence to press the suspects on and every one of them stonewalling, Miller decides the first round of interviews has run dry — there's nothing more to gain from conversation without physical proof to press them on. He checks his watch: the city council's 24-hour deadline is ticking, and the "convenient suicide" paperwork is already on the Chief's desk.</li>
+        <li><strong>Into the Restricted Corridor:</strong> No bureaucracy to bypass, no risk for Miller to take — he simply pulls out the key that's been his since the case started.</li>
+    </ol>
+    <div class="dialogue"><span class="speaker">Miller</span><p>"Here — it's yours as much as mine at this point. Get into his office and find whatever it is the city council is so scared of letting out. I'm going to go pull the security logs and see who else we need in a room."</p></div>
+    <p>The player takes the key and walks back through the Exhibition Hall — now empty of witnesses, who have since been released to staging — while Miller heads off to chase down the security logs, then unlocks the Restricted Corridor door.</p>
+
+    <div class="act-title-card">ACT 2: UNLOCKING THE PAPER TRAIL<span class="sub">TITLE CARD</span></div>
+
+    <div class="mech-note">
+        <span class="mech-label">Pacing Target — Act I ≈ 30 minutes</span><br/>
+        Cinematic + briefing ≈ 5 min · Exhibition Hall search ≈ 10–15 min · Witness interviews ≈ 10–20 min · Key handoff + door unlock ≈ 5–10 min. Goal: the player should feel the same same-night urgency Miller does — right as it peaks, Act II opens the door.
+    </div>
+    <hr class="divider" />
+
+    <!-- ================= ACT 2 ================= -->
+    <h2 id="act2">ACT II — UNLOCKING THE PAPER TRAIL</h2>
+    <p><strong>Locations unlocked:</strong> Restricted Corridor, Private Office &nbsp;|&nbsp; <strong>Time Vision:</strong> Unlocks at the very end of this act</p>
+    <p>Standard procedure (via internal monologue) forces the player to sweep the Private Office first — the Archive Room, Security Booth, and Back Alley stay locked until this room is thoroughly searched.</p>
+
+    <h3 id="a2-office">2.1 The Private Office</h3>
+    <p>Moonlight cuts through floor-to-ceiling windows onto a mahogany desk, overturned leather chairs, and a shattered porcelain vase resting in a dark, dried pool of Marcus's blood.</p>
+    <div class="mech-note"><span class="mech-label">Mechanic — Environmental Investigation Screen</span><br/>Interacting with a zone shifts to a tight, high-contrast inspection view. Every discovered item populates a new "Physical Evidence" tab on the Deduction Clipboard.</div>
+
+    <h4>1. The Mahogany Desk &amp; Hidden Ledger</h4>
+    <p>A false-bottom drawer, pried open and left ajar, holds an urgent batch of final financial notices and heavily leveraged bank loans.</p>
+    <div class="clue-box">
+        <span class="clue-label">CLUE — PHYSICAL</span>
+        <div class="clue-title">The gallery was facing severe financial ruin.</div>
+        <div class="clue-note">Detective's Note: Marcus wasn't just stressed — he was bankrupt. Winning the gala was survival, not vanity.</div>
+    </div>
+
+    <h4>2. The Secondary Office Lock</h4>
+    <p>The electronic keypad works fine, but the physical deadbolt shows microscopic, fresh metallic scratches in the keyway.</p>
+    <div class="clue-box">
+        <span class="clue-label">CLUE — PHYSICAL</span>
+        <div class="clue-title">Elena used an old key to enter Marcus's private office.</div>
+        <div class="clue-note">Detective's Note: Someone with an older physical master key bypassed the electronic lock at 8:15 PM Tuesday — not an amateur break-in.</div>
+    </div>
+
+    <h4>3. The Wastebasket &amp; Discarded Contract</h4>
+    <p>Beneath shredded routine flyers sits one crumpled sheet of heavy cardstock: a pre-drafted asset liquidation contract from Vance Wealth Management.</p>
+    <div class="clue-box">
+        <span class="clue-label">CLUE — PHYSICAL</span>
+        <div class="clue-title">Elena proposed to liquidate and sell off the high-value pieces immediately.</div>
+        <div class="clue-note">Detective's Note: Elena brought an ultimatum, not small talk — and Marcus rejected it violently enough to bin it.</div>
+    </div>
+
+    <h3 id="a2-elena">2.2 The Confrontation: Breaking Elena Vance</h3>
+    <p>Once the Contract and the Scratched Lock are both logged, the game schedules a formal confrontation with Elena in the interrogation room. Miller calls her back in and the Clipboard opens in aggressive confrontation mode — the player drags the Contract and Scratched Lock clues onto Miller's Interrogation tab, one at a time, and he presses Elena with each in turn.</p>
+    <div class="dialogue"><span class="speaker">Miller</span><p>"You mentioned your working relationship with Marcus was perfectly fine. I found this in his wastebasket. A Vance Wealth Management liquidation contract, dated yesterday."</p></div>
+    <div class="dialogue"><span class="speaker">Elena</span><p>"Standard contingency paperwork. As a stakeholder, it is my fiduciary duty to prepare for all financial outcomes, including bankruptcy. A drafted proposal is not a crime, Inspector."</p></div>
+    <div class="dialogue"><span class="speaker">Miller</span><p>"A proposal usually requires a meeting. You told the uniforms you haven't been in his office all week. But someone used an older, physical master key to bypass the electronic lock last night. And judging by the fresh gouges on the cylinder, they were in a massive hurry."</p></div>
+    <p>Elena checks the room, drops the polite act, and lowers her voice to a sharp whisper.</p>
+    <div class="dialogue"><span class="speaker">Elena</span><p>"Are you wearing a wire? No? Fine. Yes, I let myself into his office at 8:15 PM. He was spiraling. I offered him a clean exit — sign over the exhibition rights, and I would handle the debt. He screamed, threw the contract in the trash, and I walked out. He was very much alive and entirely alone when I left him. So unless you are arresting me for trespassing, we are done here."</p></div>
+    <p>Elena admits to corporate espionage and trespassing — but her 8:15 PM timeline clears her of the murder itself, hours before Marcus actually died. The physical evidence proves everyone is lying about something, but not who swung the vase at 11:30 PM. The only way forward is Time Vision.</p>
+
+    <h3 id="a2-autopsy">2.3 The Autopsy Discrepancy <em>(Optional, can be delayed)</em></h3>
+    <p>Miller already handed over the local precinct's Preliminary Case File during the initial briefing outside the gallery; it sits in the player's inventory through the office search. Once the three physical clues above are found, the investigator's internal monologue prompts a cross-reference with Miller's file.</p>
+    <div class="mech-note"><span class="mech-label">Mechanic — The Cross-Examination Screen</span><br/>The player opens the Deduction Clipboard's new "Cross-Reference" mode — a split screen showing the official police report on one side, physical evidence on the other.</div>
+    <p><strong>The Police Narrative</strong> (highlighted line): <em>"A small vial of heavy synthetic depressants was found in the victim's left jacket pocket. Current working theory: Victim ingested the substance due to financial despair, leading to a fatal, accidental fall against the desk."</em></p>
+    <p><strong>The Contradiction</strong> (highlighted line, from the M.E.'s toxicology screen at the back of the file): <em>"Blood Toxicity Screen: 100% Negative/Clear."</em></p>
+    <p>Linking the two highlighted lines with a red connector line registers a major breakthrough.</p>
+    <div class="clue-box">
+        <span class="clue-label">CLUE — CROSS-REFERENCE</span>
+        <div class="clue-title">The victim had zero drugs in his system. The vial was planted.</div>
+        <div class="clue-note">Detective's Note: Marcus didn't overdose and didn't trip. Someone struck him, planted the vial to fake an accident, and walked out. This is a staged murder scene.</div>
+    </div>
+
+    <h3 id="a2-transition">2.4 Transition to Act III</h3>
+    <p>Once Elena's contract, the scratched lock, the hidden ledger, and the autopsy discrepancy are all logged, the physical investigation is declared complete.</p>
+    <div class="dialogue"><span class="speaker">Investigator (internal)</span><p>"The paperwork tells us everyone is lying. We know he didn't overdose, and we know he didn't just fall. To prove how he actually died and confirm our theory, I need to look past the physical evidence and see it for myself."</p></div>
+    <p>The UI guides the player to equip Time Vision — but not on the whole room. The target is a specific object: an empty display pedestal near the desk, its scuff marks and clean dust outline showing exactly where a heavy vase used to sit.</p>
+
+    <h4>The Comic-Panel Cinematic — First Time Vision</h4>
+    <div class="panel">
+        <span class="panel-num">PANEL 1</span>
+        <div class="panel-title">The Rewind</div>
+        <p>The Investigator focuses on the empty spot. A glowing, translucent vase appears on the pillar. A pocket watch fades into the foreground — its second hand pauses, then spins violently backward.</p>
+    </div>
+    <div class="panel">
+        <span class="panel-num">PANEL 2</span>
+        <div class="panel-title">The Confrontation</div>
+        <p>The rewind stops at <strong>11:20 PM</strong> — five minutes after the night guard, Damian Cross, was seen leaving his post. Marcus stands furious at the desk, yelling silently at a hooded silhouette, who lunges for the vase.</p>
+    </div>
+    <div class="panel">
+        <span class="panel-num">PANEL 3</span>
+        <div class="panel-title">The Strike</div>
+        <p>The silhouette swings the vase into Marcus's temple. Porcelain shatters. Marcus collapses; dark blood pools beneath his head.</p>
+    </div>
+    <div class="panel">
+        <span class="panel-num">PANEL 4</span>
+        <div class="panel-title">The Staging</div>
+        <p>The killer checks Marcus's pulse, then slides an empty poison vial into his inside pocket to stage a suicide.</p>
+    </div>
+    <div class="panel">
+        <span class="panel-num">PANEL 5</span>
+        <div class="panel-title">The Escape</div>
+        <p>The hooded figure stands, escapes the room, and pulls the heavy office door shut behind them.</p>
+    </div>
+
+    <p>The vision fades, returning the player to the present. The Investigator confirms the logic:</p>
+    <div class="dialogue"><span class="speaker">Investigator</span><p>"That confirms it. The vase didn't shatter because of a clumsy fall — it was the murder weapon. He was dead before that empty vial ever touched his pocket."</p></div>
+    <div class="dialogue"><span class="speaker">Investigator</span><p>"The killer didn't panic. They walked out and shut that heavy door behind them. If the electronic lock is engaged when they left, there has to be a digital footprint logged in the system…"</p></div>
+    <p>New objective: <strong>Investigate the Security Booth to check the digital door logs.</strong></p>
+
+    <div class="act-title-card">ACT 3: THE NIGHT SHIFT<span class="sub">TITLE CARD</span></div>
+
+    <div class="footer-note">
+        <p><span class="confidential">CONFIDENTIAL</span> — Internal development reference. Compiled from the finalized narrative draft ("New Document") for Act I &amp; Act II implementation.</p>
+    </div>
+
+</div>
+</body>
+</html>
