@@ -49,6 +49,9 @@ namespace JusticeIsAWeapon.Core
         /// <summary>All suspects involved in this case. References are assigned in the inspector.</summary>
         public List<SuspectDataSO> suspects;
 
+        /// <summary>The true culprit among the suspects. Assigned in the inspector per case.</summary>
+        public SuspectDataSO killer;
+
         /// <summary>All discoverable clues for this case. Tagged by type for the Clipboard sorter.</summary>
         public List<ClueDataSO> clues;
 
