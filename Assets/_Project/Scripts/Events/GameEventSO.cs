@@ -7,7 +7,7 @@
 // any number of other scripts can be "listening" for it.
 //
 // HOW TO USE IT (no coding needed after this file exists):
-// 1. Right-click in the Project window → Create → Systems → Game Event.
+// 1. Right-click in the Project window → Create → JusticeIsAWeapon → Game Event.
 // 2. Name it something like "DoorUnlockedEvent" or "InterviewCompletedEvent".
 // 3. Drag that asset into any script that should RAISE it, and call
 //    myEvent.Raise() when that thing happens.
