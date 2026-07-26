@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JusticeIsAWeapon.Core
+namespace JusticeIsAWeapon.Data
 {
     /// <summary>
     /// Root ScriptableObject for a case. One asset per case (e.g. "The Midnight Gallery").

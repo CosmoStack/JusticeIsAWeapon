@@ -1,4 +1,4 @@
-namespace JusticeIsAWeapon.Core
+namespace JusticeIsAWeapon.Enum
 {
     /// <summary>
 /// Represents the difficulty level of a case.
