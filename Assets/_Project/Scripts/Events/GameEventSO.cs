@@ -27,7 +27,7 @@ using UnityEngine;
 
 namespace JusticeIsAWeapon.Events
 {
-    [CreateAssetMenu(fileName = "NewGameEvent", menuName = "Systems/Game Event")]
+    [CreateAssetMenu(fileName = "NewGameEvent", menuName = "JusticeIsAWeapon/Game Event")]
     public class GameEventSO : ScriptableObject
     {
         // Every listener currently waiting on this event.
