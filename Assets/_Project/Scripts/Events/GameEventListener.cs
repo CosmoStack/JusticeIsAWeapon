@@ -11,7 +11,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Systems.Events
+namespace JusticeIsAWeapon.Events
 {
     public class GameEventListener : MonoBehaviour
     {

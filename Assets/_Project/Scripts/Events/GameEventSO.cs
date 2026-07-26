@@ -25,7 +25,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Systems.Events
+namespace JusticeIsAWeapon.Events
 {
     [CreateAssetMenu(fileName = "NewGameEvent", menuName = "Systems/Game Event")]
     public class GameEventSO : ScriptableObject

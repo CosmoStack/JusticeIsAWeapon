@@ -8,7 +8,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Systems.Events
+namespace JusticeIsAWeapon.Events
 {
     // A UnityEvent that carries a string has to be its own named class for
     // Unity to show it properly in the Inspector — this is that class.

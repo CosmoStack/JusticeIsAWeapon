@@ -18,7 +18,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Systems.Events
+namespace JusticeIsAWeapon.Events
 {
     // T is a placeholder for "whatever type of data this event carries" —
     // it gets filled in by whichever concrete class inherits from this.

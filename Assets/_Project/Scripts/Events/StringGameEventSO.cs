@@ -12,7 +12,7 @@
 
 using UnityEngine;
 
-namespace Systems.Events
+namespace JusticeIsAWeapon.Events
 {
     [CreateAssetMenu(fileName = "NewStringGameEvent", menuName = "Systems/Game Event (with string)")]
     public class StringGameEventSO : GameEventSO<string>
