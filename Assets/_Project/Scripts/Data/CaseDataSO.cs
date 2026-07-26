@@ -55,4 +55,5 @@ namespace JusticeIsAWeapon.Core
         /// <summary>Optional comic panel sequence that plays at the start of the case (e.g. Act I opening cinematic).</summary>
         public ComicPanelSequenceSO openingComicSequence;
     }
+    
 }
