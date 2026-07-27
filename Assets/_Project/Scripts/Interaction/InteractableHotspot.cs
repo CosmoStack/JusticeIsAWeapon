@@ -10,6 +10,8 @@
 //
 // REQUIREMENTS ON THE GAMEOBJECT:
 //   - Needs a Collider (BoxCollider works fine for a placeholder cube).
+//   - The scene must have a PhysicsRaycaster on the MainCamera and an
+//     EventSystem — both are already set up in the ExhibitionHall scene.
 //
 // TWO WAYS TO FILL IN THE INFO:
 //   1. FLAVOR-ONLY OBJECT (e.g. Champagne Flutes): fill in "Manual Info"
@@ -21,12 +23,13 @@
 // ============================================================================
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using JusticeIsAWeapon.Data;
 
 namespace JusticeIsAWeapon.Interaction
 {
     [RequireComponent(typeof(Collider))]
-    public class InteractableHotspot : MonoBehaviour
+    public class InteractableHotspot : MonoBehaviour, IPointerClickHandler
     {
         [Header("Option A — flavor-only object (no real clue)")]
         [SerializeField] private InspectableInfo manualInfo;
@@ -38,11 +41,7 @@ namespace JusticeIsAWeapon.Interaction
         [Header("Shared Event (drag the same asset onto every hotspot)")]
         [SerializeField] private InspectableInfoGameEvent onInteractEvent;
 
-        // Runs when the player clicks/taps this object.
-        // OnMouseDown works for both editor mouse clicks and single-touch
-        // taps on Android without any extra setup, as long as this object
-        // has a Collider and there's a Camera tagged "MainCamera" in the scene.
-        private void OnMouseDown()
+        public void OnPointerClick(PointerEventData eventData)
         {
             Debug.Log("CLICK DETECTED ON: " + gameObject.name);
             InspectableInfo infoToSend = BuildInfoToSend();
