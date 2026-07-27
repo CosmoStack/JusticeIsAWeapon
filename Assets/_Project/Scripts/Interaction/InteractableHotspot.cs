@@ -44,6 +44,7 @@ namespace JusticeIsAWeapon.Interaction
         // has a Collider and there's a Camera tagged "MainCamera" in the scene.
         private void OnMouseDown()
         {
+            Debug.Log("CLICK DETECTED ON: " + gameObject.name);
             InspectableInfo infoToSend = BuildInfoToSend();
             onInteractEvent.Raise(infoToSend);
         }

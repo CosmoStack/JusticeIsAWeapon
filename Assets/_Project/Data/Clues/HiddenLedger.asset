@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8062004c7483ff4795700821663aa4b, type: 3}
   m_Name: HiddenLedger
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.ClueDataSO
-  clueID: 
-  clueTitle: 
-  detectiveNote: 
+  clueID: 1
+  clueTitle: Ledger
+  detectiveNote: Note.
   type: 0
   timeStage: 0
-  location: 
+  location: Exhibition Hall
   isRequired: 0
   isRedHerring: 0
   linkedSuspects: []
