@@ -1,12 +1,10 @@
-using System;
-
 namespace JusticeIsAWeapon.Data
 {
     /// <summary>
     /// One selectable response that advances the conversation to a child node.
     /// </summary>
-    [Serializable]
-    public struct DialogueChoice
+    [System.Serializable]
+    public struct DialogueChoiceSO
     {
         /// <summary>Text shown on the topic/choice button (e.g. "Ask about the contract").</summary>
         public string choiceLabel;

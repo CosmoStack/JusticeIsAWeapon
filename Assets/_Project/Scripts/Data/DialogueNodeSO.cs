@@ -63,6 +63,6 @@ namespace JusticeIsAWeapon.Data
         public bool isDeadEnd;
 
         /// <summary>Player/Miller response options leading to child nodes. Empty + isDeadEnd = conversation ends.</summary>
-        public List<DialogueChoice> choices;
+        public List<DialogueChoiceSO> choices;
     }
 }
