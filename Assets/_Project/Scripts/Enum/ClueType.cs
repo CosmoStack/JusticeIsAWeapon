@@ -1,4 +1,4 @@
-namespace JusticeIsAWeapon.Core
+namespace JusticeIsAWeapon.Enum
 {
     /// <summary>
     /// Categorizes a clue for Clipboard tab filtering and UI sorting.

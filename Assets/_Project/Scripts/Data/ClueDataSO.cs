@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using JusticeIsAWeapon.Enum;
 using UnityEngine;
 
-namespace JusticeIsAWeapon.Core
+namespace JusticeIsAWeapon.Data
 {
     /// <summary>
     /// ScriptableObject for a single clue asset (e.g. "Hidden Ledger", "Scratched Lock", "Discarded Contract").
