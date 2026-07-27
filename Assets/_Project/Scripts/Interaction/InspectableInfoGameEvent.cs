@@ -16,7 +16,7 @@ using JusticeIsAWeapon.Events;
 
 namespace JusticeIsAWeapon.Interaction
 {
-    [CreateAssetMenu(fileName = "ObjectInteractedEvent", menuName = "JustiveIsAWeapon/Game Event (Inspectable Info)")]
+    [CreateAssetMenu(fileName = "ObjectInteractedEvent", menuName = "JusticeIsAWeapon/Game Event (Inspectable Info)")]
     public class InspectableInfoGameEvent : GameEventSO<InspectableInfo>
     {
     }

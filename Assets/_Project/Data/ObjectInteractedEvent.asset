@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bee1e81d91fcf324ab71862966e7ed74, type: 3}
+  m_Script: {fileID: 11500000, guid: 29f358eb0eabc3b4cb95411f135e122b, type: 3}
   m_Name: ObjectInteractedEvent
-  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Events.GameEventSO
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Interaction.InspectableInfoGameEvent

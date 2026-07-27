@@ -19,6 +19,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using JusticeIsAWeapon.Events;
 
 namespace JusticeIsAWeapon.Interaction
@@ -30,8 +31,8 @@ namespace JusticeIsAWeapon.Interaction
 
         [Header("UI References (drag from this panel's children)")]
         [SerializeField] private GameObject panelRoot;
-        [SerializeField] private Text titleText;
-        [SerializeField] private Text descriptionText;
+        [SerializeField] private TMP_Text titleText;
+        [SerializeField] private TMP_Text descriptionText;
         [SerializeField] private Image iconImage;
         [SerializeField] private Button addToJournalButton;
         [SerializeField] private Button dismissButton;
