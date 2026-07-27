@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JusticeIsAWeapon.Enum;
 using UnityEngine;
 
 namespace JusticeIsAWeapon.Data
