@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace JusticeIsAWeapon.Core
+namespace JusticeIsAWeapon.Data
 {
     /// <summary>
     /// ScriptableObject for a single Time Vision playback instance (e.g. "Act II Vase Strike", "Act III Back Door Tamper").
