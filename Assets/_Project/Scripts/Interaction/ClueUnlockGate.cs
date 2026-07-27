@@ -21,6 +21,7 @@
 // ============================================================================
 
 using UnityEngine;
+using JusticeIsAWeapon.Events;
 
 namespace JusticeIsAWeapon.Interaction
 {

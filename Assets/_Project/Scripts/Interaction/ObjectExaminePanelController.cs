@@ -19,8 +19,9 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using JusticeIsAWeapon.Events;
 
-namespace Systems.Interaction
+namespace JusticeIsAWeapon.Interaction
 {
     public class ObjectExaminePanelController : GameEventListener<InspectableInfo>
     {

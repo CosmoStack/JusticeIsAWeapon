@@ -20,6 +20,7 @@
 // ============================================================================
 
 using UnityEngine;
+using JusticeIsAWeapon.Data;
 
 namespace JusticeIsAWeapon.Interaction
 {
