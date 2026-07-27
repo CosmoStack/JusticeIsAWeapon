@@ -1,4 +1,4 @@
-namespace JusticeIsAWeapon.Core
+namespace JusticeIsAWeapon.Enum
 {
     /// <summary>
     /// Represents the four observable stages of a crime through Time Vision.
