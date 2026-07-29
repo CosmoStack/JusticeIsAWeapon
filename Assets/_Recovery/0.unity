@@ -119,57 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &134971037
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 134971039}
-  - component: {fileID: 134971038}
-  m_Layer: 0
-  m_Name: ExaminePanelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &134971038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134971037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4436fb3d599ef040b8d42a0ac9dcdc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Interaction.ObjectExaminePanelController
-  onInteractEvent: {fileID: 11400000, guid: da074bb4d37727346a3e5f31b9f1a57a, type: 2}
-  panelRoot: {fileID: 2058667082}
-  titleText: {fileID: 922968441}
-  descriptionText: {fileID: 1566717098}
-  iconImage: {fileID: 2037546916}
-  addToJournalButton: {fileID: 2057442601}
-  dismissButton: {fileID: 777527801}
---- !u!4 &134971039
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134971037}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.43026, y: -3.18672, z: 7.24781}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &294073091
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +969,7 @@ Transform:
   m_GameObject: {fileID: 405706074}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.33, y: -2.85, z: 6.98}
+  m_LocalPosition: {x: -15.33, y: -3.47, z: 6.98}
   m_LocalScale: {x: 0.83118, y: 0.32493833, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1725,7 +1674,7 @@ Transform:
   m_GameObject: {fileID: 1239687937}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.48, y: -3.16, z: 7.84}
+  m_LocalPosition: {x: -10.48, y: -3.75, z: 7.84}
   m_LocalScale: {x: 0.89122, y: 0.1535946, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1929,8 +1878,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2545,6 +2494,7 @@ GameObject:
   - component: {fileID: 2058667085}
   - component: {fileID: 2058667084}
   - component: {fileID: 2058667083}
+  - component: {fileID: 2058667087}
   m_Layer: 5
   m_Name: ExaminePanel
   m_TagString: Untagged
@@ -2639,6 +2589,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2058667087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058667082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4436fb3d599ef040b8d42a0ac9dcdc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Interaction.ObjectExaminePanelController
+  onInteractEvent: {fileID: 11400000, guid: da074bb4d37727346a3e5f31b9f1a57a, type: 2}
+  panelRoot: {fileID: 2058667082}
+  titleText: {fileID: 922968441}
+  descriptionText: {fileID: 1566717098}
+  iconImage: {fileID: 2037546916}
+  addToJournalButton: {fileID: 2057442601}
+  dismissButton: {fileID: 777527801}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2652,4 +2621,3 @@ SceneRoots:
   - {fileID: 405706079}
   - {fileID: 1239687942}
   - {fileID: 845316819}
-  - {fileID: 134971039}

@@ -65,6 +65,7 @@ namespace JusticeIsAWeapon.Interaction
 
         public override void OnEventRaised(InspectableInfo info)
         {
+            Debug.Log("UI HEARD THE EVENT FOR: " + info.title);
             ShowPanel(info);
         }
 
