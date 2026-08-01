@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Gallery Exterior
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Gallery Exterior
+  speakerName: 
+  lineText: " | \r\n\r\nA modern art gallery exterior at night. Noir aesthetic, cold
+    blue and deep gray color palette. Wide double glass doors face a concrete front
+    plaza; a public sidewalk runs along the front. The building is boxed in by tall,
+    imposing city structures on both sides. Rain-slicked pavement reflecting streetlight,
+    moody cinematic lighting, highly detailed comic art style. Large floor-to-ceiling
+    glass windows, a glowing minimalist sign reading \"Webb Gallery.\" Yellow police
+    tape stretched across the entrance. Gloomy, atmospheric, no characters visible
+    \u2014 background plate only.\r\n\r\n<b>Detective Miller:</b>\r\n\"Head inside
+    and investigate the gallery. I'll question some locals for now.\"<b>Detective
+    Miller:</b>\r\n\"I was able to gather a few witnesses. We should go and interrogate
+    them.\"<b>Detective Miller:</b>\r\n\"Found anything interesting to interrogate
+    them again?\"<b>Detective Miller:</b>\r\n\"Contract to liquidate assets? Let's
+    head back for some more interrogation.\"<b>Detective Miller:</b>\r\n\"Found anything
+    interesting to interrogate them again?\"<b>Detective Miller:</b>\r\n\"You won't
+    believe this. A call from forensics just came over and the key you sent for examination...
+    it had Elena's fingerprints on it. They said it was fresh and was used recently
+    to unlock a door.\r\n\r\n\"We can finally catch her for something.\"\r\n\r\n<b>[CLUE
+    COLLECTED: Master Key Fingerprints]</b>\r\n\r\n\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Open Case File
+    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - choiceLabel: Use Time Vision
+    nextNode: {fileID: 11400000, guid: 2bd6b2656707d954395bda9b9e855d52, type: 2}
+  - choiceLabel: Head Inside
+    nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
+  - choiceLabel: Head to Interrogation Room
+    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - choiceLabel: Head to Interrogation Room
+    nextNode: {fileID: 11400000, guid: 0cc6e6699cb5b1c419ac280a820a543c, type: 2}
+  blocks:
+  - condition: 
+    text: 
+    links:
+    - label: Open Case File
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - condition: (history:)contains"Elena - Key"
+    text: ' | '
+    links:
+    - label: Use Time Vision
+      target: Gallery Exterior Time Vision
+      node: {fileID: 11400000, guid: 2bd6b2656707d954395bda9b9e855d52, type: 2}
+  - condition: 
+    text: "\r\n\r\nA modern art gallery exterior at night. Noir aesthetic, cold blue
+      and deep gray color palette. Wide double glass doors face a concrete front
+      plaza; a public sidewalk runs along the front. The building is boxed in by
+      tall, imposing city structures on both sides. Rain-slicked pavement reflecting
+      streetlight, moody cinematic lighting, highly detailed comic art style. Large
+      floor-to-ceiling glass windows, a glowing minimalist sign reading \"Webb Gallery.\"
+      Yellow police tape stretched across the entrance. Gloomy, atmospheric, no characters
+      visible \u2014 background plate only.\r\n\r\n"
+    links: []
+  - condition: (history:)does not contain"The Restricted Corridor Door"
+    text: '<b>Detective Miller:</b>
+
+      "Head inside and investigate the gallery.
+      I''ll question some locals for now."'
+    links: []
+  - condition: (history:)does not contain"Interrogation Room" and not ((history:)does
+      not contain"The Restricted Corridor Door")
+    text: '<b>Detective Miller:</b>
+
+      "I was able to gather a few witnesses.
+      We should go and interrogate them."'
+    links: []
+  - condition: (history:)does not contain"Contract Clue Unlock" and not ((history:)does
+      not contain"The Restricted Corridor Door") and not ((history:)does not contain"Interrogation
+      Room")
+    text: '<b>Detective Miller:</b>
+
+      "Found anything interesting to interrogate
+      them again?"'
+    links: []
+  - condition: (history:)does not contain"Elena - Contract" and not ((history:)does
+      not contain"The Restricted Corridor Door") and not ((history:)does not contain"Interrogation
+      Room") and not ((history:)does not contain"Contract Clue Unlock")
+    text: '<b>Detective Miller:</b>
+
+      "Contract to liquidate assets? Let''s
+      head back for some more interrogation."'
+    links: []
+  - condition: (history:)does not contain"Key Clue Unlock" and not ((history:)does
+      not contain"The Restricted Corridor Door") and not ((history:)does not contain"Interrogation
+      Room") and not ((history:)does not contain"Contract Clue Unlock") and not ((history:)does
+      not contain"Elena - Contract")
+    text: '<b>Detective Miller:</b>
+
+      "Found anything interesting to interrogate
+      them again?"'
+    links: []
+  - condition: (history:)does not contain"Elena - Key" and not _keyFirst and not
+      ((history:)does not contain"The Restricted Corridor Door") and not ((history:)does
+      not contain"Interrogation Room") and not ((history:)does not contain"Contract
+      Clue Unlock") and not ((history:)does not contain"Elena - Contract") and not
+      ((history:)does not contain"Key Clue Unlock")
+    text: '<b>Detective Miller:</b>
+
+      "You won''t believe this. A call from
+      forensics just came over and the key you sent for examination... it had Elena''s
+      fingerprints on it. They said it was fresh and was used recently to unlock
+      a door.
+
+      
+
+      "We can finally catch her for something."
+
+      
+
+      <b>[CLUE
+      COLLECTED: Master Key Fingerprints]</b>'
+    links: []
+  - condition: 
+    text: '
+
+      
+
+'
+    links:
+    - label: Head Inside
+      target: Exhibition Hall
+      node: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
+  - condition: (history:) contains "The Restricted Corridor Door" and (((history:)does
+      not contain"Miller - Key Handoff")or((history:) contains "Contract Clue Unlock"
+      and (history:)does not contain"Elena - Contract")or((history:) contains "Key
+      Clue Unlock" and (history:) does not contain "Elena - Key"))
+    text: '
+
+'
+    links:
+    - label: Head to Interrogation Room
+      target: Interrogation Room
+      node: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - condition: (history:) contains "The Restricted Corridor Door" and (not (((history:)does
+      not contain"Miller - Key Handoff")or((history:) contains "Contract Clue Unlock"
+      and (history:)does not contain"Elena - Contract")or((history:) contains "Key
+      Clue Unlock" and (history:) does not contain "Elena - Key")))
+    text: '
+
+'
+    links:
+    - label: Head to Interrogation Room
+      target: Interrogation Room - Restricted
+      node: {fileID: 11400000, guid: 0cc6e6699cb5b1c419ac280a820a543c, type: 2}
+  - condition: 
+    text: "\r\n\r"
+    links: []

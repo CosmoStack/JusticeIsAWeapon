@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Restricted Corridor
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Restricted Corridor
+  speakerName: 
+  lineText: "<b>[ACT 2: Unlocking the Paper Trail]</b>\r\n\r\n | \r\n\r\nA narrow
+    6-foot-wide restricted corridor connecting a security booth and archive room
+    to a private office and a doorway to back alley. Heavy modern electronic-keypad
+    security door at one end, dim overhead strip lighting, cold gray-blue tones with
+    deep shadows pooling in the corners. Claustrophobic framing, muted color palette,
+    faint rain-shadow patterns from a distant window, cinematic noir lighting, comic
+    art style.\r\n\r\nWhere do you want to go?\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Open Case File
+    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - choiceLabel: Use Time Vision
+    nextNode: {fileID: 11400000, guid: 831bacf5359de2749afb15c043156067, type: 2}
+  - choiceLabel: Exhibition Hall
+    nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
+  - choiceLabel: Private Office
+    nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
+  - choiceLabel: Security Booth
+    nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
+  - choiceLabel: Archive Room
+    nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
+  - choiceLabel: Back Alley
+    nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
+  blocks:
+  - condition: (history:) does not contain "Restricted Corridor"
+    text: '<b>[ACT 2: Unlocking the Paper Trail]</b>
+
+      
+
+'
+    links: []
+  - condition: 
+    text: 
+    links:
+    - label: Open Case File
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - condition: (history:)contains"Elena - Key"
+    text: ' | '
+    links:
+    - label: Use Time Vision
+      target: Restricted Corridor Time Vision
+      node: {fileID: 11400000, guid: 831bacf5359de2749afb15c043156067, type: 2}
+  - condition: 
+    text: "\r\n\r\nA narrow 6-foot-wide restricted corridor connecting a security
+      booth and archive room to a private office and a doorway to back alley. Heavy
+      modern electronic-keypad security door at one end, dim overhead strip lighting,
+      cold gray-blue tones with deep shadows pooling in the corners. Claustrophobic
+      framing, muted color palette, faint rain-shadow patterns from a distant window,
+      cinematic noir lighting, comic art style.\r\n\r\nWhere do you want to go?\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r"
+    links:
+    - label: Exhibition Hall
+      target: Exhibition Hall
+      node: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
+    - label: Private Office
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
+    - label: Security Booth
+      target: Private Office - Restricted
+      node: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
+    - label: Archive Room
+      target: Private Office - Restricted
+      node: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
+    - label: Back Alley
+      target: Private Office - Restricted
+      node: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}

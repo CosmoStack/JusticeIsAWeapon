@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Yuki - Relationship
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Yuki - Relationship
+  speakerName: 
+  lineText: "<i>You selected the 'Relationship' baseline.</i>\r\n\r\n<b>Detective
+    Miller:</b> \r\n\"Walk me through your dynamic with Marcus. You were his assistant
+    curator. Was there any tension between you two?\"\r\n\r\n<b>Yuki Tanaka:</b>
+    \r\n\"Strictly professional. Marcus was highly demanding, especially with the
+    gala approaching. We were all under immense pressure to ensure everything was
+    perfect, but that was just the nature of the job.\"\r\n\r\n''[Investigator's
+    Note:]'' She's keeping it strictly about the work. It's a standard, careful answer.
+    There's no visible friction to press her on without something tangible to contradict
+    her.\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Back to Yuki's Clipboard
+    nextNode: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}
+  blocks:
+  - condition: 
+    text: "<i>You selected the 'Relationship' baseline.</i>\r\n\r\n<b>Detective Miller:</b>
+      \r\n\"Walk me through your dynamic with Marcus. You were his assistant curator.
+      Was there any tension between you two?\"\r\n\r\n<b>Yuki Tanaka:</b> \r\n\"Strictly
+      professional. Marcus was highly demanding, especially with the gala approaching.
+      We were all under immense pressure to ensure everything was perfect, but that
+      was just the nature of the job.\"\r\n\r\n''[Investigator's Note:]'' She's keeping
+      it strictly about the work. It's a standard, careful answer. There's no visible
+      friction to press her on without something tangible to contradict her.\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Yuki's Clipboard
+      target: Interview Yuki
+      node: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: The Evidence
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: The Evidence
+  speakerName: 
+  lineText: "<b>Detective Miller:</b>\r\n\"Marcus Webb, the gallery owner. Found
+    dead inside. A poison vial was found with the body and much likely, the victim
+    died with the accidental fall of the vase on his head. As of right now, we have
+    absolutely no physical evidence pointing anywhere.\"\r\n\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: '"Sounds like a dead end. So why are we here?"'
+    nextNode: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
+  - choiceLabel: '"Let''s check the scene. Local PD always misses something."'
+    nextNode: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}
+  blocks:
+  - condition: 
+    text: '<b>Detective Miller:</b>
+
+      "Marcus Webb, the gallery owner. Found
+      dead inside. A poison vial was found with the body and much likely, the victim
+      died with the accidental fall of the vase on his head. As of right now, we
+      have absolutely no physical evidence pointing anywhere."
+
+      
+
+'
+    links: []
+  - condition: not ((history:) contains "The Politics")
+    text: '
+
+'
+    links:
+    - label: '"Sounds like a dead end. So why are we here?"'
+      target: The Politics
+      node: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
+  - condition: 
+    text: "\r\n\r"
+    links:
+    - label: '"Let''s check the scene. Local PD always misses something."'
+      target: The Handoff
+      node: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}

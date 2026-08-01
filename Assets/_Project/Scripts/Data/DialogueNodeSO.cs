@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JusticeIsAWeapon.Dialogue;
 using JusticeIsAWeapon.Enum;
 using UnityEngine;
 
@@ -64,5 +65,15 @@ namespace JusticeIsAWeapon.Data
 
         /// <summary>Player/Miller response options leading to child nodes. Empty + isDeadEnd = conversation ends.</summary>
         public List<DialogueChoiceSO> choices;
+
+        [Header("Twine Import (read-only — populated by the Twee importer)")]
+
+        /// <summary>
+        /// Flattened passage body: ordered render blocks, each with a combined
+        /// condition, rich-text content and its links. DialogueManager walks
+        /// these at runtime to decide what text to show and which choices are
+        /// currently available.
+        /// </summary>
+        public List<DialogueBlock> blocks;
     }
 }

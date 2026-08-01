@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: PV - Page 2
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: PV - Page 2
+  speakerName: 
+  lineText: "<b>Visuals</b>\r\nThe rewind abruptly stops, freezing on 11:20 PM. Marcus
+    stands behind his mahogany desk, furious and yelling silently, while a dark,
+    hooded silhouette lunges forward toward the display pedestal.\r\n\r\n<b>Narrative</b>\r\n11:20
+    PM \u2014 The rewind catches Marcus shouting at a shadowy figure, who lunges
+    directly toward the pedestal.\r\n\r\n\r\n \r\n\r\n<i>No. of Panels: </i>\r\n<i>1.
+    Clock stopping</i>\r\n<i>2. Marcus shouting</i>\r\n//3.\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: CONTINUE
+    nextNode: {fileID: 11400000, guid: 14fa6ff7e6ca3344a8eac0631713ccc3, type: 2}
+  - choiceLabel: SKIP
+    nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
+  blocks:
+  - condition: 
+    text: "<b>Visuals</b>\r\nThe rewind abruptly stops, freezing on 11:20 PM. Marcus
+      stands behind his mahogany desk, furious and yelling silently, while a dark,
+      hooded silhouette lunges forward toward the display pedestal.\r\n\r\n<b>Narrative</b>\r\n11:20
+      PM \u2014 The rewind catches Marcus shouting at a shadowy figure, who lunges
+      directly toward the pedestal.\r\n\r\n\r\n \r\n\r\n<i>No. of Panels: </i>\r\n<i>1.
+      Clock stopping</i>\r\n<i>2. Marcus shouting</i>\r\n//3.\r\n\r"
+    links:
+    - label: CONTINUE
+      target: PV - Page 3
+      node: {fileID: 11400000, guid: 14fa6ff7e6ca3344a8eac0631713ccc3, type: 2}
+    - label: SKIP
+      target: Post Vision - Vase
+      node: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}

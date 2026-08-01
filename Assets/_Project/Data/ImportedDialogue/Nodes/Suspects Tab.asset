@@ -1,0 +1,191 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Suspects Tab
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Suspects Tab
+  speakerName: 
+  lineText: " |  |  | <b>[SUSPECTS]</b> |  | \r\n\r\nNo suspects have been gathered
+    so far.<u><b>Yuki Tanaka</b></u>\r\n<b>Role:</b> Assistant Curator \r\n<b>Alibi:</b>
+    She was at home at the time of murder.N/A\r\n<b>Timeline:</b> \r\n- Found the
+    body- Found the body at 7:35 AM with Victor.N/A<u><b>Victor Hasting</b></u>\r\n\r\n\r\n<b>Role:</b>
+    Chief Security Officer \r\n<b>Alibi:</b> He was at home at the time of murder.N/A\r\n<b>Timeline:</b>
+    \r\n- Found the body- Override the electronic lock around 7:35 AM.\r\n- Found
+    the body at 7:35 AM with Yuki.\r\n- Reported the murder to 911N/A<u><b>Thomas
+    Webb</b></u>\r\n\r\n\r\n<b>Role:</b> Victim's Brother\r\n<b>Alibi:</b> He was
+    at the gala at the time of murder.N/A\r\n<b>Timeline:</b> \r\n- Received N/A\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: EXIT
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - choiceLabel: VICTIM
+    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - choiceLabel: OBJECTIVES
+    nextNode: {fileID: 11400000, guid: b072e936fcae7fd44be16504779769c0, type: 2}
+  - choiceLabel: EVIDENCE
+    nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
+  - choiceLabel: TIMELINE
+    nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
+  blocks:
+  - condition: 
+    text: " |  |  | <b>[SUSPECTS]</b> |  | \r\n\r\n"
+    links:
+    - label: EXIT
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+    - label: VICTIM
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+    - label: OBJECTIVES
+      target: Objective Tab
+      node: {fileID: 11400000, guid: b072e936fcae7fd44be16504779769c0, type: 2}
+    - label: EVIDENCE
+      target: Evidence Tab
+      node: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
+    - label: TIMELINE
+      target: Timeline Tab
+      node: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
+  - condition: not _galleryAfterCorridor
+    text: No suspects have been gathered so far.
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: <u><b>Yuki Tanaka</b></u>
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: "\r\n<b>Role:</b> Assistant Curator \r\n<b>Alibi:</b> "
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Yuki - Alibi")
+    text: She was at home at the time of murder.
+    links: []
+  - condition: not (not _galleryAfterCorridor) and (not ((history:)contains"Yuki
+      - Alibi"))
+    text: N/A
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: '
+
+      <b>Timeline:</b> '
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Interrogation
+      Room")
+    text: '
+
+'
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Interrogation
+      Room") and ((history:)does not contain"Yuki - Alibi" and (history:)does not
+      contain"Victor - Alibi")
+    text: '- Found the body'
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Interrogation
+      Room") and (not ((history:)does not contain"Yuki - Alibi" and (history:)does
+      not contain"Victor - Alibi"))
+    text: '- Found the body at 7:35 AM with Victor.'
+    links: []
+  - condition: not (not _galleryAfterCorridor) and (not ((history:)contains"Interrogation
+      Room"))
+    text: N/A
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: <u><b>Victor Hasting</b></u>
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: "\r\n\r\n\r\n<b>Role:</b> Chief Security Officer \r\n<b>Alibi:</b> "
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Victor - Alibi")
+    text: He was at home at the time of murder.
+    links: []
+  - condition: not (not _galleryAfterCorridor) and (not ((history:)contains"Victor
+      - Alibi"))
+    text: N/A
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: '
+
+      <b>Timeline:</b> '
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Interrogation
+      Room")
+    text: '
+
+'
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Interrogation
+      Room") and ((history:)does not contain"Yuki - Alibi" and (history:)does not
+      contain"Victor - Alibi")
+    text: '- Found the body'
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Interrogation
+      Room") and (not ((history:)does not contain"Yuki - Alibi" and (history:)does
+      not contain"Victor - Alibi"))
+    text: '- Override the electronic lock around 7:35 AM.
+
+      - Found the body
+      at 7:35 AM with Yuki.'
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Interrogation
+      Room")
+    text: '
+
+      - Reported the murder to 911'
+    links: []
+  - condition: not (not _galleryAfterCorridor) and (not ((history:)contains"Interrogation
+      Room"))
+    text: N/A
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: <u><b>Thomas Webb</b></u>
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: '
+
+      
+
+      
+
+      <b>Role:</b> Victim''s Brother
+
+      <b>Alibi:</b> '
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Thomas - Alibi")
+    text: He was at the gala at the time of murder.
+    links: []
+  - condition: not (not _galleryAfterCorridor) and (not ((history:)contains"Thomas
+      - Alibi"))
+    text: N/A
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: '
+
+      <b>Timeline:</b> '
+    links: []
+  - condition: not (not _galleryAfterCorridor) and ((history:)contains"Thomas - Timeline")
+    text: '
+
+      - Received '
+    links: []
+  - condition: not (not _galleryAfterCorridor) and (not ((history:)contains"Thomas
+      - Timeline"))
+    text: N/A
+    links: []
+  - condition: not (not _galleryAfterCorridor)
+    text: '
+
+'
+    links: []
+  - condition: 
+    text: "\r\n\r"
+    links: []

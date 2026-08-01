@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Thomas - Timeline
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Thomas - Timeline
+  speakerName: 
+  lineText: "You select the 'Timeline' baseline.\r\n\r\n<b>Detective Miller:</b>
+    \r\n\"Walk me through your timeline for this morning. When did you get the news?\"\r\n\r\n<b>Thomas
+    Webb:</b> \r\n\"I was still backstage at the convention hall, holding his damn
+    trophy. Yuki called my cell in an absolute panic, crying that the police were
+    here. I dropped everything and practically sprinted the whole way to the gallery.
+    That's it. That's all I know.\"\r\n\r\n''[Investigator's Note:]'' His timeline
+    matches the sequence of events perfectly. He got the call from Yuki and arrived
+    exactly when expected. \r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Back to Thomas's Clipboard
+    nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
+  blocks:
+  - condition: 
+    text: "You select the 'Timeline' baseline.\r\n\r\n<b>Detective Miller:</b> \r\n\"Walk
+      me through your timeline for this morning. When did you get the news?\"\r\n\r\n<b>Thomas
+      Webb:</b> \r\n\"I was still backstage at the convention hall, holding his damn
+      trophy. Yuki called my cell in an absolute panic, crying that the police were
+      here. I dropped everything and practically sprinted the whole way to the gallery.
+      That's it. That's all I know.\"\r\n\r\n''[Investigator's Note:]'' His timeline
+      matches the sequence of events perfectly. He got the call from Yuki and arrived
+      exactly when expected. \r\n\r\n\r\n\r"
+    links:
+    - label: Back to Thomas's Clipboard
+      target: Interview Thomas
+      node: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: CO - Page 2
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: CO - Page 2
+  speakerName: 
+  lineText: "<b>Visuals</b>\r\nWide shot of the crowd as the announcer calls \"The
+    Marcus Art Gallery\" to dead silence \u2014 twice. Just as it curdles into scandal,
+    Thomas Webb rises from his seat and walks to the stage, forcing a practiced smile
+    as he accepts the trophy on the gallery's behalf.\r\n\r\n<b>Narrative</b>\r\nTight
+    cuts of rivals trading knowing glances \u2014 the confusion over Marcus's absence
+    turning into a different kind of curiosity now that it's the brother holding
+    the prize.\r\n\r\n\r\n\r\n\r\n<i>No. of Panels: 7 </i>\r\n<i>1. Announcement</i>\r\n<i>2.
+    Silence</i>\r\n<i>3. Announcement 2nd time</i>\r\n<i>4. Silence again</i>\r\n<i>5.
+    Thomas rises</i>\r\n<i>6. Walks to stage</i>\r\n<i>7. Receives the trophy</i>\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: CONTINUE
+    nextNode: {fileID: 11400000, guid: 0ebb05798e23c8842a28299511531943, type: 2}
+  - choiceLabel: SKIP
+    nextNode: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}
+  blocks:
+  - condition: 
+    text: "<b>Visuals</b>\r\nWide shot of the crowd as the announcer calls \"The
+      Marcus Art Gallery\" to dead silence \u2014 twice. Just as it curdles into
+      scandal, Thomas Webb rises from his seat and walks to the stage, forcing a
+      practiced smile as he accepts the trophy on the gallery's behalf.\r\n\r\n<b>Narrative</b>\r\nTight
+      cuts of rivals trading knowing glances \u2014 the confusion over Marcus's absence
+      turning into a different kind of curiosity now that it's the brother holding
+      the prize.\r\n\r\n\r\n\r\n\r\n<i>No. of Panels: 7 </i>\r\n<i>1. Announcement</i>\r\n<i>2.
+      Silence</i>\r\n<i>3. Announcement 2nd time</i>\r\n<i>4. Silence again</i>\r\n<i>5.
+      Thomas rises</i>\r\n<i>6. Walks to stage</i>\r\n<i>7. Receives the trophy</i>\r\n\r"
+    links:
+    - label: CONTINUE
+      target: CO - Page 3
+      node: {fileID: 11400000, guid: 0ebb05798e23c8842a28299511531943, type: 2}
+    - label: SKIP
+      target: Taking Control
+      node: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}

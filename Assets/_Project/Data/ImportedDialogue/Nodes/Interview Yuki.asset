@@ -1,0 +1,164 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Interview Yuki
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Interview Yuki
+  speakerName: 
+  lineText: "The camera settles on Yuki Tanaka across a plain, metal table. She sits
+    perfectly straight, her hands folded neatly in front of her, the picture of a
+    professional holding it together after a shock.\r\n\r\n<b>[DEDUCTION CLIPBOARD
+    ACTIVE]</b>\r\n<i>PHYSICAL EVIDENCE</i>\r\n\r\n\r\n\r\n<i>You currently have
+    no physical clues to present. Select a baseline topic for Detective Miller to
+    press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective Miller:</b>\r\n\"Her story
+    is ironclad. We aren't getting anything else out of her without physical proof.\"\r\n\r\n<i>[YUKI
+    TANAKA'S STATEMENT LOGGED]</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: The Restricted Corridor Door
+    nextNode: {fileID: 11400000, guid: 12bfc5c9053694840adf854ce9a3c32a, type: 2}
+  - choiceLabel: Asset Liquidation Contract
+    nextNode: {fileID: 11400000, guid: cd3e7494af918774884bd50ca2ed1819, type: 2}
+  - choiceLabel: Master Key Fingerprints
+    nextNode: {fileID: 11400000, guid: cd3e7494af918774884bd50ca2ed1819, type: 2}
+  - choiceLabel: Press on Alibi
+    nextNode: {fileID: 11400000, guid: b1f6f6287400c9f449750f0d3b511dec, type: 2}
+  - choiceLabel: Press on Timeline
+    nextNode: {fileID: 11400000, guid: bfcbf59d21ff96e468f722d36eac0928, type: 2}
+  - choiceLabel: Press on Relationship to Victim
+    nextNode: {fileID: 11400000, guid: 02fba83b2af29f548a686cda1ce4fbb7, type: 2}
+  - choiceLabel: Return to the Roster
+    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - choiceLabel: Step out for now
+    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  blocks:
+  - condition: 
+    text: 'The camera settles on Yuki Tanaka across a plain, metal table. She sits
+      perfectly straight, her hands folded neatly in front of her, the picture of
+      a professional holding it together after a shock.
+
+      
+
+      <b>[DEDUCTION
+      CLIPBOARD ACTIVE]</b>
+
+      <i>PHYSICAL EVIDENCE</i>
+
+'
+    links: []
+  - condition: (history:) contains "The Restricted Corridor Door" and (history:)
+      does not contain "Miller - Key Handoff"
+    text: '
+
+'
+    links:
+    - label: The Restricted Corridor Door
+      target: Miller - Key Handoff
+      node: {fileID: 11400000, guid: 12bfc5c9053694840adf854ce9a3c32a, type: 2}
+  - condition: (history:)contains"Contract Clue Unlock" and not ((history:) contains
+      "The Restricted Corridor Door" and (history:) does not contain "Miller - Key
+      Handoff")
+    text: '
+
+'
+    links:
+    - label: Asset Liquidation Contract
+      target: Yuki - Restricted
+      node: {fileID: 11400000, guid: cd3e7494af918774884bd50ca2ed1819, type: 2}
+  - condition: (history:)contains"Key Clue Unlock" and (history:)contains"Elena -
+      Contract" and (history:) does not contain "Elena - Key" and not ((history:)
+      contains "The Restricted Corridor Door" and (history:) does not contain "Miller
+      - Key Handoff") and not ((history:)contains"Contract Clue Unlock")
+    text: '
+
+'
+    links:
+    - label: Master Key Fingerprints
+      target: Yuki - Restricted
+      node: {fileID: 11400000, guid: cd3e7494af918774884bd50ca2ed1819, type: 2}
+  - condition: not ((history:) contains "The Restricted Corridor Door" and (history:)
+      does not contain "Miller - Key Handoff") and not ((history:)contains"Contract
+      Clue Unlock") and not ((history:)contains"Key Clue Unlock" and (history:)contains"Elena
+      - Contract" and (history:) does not contain "Elena - Key")
+    text: '<i>You currently have no physical clues to present. Select a baseline
+      topic for Detective Miller to press her on.</i>
+
+'
+    links: []
+  - condition: 
+    text: '
+
+'
+    links: []
+  - condition: (history:) does not contain "Yuki - Alibi"
+    text: '
+
+'
+    links:
+    - label: Press on Alibi
+      target: Yuki - Alibi
+      node: {fileID: 11400000, guid: b1f6f6287400c9f449750f0d3b511dec, type: 2}
+  - condition: (history:) does not contain "Yuki - Timeline"
+    text: '
+
+'
+    links:
+    - label: Press on Timeline
+      target: Yuki - Timeline
+      node: {fileID: 11400000, guid: bfcbf59d21ff96e468f722d36eac0928, type: 2}
+  - condition: (history:) does not contain "Yuki - Relationship"
+    text: '
+
+'
+    links:
+    - label: Press on Relationship to Victim
+      target: Yuki - Relationship
+      node: {fileID: 11400000, guid: 02fba83b2af29f548a686cda1ce4fbb7, type: 2}
+  - condition: (history:) contains "Yuki - Alibi" and (history:) contains "Yuki -
+      Timeline" and (history:) contains "Yuki - Relationship"
+    text: '<b>Detective Miller:</b>
+
+      "Her story is ironclad. We aren''t getting
+      anything else out of her without physical proof."
+
+      
+
+      <i>[YUKI
+      TANAKA''S STATEMENT LOGGED]</i>
+
+      
+
+      
+
+'
+    links:
+    - label: Return to the Roster
+      target: Interrogation Room
+      node: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - condition: not ((history:) contains "Yuki - Alibi" and (history:) contains "Yuki
+      - Timeline" and (history:) contains "Yuki - Relationship")
+    text: '
+
+      
+
+'
+    links:
+    - label: Step out for now
+      target: Interrogation Room
+      node: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - condition: 
+    text: "\r\n\r"
+    links: []

@@ -1,0 +1,788 @@
+:: StoryTitle
+The Midnight Gallery
+
+:: StoryData
+{
+ "ifid": "60D98EB8-354A-4E85-8CB6-1EF721671F54",
+ "format": "Entweedle",
+ "format-version": "1.1.1",
+ "startnode": "48",
+ "zoom": "0.3",
+ "start": "The Cinematic Opening"
+}
+
+:: UserScript [script]
+
+
+:: UserStylesheet [stylesheet]
+
+
+:: Act 3 {"position":"2950,700","size":"100,100"}
+''[ACT 3: THE NIGHT SHIFT]''
+
+DEMO completed. Leave any suggestions in comments and wishlist for future updates.
+
+:: CO - Page 1 {"position":"500,750","size":"100,100"}
+''Visuals''
+Sweeping shots across a glamorous, black-tie convention hall — warm lighting, tuxedos, evening gowns, the wealthy elite in full chatter.
+
+''Narrative''
+The house microphone crackles — the judges are ready to crown the evening's Grand Prize.
+
+[[CONTINUE|CO - Page 2]]
+[[SKIP|Taking Control]]
+
+//No. of panels: 1//
+
+:: CO - Page 2 {"position":"350,750","size":"100,100"}
+''Visuals''
+Wide shot of the crowd as the announcer calls "The Marcus Art Gallery" to dead silence — twice. Just as it curdles into scandal, Thomas Webb rises from his seat and walks to the stage, forcing a practiced smile as he accepts the trophy on the gallery's behalf.
+
+''Narrative''
+Tight cuts of rivals trading knowing glances — the confusion over Marcus's absence turning into a different kind of curiosity now that it's the brother holding the prize.
+
+[[CONTINUE|CO - Page 3]]
+[[SKIP|Taking Control]]
+
+//No. of Panels: 7 (can be altered as suited)//
+//1. Announcement//
+//2. Silence//
+//3. Announcement 2nd time//
+//4. Silence again//
+//5. Thomas rises//
+//6. Walks to stage//
+//7. Receives the trophy//
+
+:: CO - Page 3 {"position":"350,900","size":"100,100"}
+''Visuals''
+Backstage at the convention hall — moments after Thomas steps off the stage, trophy still in hand. His phone buzzes. His hands start shaking as he answers.
+
+''Narrative''
+A voice bursts through in panicked, breathless tears: "Thomas. The police are here… you need to come back." Thomas sprints out of the convention hall.
+
+[[CONTINUE|CO - Page 4]]
+[[SKIP|Taking Control]]
+
+//No. of Panels: 3//
+//1. Phone Ringing//
+//2. Dialogue//
+//3. Hand Shakes//
+
+:: CO - Page 4 {"position":"350,1050","size":"100,100"}
+''Visuals''
+Thomas running from the convention hall toward the Webb Gallery — splash SFX driving the urgency. The player just watched him on stage, so his identity is fully established. The gallery comes into view, wrapped in police tape.
+
+[[CONTINUE|CO - Page 5]] 
+[[SKIP|Taking Control]] 
+
+//No. of Panels: 1//
+
+:: CO - Page 5 {"position":"500,1050","size":"100,100"}
+''Visuals''
+Hard cut from Thomas's run — no time skip, this is the same night. The palette drains to cold and dreary. Detective Miller is already standing outside the yellow tape under flashing blue lights, called to the scene the moment the case was flagged for his and the investigator's joint assignment.
+
+[[CONTINUE|Taking Control]]
+
+//No. of Panels: 1//
+
+:: Case File {"position":"1450,475","size":"100,100"}
+[[EXIT|Gallery Exterior]] | ''[ VICTIM ]'' | [[OBJECTIVES|Objective Tab]] | [[SUSPECTS|Suspects Tab]] | [[EVIDENCE|Evidence Tab]] | [[TIMELINE|Timeline Tab]]
+
+(text-style:"underline")[''Victim Details'']
+''Name:'' Marcus Webb
+''Profession:'' Curator & Owner (Webb Gallery/Marcus Art Gallery)
+''Age:'' 34 yrs 2 mo
+''Blood Type:'' AB+
+
+(text-style:"underline")[''Murder Details'']
+''Time of Murder:'' Between 10 PM and 12 PM last night.
+''Murder Weapon:'' -//not confirmed//-
+''Official Precinct Theory:'' Death by self-administered overdose of synthetic depressants leading to an accidental fatal fall, currently pushed by city council authority as a suicide triggered by impending bankruptcy.
+
+(text-style: "underline")[ ''Autopsy & Medical Report'' ]
+''Primary Cause of Death:'' Blunt force trauma to head consistent with fatal fall.
+''Toxicology Screen:'' Pending / Unverified.
+''Secondary Findings:'' Synthetic depressant vial recovered from victim's left jacket pocket.
+''Notes:'' Precinct narrative assumes fall induced by drug ingestion.
+
+:: Contract Clue Unlock {"position":"1900,1050","size":"100,100"}
+We must interrogate with Elena to talk about the contract.
+
+''[CLUE COLLECTED: Asset Liquidation Contract]''
+
+[[CONTINUE|Private Office]]
+
+:: Elena - Alibi {"position":"1350,1175","size":"100,100"}
+You select the 'Alibi' baseline.
+
+''Detective Miller:'' 
+"Where were you last night when the gallery was locked down?"
+
+''Elena Vance:'' 
+"I was working late at my own gallery across town, finalizing auction logistics, and then I went home. You are welcome to pull my building's security logs. I haven't set foot in Marcus's office all week."
+
+''[Investigator's Note:]'' She offers up her own security logs without blinking. It's a confident, perfectly practiced deflection. Unless we find physical evidence putting her inside Marcus's gallery last night, we can't touch her.
+
+[[Back to Elena's Clipboard|Interview Elena]]
+
+:: Elena - Contract {"position":"1225,1175","size":"100,100"}
+''Detective Miller:''
+"You mentioned your working relationship with Marcus was perfectly fine. We found this in his wastebasket. A Vance Wealth Management liquidation contract, dated yesterday."
+
+''Elena Vance:''
+"Standard contingency paperwork. As a stakeholder, it is my fiduciary duty to prepare for all financial outcomes, including bankruptcy. A drafted proposal is not a crime, Inspector."
+
+''[Investigator's Note:]'' There's definitely something more to this story. She was clearly hiding something.
+
+[[Back to Elena's Clipboard|Interview Elena]]
+
+:: Elena - Key {"position":"1100,1175","size":"100,100"}
+''Detective Miller:''
+"You told me the contract was just a contingency plan. Doesn't such a proposal usually requires a meeting? You told me you haven't been in his office all week. But someone used an older, physical master key to bypass the electronic lock last night. And judging by the fresh gouges on the cylinder, they were in a massive hurry."
+
+''Elena Vance:''
+"Are you wearing a wire? No? Fine. Yes, I let myself into his office at 8:15 PM. He was spiraling. I offered him a clean exit — sign over the exhibition rights, and I would handle the debt. He screamed, threw the contract in the trash, and I walked out. He was very much alive and entirely alone when I left him. So unless you are arresting me for trespassing, we are done here."
+
+''[Investigator's Note:]'' Elena admits to corporate espionage and trespassing — but her 8:15 PM timeline clears her of the murder itself, hours before Marcus actually died.
+
+[[Back to Elena's Clipboard|Interview Elena]]
+
+:: Elena - Relationship {"position":"1350,1425","size":"100,100"}
+You tap the 'Relationship' baseline on your clipboard. Miller sits up slightly straighter to match her corporate energy.
+
+''Detective Miller:'' 
+"Let's talk about you and Marcus. Ex-spouses running rival galleries in the same city... there had to be friction."
+
+''Elena Vance:'' 
+"It is a devastating loss for the art community. Marcus and I had a perfectly fine working relationship. My statements regarding the gallery's portfolio are on file with Detective Miller. If you'll excuse me, I have a board meeting to salvage."
+
+''[Investigator's Note:]'' There is a total lack of humanity in her response. She's already treating her ex-husband's death as a logistical problem to manage.
+ 
+[[Back to Elena's Clipboard|Interview Elena]]
+
+:: Elena - Timeline {"position":"1350,1300","size":"100,100"}
+You select the 'Timeline' baseline. 
+
+''Detective Miller:'' 
+"When did you find out about the incident this morning?"
+
+''Elena Vance:'' 
+"Your precinct called my office at 8:00 AM as a primary stakeholder in the Webb estate. I cancelled a very important morning briefing to come down here and cooperate out of respect for Marcus. But my patience, and my schedule, are wearing extremely thin."
+
+''[Investigator's Note:]'' She frames her presence here as a favor to the police rather than an obligation. She is controlling the pace of the interview and giving us absolutely nothing to work with.
+
+[[Back to Elena's Clipboard|Interview Elena]]
+
+:: Evidence Tab {"position":"1550,175","size":"100,100"}
+[[EXIT|Gallery Exterior]] | [[VICTIM|Case File]] | [[OBJECTIVES|Objective Tab]] | [[SUSPECTS|Suspects Tab]] | ''[EVIDENCE]'' | [[TIMELINE|Timeline Tab]]
+
+:: Exhibition Hall {"position":"1300,900","size":"100,100"}
+[[Open Case File|Case File]](if: (history:)contains"Elena - Key")[ | [[Use Time Vision|Exhibition Hall Time Vision]]]
+
+(if: (history:) contains "The Restricted Corridor Door")[[[Head outside|Gallery Exterior]]](else:)[[[Head outside|Gallery Exterior - Restricted]]]
+
+(if: (history:) does not contain "Exhibition Hall")[Ducking under the tape together, you enter a space designed to be a pristine showroom.
+
+]Pristine white marble/hardwood floor, harsh track lighting casting long shadows. Empty and near-empty display pedestals with faint dust outlines where sculptures once stood, blank stretches of wall where paintings were removed. Scattered police evidence markers on the floor. A reception desk near the entrance with discarded half-full champagne flutes and glossy gala pamphlets. Cold blue-gray palette, single muted crimson accent (police tape or a marker flag), rain visible through floor-to-ceiling windows. Sterile, tomb-like atmosphere, highly detailed comic/graphic-novel art style.
+
+What do you want to inspect?
+
+[[The Empty Displays]]
+[[The Scattered Gala Programs]]
+[[The Discarded Champagne Flutes]]
+(if: (history:) contains "Miller - Key Handoff")[[[The Restricted Corridor Door|Restricted Corridor]]](else:)[[The Restricted Corridor Door]]
+
+:: Exhibition Hall Time Vision {"position":"1450,675","size":"100,100"}
+I don't see any meaningful object in here to use this ability on.
+
+[[Exit Time Vision Mode|Exhibition Hall]]
+
+:: Gallery - Restricted {"position":"900,1175","size":"100,100"}
+I should not go back yet. Still need to interrogate some people.
+
+[[CONTINUE|Interrogation Room]]
+
+:: Gallery Exterior {"position":"1000,900","size":"100,100"}
+[[Open Case File|Case File]](if: (history:)contains"Elena - Key")[ | [[Use Time Vision|Gallery Exterior Time Vision]]]<!--(set: _contractClue to false)(set: _galleryAfterClue to false)(if:(history:)contains"Key Clue Unlock")[(for: each _p, ...(history:))[(if: _p is "Elena - Contract")[(set: _contractClue to true)](else-if: _p is "Gallery Exterior" and _contractClue)[(set: _galleryAfterClue to true)]]]-->(set: _keyFirst to false)(set: _decided to false)(for: each _p, ...(history:))[(if: not _decided)[(if: _p is "Key Clue Unlock")[(set: _keyFirst to true)(set: _decided to true)](else-if: _p is "Elena - Contract")[(set: _decided to true)]]]
+
+A modern art gallery exterior at night. Noir aesthetic, cold blue and deep gray color palette. Wide double glass doors face a concrete front plaza; a public sidewalk runs along the front. The building is boxed in by tall, imposing city structures on both sides. Rain-slicked pavement reflecting streetlight, moody cinematic lighting, highly detailed comic art style. Large floor-to-ceiling glass windows, a glowing minimalist sign reading "Webb Gallery." Yellow police tape stretched across the entrance. Gloomy, atmospheric, no characters visible — background plate only.
+
+(if:(history:)does not contain"The Restricted Corridor Door")[''Detective Miller:''
+"Head inside and investigate the gallery. I'll question some locals for now."](else-if:(history:)does not contain"Interrogation Room")[''Detective Miller:''
+"I was able to gather a few witnesses. We should go and interrogate them."](else-if:(history:)does not contain"Contract Clue Unlock")[''Detective Miller:''
+"Found anything interesting to interrogate them again?"](else-if:(history:)does not contain"Elena - Contract")[''Detective Miller:''
+"Contract to liquidate assets? Let's head back for some more interrogation."](else-if:(history:)does not contain"Key Clue Unlock")[''Detective Miller:''
+"Found anything interesting to interrogate them again?"](else-if:(history:)does not contain"Elena - Key" and not _keyFirst)[''Detective Miller:''
+"You won't believe this. A call from forensics just came over and the key you sent for examination... it had Elena's fingerprints on it. They said it was fresh and was used recently to unlock a door.
+
+"We can finally catch her for something."
+
+''[CLUE COLLECTED: Master Key Fingerprints]'']
+
+[[Head Inside|Exhibition Hall]](if: (history:) contains "The Restricted Corridor Door")[(if: ((history:)does not contain"Miller - Key Handoff")or((history:) contains "Contract Clue Unlock" and (history:)does not contain"Elena - Contract")or((history:) contains "Key Clue Unlock" and (history:) does not contain "Elena - Key"))[
+[[Head to Interrogation Room|Interrogation Room]]](else:)[
+[[Head to Interrogation Room|Interrogation Room - Restricted]]]]
+
+:: Gallery Exterior - Restricted {"position":"1150,800","size":"100,100"}
+I shouldn't leave without exploring this place first.
+
+[[CONTINUE|Exhibition Hall]]
+
+:: Gallery Exterior Time Vision {"position":"900,750","size":"100,100"}
+I don't see any meaningful object in here to use this ability on.
+
+[[Exit Time Vision Mode|Gallery Exterior]]
+
+:: Interrogation Room {"position":"1000,1325","size":"100,100"}
+[[Open Case File|Case File]]
+
+<!--(set: _contractClue to false)(set: _interrogationAfterClue to false)(for: each _p, ...(history:))[(if: _p is "Elena - Contract")[(set: _contractClue to true)](else-if: _p is "Interrogation Room" and _contractClue)[(set: _interrogationAfterClue to true)]](set: _galleryAfterClue to false)(for: each _p, ...(history:))[(if: _p is "Elena - Contract")[(set: _contractClue to true)](else-if: _p is "Gallery Exterior" and _contractClue)[(set: _galleryAfterClue to true)]]-->(set: _keyFirst to false)(set: _decided to false)(for: each _p, ...(history:))[(if: not _decided)[(if: _p is "Key Clue Unlock")[(set: _keyFirst to true)(set: _decided to true)](else-if: _p is "Elena - Contract")[(set: _decided to true)]]](if: (history:) does not contain "Interrogation Room")[''Detective Miller:''
+"Alright, let's get this roster organized. The assistant curator, Yuki, is the one who actually discovered the body, though the security chief, Victor, is the one who made the 911 call. There was another employee on-site—Leo, the archive assistant—but the kid was running on fumes after pulling an all-night digitization shift. I let him head home to get some sleep. We'll bring him back in later.
+
+"As for the rest... the victim's brother, Thomas, just arrived outside the tape, and we called the ex-wife, Elena, earlier and had her brought down. They're all waiting. Let's see whose story cracks first."
+
+](else-if: (history:)contains"Elena - Contract" and (history:)contains"Key Clue Unlock" and (history:) does not contain "Elena - Key" and _keyFirst)<!--and not _interrogationAfterClue and not _galleryAfterClue)-->[''Detective Miller:''
+"You won't believe this. A call from forensics just came over and the key you sent for examination... it had Elena's fingerprints on it. They said it was fresh and was used recently to unlock a door.
+
+"We can finally catch her for something."
+
+''[CLUE COLLECTED: Master Key Fingerprints]''
+
+]Who do you want to interrogate?
+
+[[Yuki Tanaka - The Assistant Curator|Interview Yuki]]
+[[Victor Hasting - Chief Security Officer|Interview Victor]]
+[[Thomas Webb - The Brother|Interview Thomas]]
+[[Elena Vance - The Rival|Interview Elena]]
+
+(if: (history:) contains "Interview Yuki" and (history:) contains "Interview Victor" and (history:) contains "Interview Thomas" and (history:) contains "Interview Elena" and (history:) contains "Miller - Key Handoff")[(if: (history:) does not contain "Contract Clue Unlock")[''Detective Miller:''
+"That's everyone. And every single one of them is a dead end on paper. We aren't getting anything else out of them right now. You have the master key. Go back and crack open that Private Office before the city council shuts us down."
+
+[[Head to the Webb Gallery|Gallery Exterior]]](else-if: (history:)contains"Elena - Contract" and (history:)does not contain"Key Clue Unlock")[''Detective Miller:''
+"We are missing something. You need to go back and check the Private Office."
+
+[[Head to the Webb Gallery|Gallery Exterior]]](else-if: (history:)contains"Elena - Key")[''Detective Miller:''
+"Detective. I have another news for you. Forensics also just called me again. Marcus did not ingest the poison. The vial was planted post-mortem, and the fatal blow was delivered before the scene was staged. You can now actually use your ability on the vase to find out who the killer is."
+
+''[ABILITY UNLOCKED: Time Vision]''
+
+[[Head to the Webb Gallery|Gallery Exterior]]](else:)[[Head to the Webb Gallery|Gallery - Restricted]]]
+
+:: Interrogation Room - Restricted {"position":"900,1050","size":"100,100"}
+I don't have another reason to go there yet.
+
+[[CONTINUE|Gallery Exterior]]
+
+:: Interrogation Room Unlock {"position":"1300,1050","size":"100,100"}
+With the back corridor locked down, you need to talk to the witnesses to figure out who has access.
+
+//Interrogation Room: ''Unlocked''//
+
+[[CONTINUE|Exhibition Hall]]
+
+:: Interview Elena {"position":"1200,1325","size":"100,100"}
+The camera settles on Elena Vance. She sits with perfect posture, checking an expensive watch. She is Marcus's ex-wife and a rival gallery owner, but she projects the icy, untouchable aura of a corporate CEO who has somewhere much better to be.(set: _contractClue to false)(set: _interrogationAfterClue to false)(for: each _p, ...(history:))[(if: _p is "Elena - Contract")[(set: _contractClue to true)](else-if: _p is "Interrogation Room" and _contractClue)[(set: _interrogationAfterClue to true)]]
+
+''[DEDUCTION CLIPBOARD ACTIVE]''
+(if: (history:) contains "The Restricted Corridor Door" and (history:) does not contain "Miller - Key Handoff")[[[The Restricted Corridor Door|Miller - Key Handoff]]
+](else-if: (history:)contains"Contract Clue Unlock" and (history:)does not contain"Elena - Contract")[[[Asset Liquidation Contract|Elena - Contract]]
+](else-if: (history:)contains"Key Clue Unlock" and _interrogationAfterClue and (history:) does not contain "Elena - Key")[[[Master Key Fingerprints|Elena - Key]]
+](else:)[//You currently have no physical clues to present. Select a baseline topic for Detective Miller to press her on.//
+]
+(if: (history:) does not contain "Elena - Alibi")[[[Press on Alibi|Elena - Alibi]]
+](if: (history:) does not contain "Elena - Timeline")[[[Press on Timeline|Elena - Timeline]]
+](if: (history:) does not contain "Elena - Relationship")[[[Press on Relationship to Victim|Elena - Relationship]]
+](if: (history:) contains "Elena - Alibi" and (history:) contains "Elena - Timeline" and (history:) contains "Elena - Relationship")[''Detective Miller:''
+"She's a fortress. Unless we find a paper trail proving she was in that building last night, she's going to walk right out of here to her board meeting."
+
+//[ELENA VANCE'S STATEMENT LOGGED]//
+
+[[Return to the Roster|Interrogation Room]]
+](else:)[
+[[Step out for now|Interrogation Room]]
+]
+
+:: Interview Thomas {"position":"1200,1550","size":"100,100"}
+The camera shifts to Thomas Webb. He looks like a man vibrating out of his skin—sweating, pacing slightly even while seated, and openly hostile. He is using his grief as a blunt instrument to keep you both at bay.
+
+''[DEDUCTION CLIPBOARD ACTIVE]''
+(if: (history:) contains "The Restricted Corridor Door" and (history:) does not contain "Miller - Key Handoff")[[[The Restricted Corridor Door|Miller - Key Handoff]]
+](else-if: (history:)contains"Contract Clue Unlock")[[[Asset Liquidation Contract|Thomas - Restricted]]
+](else-if: (history:)contains"Key Clue Unlock" and (history:)contains"Elena - Contract" and (history:) does not contain "Elena - Key")[[[Master Key Fingerprints|Thomas - Restricted]]
+](else:)[//You currently have no physical clues to present. Select a baseline topic for Detective Miller to press her on.//
+]
+(if: (history:) does not contain "Thomas - Alibi")[[[Press on Alibi|Thomas - Alibi]]
+](if: (history:) does not contain "Thomas - Timeline")[[[Press on Timeline|Thomas - Timeline]]
+](if: (history:) does not contain "Thomas - Relationship")[[[Press on Relationship to Victim|Thomas - Relationship]]
+](if: (history:) contains "Thomas - Alibi" and (history:) contains "Thomas - Timeline" and (history:) contains "Thomas - Relationship")[''Detective Miller:''
+"He's loud, but he's safe behind a room full of witnesses. Until we have paper proving he had a reason to want Marcus dead, pushing him is just going to get us a harassment complaint."
+
+//[THOMAS WEBB'S STATEMENT LOGGED]//
+
+[[Return to the Roster|Interrogation Room]]
+](else:)[
+[[Step out for now|Interrogation Room]]
+]
+
+:: Interview Victor {"position":"800,1525","size":"100,100"}
+The camera cuts to Victor Hasting, the Chief Security Officer. He's a large, rigid man sitting with his arms crossed. He looks more annoyed by the disruption to his security protocols than devastated by his boss's death.
+
+''[DEDUCTION CLIPBOARD ACTIVE]''
+(if: (history:) contains "The Restricted Corridor Door" and (history:) does not contain "Miller - Key Handoff")[[[The Restricted Corridor Door|Miller - Key Handoff]]
+](else-if: (history:)contains"Contract Clue Unlock")[[[Asset Liquidation Contract|Victor - Restricted]]
+](else-if: (history:)contains"Key Clue Unlock" and (history:)contains"Elena - Contract" and (history:) does not contain "Elena - Key")[[[Master Key Fingerprints|Victor - Restricted]]
+](else:)[//You currently have no physical clues to present. Select a baseline topic for Detective Miller to press her on.//
+]
+(if: (history:) does not contain "Victor - Alibi")[[[Press on Alibi|Victor - Alibi]]
+](if: (history:) does not contain "Victor - Timeline")[[[Press on Timeline|Victor - Timeline]]
+](if: (history:) does not contain "Victor - Relationship")[[[Press on Relationship to Victim|Victor - Relationship]]
+](if: (history:) contains "Victor - Alibi" and (history:) contains "Victor - Timeline" and (history:) contains "Victor - Relationship")[''Detective Miller:''
+"He's completely walled up behind his own security protocols. We need the actual logs to punch a hole in this."
+
+//[VICTOR HASTING'S STATEMENT LOGGED]//
+
+[[Return to the Roster|Interrogation Room]]
+](else:)[
+[[Step out for now|Interrogation Room]]
+]
+
+:: Interview Yuki {"position":"800,1325","size":"100,100"}
+The camera settles on Yuki Tanaka across a plain, metal table. She sits perfectly straight, her hands folded neatly in front of her, the picture of a professional holding it together after a shock.
+
+''[DEDUCTION CLIPBOARD ACTIVE]''
+//PHYSICAL EVIDENCE//
+(if: (history:) contains "The Restricted Corridor Door" and (history:) does not contain "Miller - Key Handoff")[[[The Restricted Corridor Door|Miller - Key Handoff]]
+](else-if: (history:)contains"Contract Clue Unlock")[[[Asset Liquidation Contract|Yuki - Restricted]]
+](else-if: (history:)contains"Key Clue Unlock" and (history:)contains"Elena - Contract" and (history:) does not contain "Elena - Key")[[[Master Key Fingerprints|Yuki - Restricted]]
+](else:)[//You currently have no physical clues to present. Select a baseline topic for Detective Miller to press her on.//
+]
+(if: (history:) does not contain "Yuki - Alibi")[[[Press on Alibi|Yuki - Alibi]]
+](if: (history:) does not contain "Yuki - Timeline")[[[Press on Timeline|Yuki - Timeline]]
+](if: (history:) does not contain "Yuki - Relationship")[[[Press on Relationship to Victim|Yuki - Relationship]]
+](if: (history:) contains "Yuki - Alibi" and (history:) contains "Yuki - Timeline" and (history:) contains "Yuki - Relationship")[''Detective Miller:''
+"Her story is ironclad. We aren't getting anything else out of her without physical proof."
+
+//[YUKI TANAKA'S STATEMENT LOGGED]//
+
+[[Return to the Roster|Interrogation Room]]
+](else:)[
+[[Step out for now|Interrogation Room]]
+]
+
+:: Key Clue Unlock {"position":"1900,750","size":"100,100"}
+You also found a key on the desk. It seems there are some fingerprints on it.
+
+//Key sent to forensics.//
+
+[[CONTINUE|Private Office]]
+
+:: Miller - Key Handoff {"position":"1000,1525","size":"100,100"}
+//You drag the 'Restricted Corridor Door' onto the interrogation tab, preparing to press the witness on who has access to the back rooms.//
+
+''Detective Miller:'' 
+"Don't bother with that right now. Here's the key for the corridor. Once we're done with the roster, you can investigate the Private Office."
+
+''[ITEM REMOVED: The Restricted Corridor Door]''
+''[ITEM ACQUIRED: Restricted Master Key]''
+
+[[Return to the Roster|Interrogation Room]]
+
+:: Objective Tab {"position":"1275,350","size":"100,100"}
+[[EXIT|Gallery Exterior]] | [[VICTIM|Case File]] | ''[OBJECTIVES]'' | [[SUSPECTS|Suspects Tab]] | [[EVIDENCE|Evidence Tab]] | [[TIMELINE|Timeline Tab]](set: _corridorSeen to false)(set: _galleryAfterCorridor to false)(for: each _p, ...(history:))[(if: _p is "The Restricted Corridor Door")[(set: _corridorSeen to true)](else-if: _p is "Gallery Exterior" and _corridorSeen)[(set: _galleryAfterCorridor to true)]]
+
+(if: (history:)does not contain"The Restricted Corridor Door")[Investigate the Exhibition Hall.](else:)[~~Investigate the Exhibition Hall~~
+(if: not _galleryAfterCorridor)[Talk to Detective Miller outside the gallery.](else:)[~~Talk to Detective Miller outside the gallery.~~
+(if: not ((history:) contains "Interview Yuki" and (history:) contains "Interview Victor" and (history:) contains "Interview Thomas" and (history:) contains "Interview Elena"))[Interrogate the suspects.](else:)[~~Interrogate the Suspects.~~]]
+(if: (history:)does not contain"Miller - Key Handoff")[Find out about the key to the Restricted Corridor.](else:)[~~Find out about the key to the Restricted Corridor.~~]]
+
+:: PV - Page 1 {"position":"2350,900","size":"100,100"}
+''Visuals''
+The Investigator focuses intently on the clean dust outline on the pedestal. A glowing, translucent vase materializes over the empty spot. An ornate pocket watch fades into the foreground—its second hand stutters, pauses, and then spins violently backward.
+
+''Narrative / Audio''
+(Temporal chime / ticking SFX rewinding backwards)
+
+[[CONTINUE|PV - Page 2]]
+[[SKIP|Post Vision - Vase]] 
+
+//No. of Panels: 5//
+//1. Focus on pedestal//
+//2. Clock fading into foreground//
+//3. Second hand slowing down//
+//4. Second hand pausing//
+//5. Second spining backward//
+
+:: PV - Page 2 {"position":"2500,900","size":"100,100"}
+''Visuals''
+The rewind abruptly stops, freezing on 11:20 PM. Marcus stands behind his mahogany desk, furious and yelling silently, while a dark, hooded silhouette lunges forward toward the display pedestal.
+
+''Narrative''
+11:20 PM — The rewind catches Marcus shouting at a shadowy figure, who lunges directly toward the pedestal.
+
+[[CONTINUE|PV - Page 3]]
+[[SKIP|Post Vision - Vase]] 
+
+//No. of Panels: //
+//1. Clock stopping//
+//2. Marcus shouting//
+//3.
+
+:: PV - Page 3 {"position":"2650,900","size":"100,100"}
+''Visuals''
+Action shot—the hooded figure grabs the heavy porcelain vase and swings it with full force into Marcus's temple. Shards of porcelain scatter across the floor as Marcus collapses beside the desk, a dark pool of blood instantly spreading beneath his head.
+
+''Narrative/Audio''
+(Shattering porcelain SFX) The fatal blow is delivered before Marcus hits the ground.
+
+[[CONTINUE|PV - Page 4]]
+[[SKIP|Post Vision - Vase]]
+
+//No. of Panels: 4//
+//1. Hooded figure grabs the vase//
+//2. Marcus gets in front of desk//
+//3. Vase crashes into Marcus's temple//
+//4. Aftermath//
+
+:: PV - Page 4 {"position":"2800,900","size":"100,100"}
+''Visuals''
+Close-up shot—the killer stoops down over Marcus, checks his wrist for a pulse, and pulls a small vial of synthetic depressants from their pocket. They slide the vial deep inside Marcus's jacket pocket to fake an overdose.
+
+''Narrative:''
+Cold and deliberate. Planting the poison to fake a financial suicide.
+
+[[CONTINUE|PV - Page 5]]
+[[SKIP|Post Vision - Vase]]
+
+//No. of Panels: 4//
+//1. Killer stooping over//
+//2. Check wrist for pulse//
+//3. Pulls a small vial//
+//4. Slides into Marcus's pocket//
+
+:: PV - Page 5 {"position":"2950,900","size":"100,100"}
+''Visuals''
+Wide shot—the hooded figure stands, steps over the broken porcelain, slips out of the office, and pulls the heavy office door shut behind them as the lock engages.
+
+''Narrative''
+The killer leaves the room locked. However every digital key card should leave a trail...
+
+[[CONTINUE|Post Vision - Vase]]
+
+//No. of Panels: 3//
+//1. Killer stepping over the vase//
+//2. Leaves the room//
+//3. Closes the door//
+
+:: Post Vision - Vase {"position":"2650,700","size":"100,100"}
+That confirms it. The vase didn't shatter because of a clumsy fall—it was the murder weapon. He was dead before that empty vial ever touched his pocket.
+
+The killer didn't panic. They walked out and shut that heavy door behind them. If the electronic lock engaged when they left, there has to be a digital footprint logged in the system…
+
+[[CONTINUE|Act 3]]
+
+:: Private Office {"position":"1900,900","size":"100,100"}
+[[Open Case File|Case File]](if: (history:)contains"Elena - Key")[ | [[Use Time Vision|Private Office Time Vision]]]
+
+Stepping into the office, the air feels heavy, bathed in the rich, dim glow of warm interior lighting that casts long, dramatic shadows against dark mahogany wainscoting and paneled wooden walls. An intimate, enclosed study bathed in moody, ambient amber light.
+
+What do you want to inspect?
+
+[[Search the desk and ledgers|Private Office - Desk]]
+[[Examine the door lock|Private Office - Lock]]
+[[Look into the wastebasket|Private Office - Wastebasket]]
+[[Check the shattered porcelain vase|Private Office - Vase]]
+
+[[Exit the Private Office|Restricted Corridor]]
+
+:: Private Office - Desk {"position":"2050,800","size":"100,100"}
+A false-bottom drawer, pried open and left ajar, holds an urgent batch of final financial notices and heavily leveraged bank loans.
+
+(if: (history:)does not contain "Private Office - Desk")[[[CONTINUE|Key Clue Unlock]]](else:)[[[CONTINUE|Private Office]]]
+
+:: Private Office - Lock {"position":"1750,1000","size":"100,100"}
+The electronic keypad works fine, but the physical deadbolt shows microscopic, fresh metallic scratches in the keyway.
+
+[[CONTINUE|Private Office]]
+
+:: Private Office - Restricted {"position":"1600,750","size":"100,100"}
+I should investigate the private office first.
+
+[[CONTINUE|Restricted Corridor]]
+
+:: Private Office - Vase {"position":"1750,800","size":"100,100"}
+Jagged, heavy porcelain fragments lie scattered in a dark, dried pool of blood beside the mahogany desk.
+
+//It could be the likely cause of Marcus' death and the murder weapon unless he actually took that drug vial.//
+
+[[CONTINUE|Private Office]]
+
+:: Private Office - Wastebasket {"position":"2050,1000","size":"100,100"}
+(if: (history:) does not contain "Private Office - Wastebasket")[Beneath shredded routine flyers sits one crumpled sheet of heavy cardstock: a pre-drafted asset liquidation contract from Vance Wealth Management.
+
+[[CONTINUE|Contract Clue Unlock]]](else:)[There is nothing else of value here.
+
+[[CONTINUE|Private Office]]]
+
+:: Private Office Time Vision {"position":"2200,900","size":"100,100"}
+(if: (history:)does not contain"Private Office - Vase")[I don't see any meaningful object in here to use this ability on.](else:)[[Use Time Vision on Shattered Vase|PV - Page 1]]
+
+[[Exit Time Vision Mode|Private Office]]
+
+:: Restricted Corridor {"position":"1600,900","size":"100,100"}
+(if: (history:) does not contain "Restricted Corridor")[''[ACT 2: Unlocking the Paper Trail]''
+
+][[Open Case File|Case File]](if: (history:)contains"Elena - Key")[ | [[Use Time Vision|Restricted Corridor Time Vision]]]
+
+A narrow 6-foot-wide restricted corridor connecting a security booth and archive room to a private office and a doorway to back alley. Heavy modern electronic-keypad security door at one end, dim overhead strip lighting, cold gray-blue tones with deep shadows pooling in the corners. Claustrophobic framing, muted color palette, faint rain-shadow patterns from a distant window, cinematic noir lighting, comic art style.
+
+Where do you want to go?
+
+[[Exhibition Hall]]
+[[Private Office]]
+[[Security Booth|Private Office - Restricted]]
+[[Archive Room|Private Office - Restricted]]
+[[Back Alley|Private Office - Restricted]]
+
+:: Restricted Corridor Time Vision {"position":"1600,1050","size":"100,100"}
+I don't see any meaningful object in here to use this ability on.
+
+[[Exit Time Vision Mode|Restricted Corridor]]
+
+:: Suspects Tab {"position":"1350,175","size":"100,100"}
+[[EXIT|Gallery Exterior]] | [[VICTIM|Case File]] | [[OBJECTIVES|Objective Tab]] | ''[SUSPECTS]'' | [[EVIDENCE|Evidence Tab]] | [[TIMELINE|Timeline Tab]](set: _corridorSeen to false)(set: _galleryAfterCorridor to false)(for: each _p, ...(history:))[(if: _p is "The Restricted Corridor Door")[(set: _corridorSeen to true)](else-if: _p is "Gallery Exterior" and _corridorSeen)[(set: _galleryAfterCorridor to true)]]
+
+(if: not _galleryAfterCorridor)[No suspects have been gathered so far.](else:)[(text-style: "underline")[''Yuki Tanaka'']
+''Role:'' Assistant Curator (Webb Gallery)
+''Alibi:'' (if: (history:)contains"Yuki - Alibi")[She was at home at the time of murder.](else:)[N/A]
+''Timeline:'' (if: (history:)contains"Interrogation Room")[
+(if: (history:)does not contain"Yuki - Alibi" and (history:)does not contain"Victor - Alibi")[- Found the body](else:)[- Found the body at 7:35 AM with Victor.]](else:)[N/A]
+
+(text-style: "underline")[''Victor Hasting'']
+''Role:'' Chief Security Officer (Webb Gallery)
+''Alibi:'' (if: (history:)contains"Victor - Alibi")[He was at home at the time of murder.](else:)[N/A]
+''Timeline:'' (if: (history:)contains"Interrogation Room")[
+(if: (history:)does not contain"Yuki - Alibi" and (history:)does not contain"Victor - Alibi")[- Found the body](else:)[- Override the electronic lock around 7:35 AM.
+- Found the body at 7:35 AM with Yuki.]
+- Reported the murder to 911](else:)[N/A]
+
+(text-style: "underline")[''Thomas Webb'']
+''Role:'' Victim's Brother
+''Alibi:'' (if: (history:)contains"Thomas - Alibi")[He was at the gala at the time of murder.](else:)[N/A]
+''Timeline:'' (if: (history:)contains"Thomas - Timeline")[
+- Received ](else:)[N/A]
+]
+
+:: Taking Control {"position":"500,900","size":"100,100"}
+''[ACT 1]''
+''Location:'' //Outside the Marcus Art Gallery. Cold, dreary palette. Flashing blue police lights. Detective Miller is waiting by the yellow tape.//
+
+''Detective Miller:''
+"Glad you made it. Oversight wasn't kidding when they said they were pairing us up. We need to move fast."
+
+[["What's the situation?"|The Evidence]]
+[["Why the rush?"|The Politics]]
+
+:: The Cinematic Opening {"position":"500,600","size":"100,100"}
+The game opens on a passive observer, not the detective, watching the high-society downfall play out as a stylized comic-panel cutscene. Narrative is delivered through dialogue boxes, not on-screen text or voiceover.
+
+[[CONTINUE|CO - Page 1]]
+
+:: The Discarded Champagne Flutes {"position":"1450,800","size":"100,100"}
+Half-empty glasses rest on almost every available flat surface. 
+
+[[CONTINUE->Exhibition Hall]]
+
+:: The Empty Displays {"position":"1300,750","size":"100,100"}
+You look at the blank walls and empty pedestals. 
+
+[[CONTINUE->Exhibition Hall]]
+
+:: The Evidence {"position":"650,825","size":"100,100"}
+''Detective Miller:''
+"Marcus Webb, the gallery owner. Found dead inside. A poison vial was found with the body and much likely, the victim died with the accidental fall of the vase on his head. As of right now, we have absolutely no physical evidence pointing anywhere."
+
+(if: not ((history:) contains "The Politics"))[[["Sounds like a dead end. So why are we here?"|The Politics]]
+][["Let's check the scene. Local PD always misses something."|The Handoff]]
+
+:: The Handoff {"position":"800,900","size":"100,100"}
+''Detective Miller:''
+"Here’s the local precinct's Preliminary Case File. Read it over before you go inside."
+
+//Item Added: Case File.//
+
+[[CONTINUE|Case File]]
+
+:: The Politics {"position":"650,975","size":"100,100"}
+''Detective Miller:''
+"The city council is terrified. They want to avoid a high-society scandal that could freeze the art trade. They're forcing the 'suicide due to financial distress' verdict by the end of the day. Oversight assigned us as a two-person team to find the truth before local politics can bury the case for good."
+
+(if: not ((history:) contains "The Evidence"))[[["Tell me about the situation."|The Evidence]]
+][["End of the day? We'd better get moving."|The Handoff]]
+
+:: The Restricted Corridor Door {"position":"1450,1000","size":"100,100"}
+You approach the heavy door leading to the back rooms and the Private Office. 
+
+(if: (history:) does not contain "The Restricted Corridor Door")[[[CONTINUE->Interrogation Room Unlock]]](else:)[[[CONTINUE|Exhibition Hall]]]
+
+:: The Scattered Gala Programs {"position":"1150,1000","size":"100,100"}
+Glossy promotional pamphlets are scattered across the floor. 
+
+[[CONTINUE|Exhibition Hall]]
+
+:: Thomas - Alibi {"position":"1100,1675","size":"100,100"}
+You select the 'Alibi' baseline. Miller keeps his voice level, contrasting Thomas's erratic energy.
+
+''Detective Miller:'' 
+"Where were you last night when the gallery was locked down?"
+
+''Thomas Webb:'' 
+"My brother is dead on the floor, and you're asking where I was? I was at the gala — accepting a prize he should have been there to take himself. Call the entire convention hall; they all watched me on that stage. Do your job and find out who actually did this instead of harassing his family."
+
+''[Investigator's Note:]'' It's a completely ironclad public alibi. Hundreds of high-society witnesses saw him on that stage. We can't touch his whereabouts for the time of the murder.
+
+[[Back to Thomas's Clipboard|Interview Thomas]]
+
+:: Thomas - Relationship {"position":"1350,1675","size":"100,100"}
+You tap the 'Relationship' baseline. 
+
+''Detective Miller:'' 
+"How were things between you two recently? Being brothers in the same business can complicate things."
+
+''Thomas Webb:'' 
+"We were family. Obviously, we had our disagreements about how the gallery was being run—Marcus was obsessive, he refused to liquidate inventory even when it made sense—but I supported him. He was a genius. Why are we talking about this instead of finding the bastard who killed him?"
+
+''[Investigator's Note:]'' He’s using his grief to steer the conversation, but he got incredibly defensive the second gallery finances and "liquidating inventory" came up. There is tension there, but no proof to press him on yet.
+
+[[Back to Thomas's Clipboard|Interview Thomas]]
+
+:: Thomas - Restricted {"position":"1350,1550","size":"100,100"}
+''Detective Miller:''
+"I don't think that's a good idea.
+
+[[CONTINUE|Interview Thomas]]
+
+:: Thomas - Timeline {"position":"1225,1675","size":"100,100"}
+You select the 'Timeline' baseline.
+
+''Detective Miller:'' 
+"Walk me through your timeline for this morning. When did you get the news?"
+
+''Thomas Webb:'' 
+"I was still backstage at the convention hall, holding his damn trophy. Yuki called my cell in an absolute panic, crying that the police were here. I dropped everything and practically sprinted the whole way to the gallery. That's it. That's all I know."
+
+''[Investigator's Note:]'' His timeline matches the sequence of events perfectly. He got the call from Yuki and arrived exactly when expected. 
+
+[[Back to Thomas's Clipboard|Interview Thomas]]
+
+:: Timeline Tab {"position":"1625,350","size":"100,100"}
+[[EXIT|Gallery Exterior]] | [[VICTIM|Case File]] | [[OBJECTIVES|Objective Tab]] | [[SUSPECTS|Suspects Tab]] | [[EVIDENCE|Evidence Tab]] | ''[TIMELINE]''
+
+:: Victor - Alibi {"position":"900,1675","size":"100,100"}
+You select the 'Alibi' baseline.
+
+''Detective Miller:'' 
+"Where were you last night when the gallery was locked down?"
+
+''Victor Hasting:'' 
+"At home, off shift. Damian Cross, my night guard, was on duty. He ran his sweeps and checked the physical locks right on schedule. Nobody went in, nobody came out. My system didn't fail."
+
+''[Investigator's Note:]'' He blindly trusts his subordinate's report to protect his own system's integrity. Without getting our hands on those security logs or speaking to Damian directly, this defense is a brick wall.
+
+[[Back to Victor's Clipboard|Interview Victor]]
+
+:: Victor - Relationship {"position":"650,1550","size":"100,100"}
+You tap the 'Relationship' baseline. 
+
+''Detective Miller:'' 
+"How were things between you and Marcus recently? The gala must have been a security nightmare."
+
+''Victor Hasting:'' 
+"It was handled. Marcus paid me to ensure the gallery was a fortress, and that's exactly what I built. He could be difficult, sure, but he respected the perimeter. We didn't have personal problems; we had operational parameters."
+
+''[Investigator's Note:]'' He’s entirely focused on defending his professional reputation. He treats the death as a logistical anomaly rather than a human tragedy, giving us no emotional leverage to exploit.
+
+[[Back to Victor's Clipboard|Interview Victor]]
+
+:: Victor - Restricted {"position":"650,1675","size":"100,100"}
+''Detective Miller:''
+"I don't think that's a good idea.
+
+[[CONTINUE|Interview Victor]]
+
+:: Victor - Timeline {"position":"775,1675","size":"100,100"}
+You select the 'Timeline' baseline.
+
+(if: (history:) contains "Yuki - Timeline")[
+''Detective Miller:'' 
+"Walk me through this morning. Yuki says she came to you when the door wouldn't open."
+
+''Victor Hasting:'' 
+"She was panicked. Marcus held the only physical master keys, so the only way into that office once it's deadbolted is an emergency system override from my console. I blew the electronic lock at 7:35 AM. We walked in, saw him on the floor, and I made the call to 911 immediately. Whatever happened in there, he brought on himself."
+
+''[Investigator's Note:]'' He's got the timeline down to the minute, completely validating Yuki's morning story. He’s using his strict adherence to protocol as a shield.
+](else:)[
+''Detective Miller:'' 
+"Walk me through your timeline for this morning. When did you realize something was wrong?"
+
+''Victor Hasting:'' 
+"His assistant, Yuki, came running to my desk at 7:35 AM. She was panicking because his office door was deadbolted and he wasn't answering. I had to trigger an emergency system override from my console to blow the electronic lock. We walked in, saw him on the floor, and I made the call to 911 immediately. My system didn't fail; whatever happened in there, he brought on himself."
+
+''[Investigator's Note:]'' He's got the timeline down to the minute, but he immediately involves Yuki in his sequence of events to validate his story. We need to verify this with her.
+]
+
+[[Back to Victor's Clipboard|Interview Victor]]
+
+:: Yuki - Alibi {"position":"650,1175","size":"100,100"}
+//You selected the 'Alibi' baseline.//
+
+''Detective Miller:'' 
+"Where were you when the incident occurred last night?"
+
+''Yuki Tanaka:'' 
+"I wasn't here. I was supposed to work late on the gala files, but around 5 o'clock, Marcus told me to go home and get some rest. I left the gallery and went straight to my apartment."
+
+''[Investigator's Note:]'' If Marcus sent her home, it creates a perfectly clean break in her timeline. Without security logs or a witness to prove she came back to the gallery later that night, this alibi is a dead end.
+
+[[Back to Yuki's Clipboard|Interview Yuki]]
+
+:: Yuki - Relationship {"position":"650,1425","size":"100,100"}
+//You selected the 'Relationship' baseline.//
+
+''Detective Miller:'' 
+"Walk me through your dynamic with Marcus. You were his assistant curator. Was there any tension between you two?"
+
+''Yuki Tanaka:'' 
+"Strictly professional. Marcus was highly demanding, especially with the gala approaching. We were all under immense pressure to ensure everything was perfect, but that was just the nature of the job."
+
+''[Investigator's Note:]'' She's keeping it strictly about the work. It's a standard, careful answer. There's no visible friction to press her on without something tangible to contradict her.
+
+[[Back to Yuki's Clipboard|Interview Yuki]]
+
+:: Yuki - Restricted {"position":"775,1175","size":"100,100"}
+''Detective Miller:''
+"I don't think that's a good idea.
+
+[[CONTINUE|Interview Yuki]]
+
+:: Yuki - Timeline {"position":"650,1300","size":"100,100"}
+You select the 'Timeline' baseline. 
+
+(if: (history:) contains "Victor - Timeline")[
+''Detective Miller:'' 
+"Victor claims you came to his security desk panicking around 7:35 AM. Take me through exactly what happened this morning."
+
+''Yuki Tanaka:'' 
+"I arrived at 7:30 AM to start my shift. I went to Marcus's office to drop off some paperwork, but the door was locked and he wasn't answering. That wasn't like him. I got Victor to override the lock, and we found him together."
+
+''[Investigator's Note:]'' Her timeline lines up perfectly with Victor's down to the minute, and she uses him to validate her sequence of events. It's a solid, verifiable story.
+](else:)[
+''Detective Miller:'' 
+"Take me through the exact timeline of when you found him this morning."
+
+''Yuki Tanaka:'' 
+"I arrived at 7:30 AM to start my shift. I went to his office to drop off some paperwork, but the door was locked and he wasn't answering. That wasn't like him. I got Victor to override the lock, and we found him together."
+
+''[Investigator's Note:]'' She immediately involves the Security Chief in her timeline to validate her story. It's a solid sequence of events for the morning, assuming Victor backs it up.
+]
+
+[[Back to Yuki's Clipboard|Interview Yuki]]

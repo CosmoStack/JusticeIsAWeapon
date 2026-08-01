@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Taking Control
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Taking Control
+  speakerName: 
+  lineText: "<b>[ACT 1]</b>\r\n<b>Location:</b> <i>Outside the Marcus Art Gallery.
+    Cold, dreary palette. Flashing blue police lights. Detective Miller is waiting
+    by the yellow tape.</i>\r\n\r\n<b>Detective Miller:</b>\r\n\"Glad you made it.
+    Oversight wasn't kidding when they said they were pairing us up. We need to move
+    fast.\"\r\n\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: '"What''s the situation?"'
+    nextNode: {fileID: 11400000, guid: 620aae6b554e6104485596f25e94a40f, type: 2}
+  - choiceLabel: '"Why the rush?"'
+    nextNode: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
+  blocks:
+  - condition: 
+    text: "<b>[ACT 1]</b>\r\n<b>Location:</b> <i>Outside the Marcus Art Gallery.
+      Cold, dreary palette. Flashing blue police lights. Detective Miller is waiting
+      by the yellow tape.</i>\r\n\r\n<b>Detective Miller:</b>\r\n\"Glad you made
+      it. Oversight wasn't kidding when they said they were pairing us up. We need
+      to move fast.\"\r\n\r\n\r\n\r\n\r"
+    links:
+    - label: '"What''s the situation?"'
+      target: The Evidence
+      node: {fileID: 11400000, guid: 620aae6b554e6104485596f25e94a40f, type: 2}
+    - label: '"Why the rush?"'
+      target: The Politics
+      node: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
