@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using System.Text;
 using JusticeIsAWeapon.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 #if ENABLE_INPUT_SYSTEM
+using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 #endif
 
@@ -32,8 +34,13 @@ namespace JusticeIsAWeapon.Dialogue
         public VerticalLayoutGroup choiceList;
 
         private readonly List<GameObject> _choiceButtons = new List<GameObject>();
+        private readonly List<string> _pages = new List<string>();
         private LayoutElement _choiceListLayout;
         private TMP_FontAsset _font;
+        private RectTransform _viewportRect;
+        private ScrollRect _scrollRect;
+        private int _pageIndex;
+        private static TMP_FontAsset _sharedFont;
 
         private TMP_FontAsset Font
         {
@@ -41,7 +48,13 @@ namespace JusticeIsAWeapon.Dialogue
             {
                 if (_font == null)
                 {
-                    _font = TMP_Settings.defaultFontAsset;
+                    // 1) A sharp dynamic OS font (rendered at screen resolution).
+                    _font = CreateSharpFont();
+                    // 2) Fallback: the project's SDF font asset.
+                    if (_font == null)
+                    {
+                        _font = TMP_Settings.defaultFontAsset;
+                    }
                     if (_font == null)
                     {
                         _font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
@@ -49,6 +62,59 @@ namespace JusticeIsAWeapon.Dialogue
                 }
                 return _font;
             }
+        }
+
+        /// <summary>
+        /// Creates an in-memory dynamic TMP font from an OS font. Dynamic fonts
+        /// are rasterized at the exact screen size, so text stays sharp instead
+        /// of being scaled up from a small SDF atlas.
+        /// </summary>
+        private static TMP_FontAsset CreateSharpFont()
+        {
+            if (_sharedFont != null)
+            {
+                return _sharedFont;
+            }
+
+            try
+            {
+                UnityEngine.Font osFont = UnityEngine.Font.CreateDynamicFontFromOSFont(new[] { "Segoe UI", "Arial" }, 96);
+                if (osFont == null)
+                {
+                    return null;
+                }
+                TMP_FontAsset asset = TMP_FontAsset.CreateFontAsset(osFont);
+                asset.name = "DynamicOSFont";
+                _sharedFont = asset;
+                return asset;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning("[DialogueUI] OS font creation failed, using SDF font instead: " + e.Message);
+                return null;
+            }
+        }
+
+        private void Update()
+        {
+            if (panel == null || !panel.activeSelf)
+            {
+                return;
+            }
+            if (HasAdvanceKey())
+            {
+                AdvancePage();
+            }
+        }
+
+        private static bool HasAdvanceKey()
+        {
+#if ENABLE_INPUT_SYSTEM
+            Keyboard keyboard = Keyboard.current;
+            return keyboard != null && (keyboard.enterKey.wasPressedThisFrame || keyboard.spaceKey.wasPressedThisFrame);
+#else
+            return Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space);
+#endif
         }
 
         private void Awake()
@@ -117,16 +183,150 @@ namespace JusticeIsAWeapon.Dialogue
                     speakerText.gameObject.SetActive(hasSpeaker);
                 }
             }
+
             if (bodyText != null)
             {
-                bodyText.text = manager.CurrentText ?? string.Empty;
+                _pages.Clear();
+                string full = manager.CurrentText ?? string.Empty;
+                if (full.Length > 0)
+                {
+                    _pages.AddRange(BuildPages(full));
+                }
+                _pageIndex = 0;
+                bodyText.text = _pages.Count > 0 ? _pages[0] : string.Empty;
+                if (_scrollRect != null)
+                {
+                    _scrollRect.verticalNormalizedPosition = 1f;
+                }
             }
+        }
+
+        /// <summary>
+        /// Splits long text into pages that fit the text area. Choices are only
+        /// shown on the last page, so the player clicks / presses Enter to read
+        /// the rest before options appear.
+        /// </summary>
+        private List<string> BuildPages(string full)
+        {
+            if (_viewportRect == null || bodyText == null)
+            {
+                return new List<string> { full };
+            }
+
+            Canvas.ForceUpdateCanvases();
+            float viewportHeight = _viewportRect.rect.height;
+            float viewportWidth = _viewportRect.rect.width;
+            if (viewportHeight <= 1f || viewportWidth <= 1f)
+            {
+                return new List<string> { full };
+            }
+
+            float maxHeight = viewportHeight * 0.94f;
+            var pages = new List<string>();
+            var current = new StringBuilder();
+
+            foreach (string token in SplitWords(full))
+            {
+                string candidate = current.Length == 0 ? token : current + token;
+                if (current.Length > 0 && bodyText.GetPreferredValues(candidate).y > maxHeight)
+                {
+                    pages.Add(current.ToString().Trim());
+                    current.Clear();
+                }
+                current.Append(token);
+            }
+
+            if (current.Length > 0)
+            {
+                pages.Add(current.ToString().Trim());
+            }
+            if (pages.Count == 0)
+            {
+                pages.Add(full);
+            }
+            return pages;
+        }
+
+        /// <summary>Tokenizes text keeping spaces/newlines as separate tokens so pages split at word boundaries.</summary>
+        private static List<string> SplitWords(string text)
+        {
+            var words = new List<string>();
+            var token = new StringBuilder();
+            foreach (char c in text)
+            {
+                if (c == ' ' || c == '\n')
+                {
+                    if (token.Length > 0)
+                    {
+                        words.Add(token.ToString());
+                        token.Clear();
+                    }
+                    words.Add(c.ToString());
+                }
+                else
+                {
+                    token.Append(c);
+                }
+            }
+            if (token.Length > 0)
+            {
+                words.Add(token.ToString());
+            }
+            return words;
+        }
+
+        /// <summary>
+        /// Advances to the next page of the current dialogue. Returns false when
+        /// already on the last page (choices are showing then — click those instead).
+        /// </summary>
+        public bool AdvancePage()
+        {
+            if (_pages.Count == 0)
+            {
+                return false;
+            }
+            if (_pageIndex < _pages.Count - 1)
+            {
+                _pageIndex++;
+                if (bodyText != null)
+                {
+                    bodyText.text = _pages[_pageIndex];
+                }
+                if (_scrollRect != null)
+                {
+                    _scrollRect.verticalNormalizedPosition = 1f;
+                }
+                RefreshChoices();
+                return true;
+            }
+            return false;
         }
 
         private void RefreshChoices()
         {
             if (choiceList == null)
             {
+                return;
+            }
+
+            // Keep choices hidden until the player has read the final page.
+            bool onLastPage = _pages.Count == 0 || _pageIndex >= _pages.Count - 1;
+
+            DialogueManager manager = CurrentManager();
+            if (manager == null || !manager.IsActive || !onLastPage)
+            {
+                foreach (GameObject button in _choiceButtons)
+                {
+                    if (button != null)
+                    {
+                        Destroy(button.gameObject);
+                    }
+                }
+                _choiceButtons.Clear();
+                if (manager == null || !manager.IsActive)
+                {
+                    HidePanel();
+                }
                 return;
             }
 
@@ -138,13 +338,6 @@ namespace JusticeIsAWeapon.Dialogue
                 }
             }
             _choiceButtons.Clear();
-
-            DialogueManager manager = CurrentManager();
-            if (manager == null || !manager.IsActive)
-            {
-                HidePanel();
-                return;
-            }
 
             IReadOnlyList<DialogueManager.DialogueChoice> choices = manager.AvailableChoices;
             for (int i = 0; i < choices.Count; i++)
@@ -184,11 +377,12 @@ namespace JusticeIsAWeapon.Dialogue
             TextMeshProUGUI labelText = labelGO.GetComponent<TextMeshProUGUI>();
             labelText.text = label;
             labelText.font = Font;
-            labelText.fontSize = 26;
+            labelText.fontSize = 28;
             labelText.color = Color.white;
             labelText.alignment = TextAlignmentOptions.Left;
             labelText.margin = new Vector4(12, 0, 12, 0);
-            labelText.enableWordWrapping = false;
+            labelText.textWrappingMode = TextWrappingModes.NoWrap;
+            labelText.raycastTarget = false;
 
             RectTransform labelRect = labelGO.GetComponent<RectTransform>();
             labelRect.anchorMin = Vector2.zero;
@@ -233,7 +427,7 @@ namespace JusticeIsAWeapon.Dialogue
 
             RectTransform panelRect = panel.GetComponent<RectTransform>();
             panelRect.anchorMin = new Vector2(0, 0);
-            panelRect.anchorMax = new Vector2(1, 0.28f);
+            panelRect.anchorMax = new Vector2(1, 0.35f);
             panelRect.pivot = new Vector2(0.5f, 0f);
             panelRect.offsetMin = Vector2.zero;
             panelRect.offsetMax = Vector2.zero;
@@ -275,17 +469,27 @@ namespace JusticeIsAWeapon.Dialogue
             speakerGO.transform.SetParent(columnGO.transform, false);
             speakerText = speakerGO.GetComponent<TextMeshProUGUI>();
             speakerText.font = Font;
-            speakerText.fontSize = 32;
+            speakerText.fontSize = 34;
             speakerText.fontStyle = FontStyles.Bold;
             speakerText.color = new Color(0.95f, 0.87f, 0.62f, 1f);
+            speakerText.raycastTarget = false;
             speakerGO.GetComponent<LayoutElement>().preferredHeight = 34;
 
             // Scrollable body -------------------------------------------------
+            // The transparent Image doubles as a click-catcher: a click on the
+            // text area advances to the next page. Scrolling (wheel/drag) still
+            // works because ScrollRect keeps its drag handlers on this object.
             GameObject scrollGO = new GameObject("ScrollArea",
-                typeof(RectTransform), typeof(RectMask2D), typeof(ScrollRect), typeof(LayoutElement));
+                typeof(RectTransform), typeof(Image), typeof(RectMask2D), typeof(ScrollRect), typeof(LayoutElement));
             scrollGO.transform.SetParent(columnGO.transform, false);
             scrollGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
             scrollGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
+            scrollGO.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+
+            EventTrigger clickTrigger = scrollGO.AddComponent<EventTrigger>();
+            var clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
+            clickEntry.callback.AddListener(_ => AdvancePage());
+            clickTrigger.triggers.Add(clickEntry);
 
             GameObject viewportGO = new GameObject("Viewport", typeof(RectTransform));
             viewportGO.transform.SetParent(scrollGO.transform, false);
@@ -294,10 +498,18 @@ namespace JusticeIsAWeapon.Dialogue
             viewportRect.anchorMax = Vector2.one;
             viewportRect.offsetMin = Vector2.zero;
             viewportRect.offsetMax = Vector2.zero;
+            _viewportRect = viewportRect;
 
             GameObject contentGO = new GameObject("Content",
                 typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
             contentGO.transform.SetParent(viewportGO.transform, false);
+
+            RectTransform contentRect = contentGO.GetComponent<RectTransform>();
+            contentRect.anchorMin = new Vector2(0, 0);
+            contentRect.anchorMax = new Vector2(1, 0);
+            contentRect.pivot = new Vector2(0.5f, 1f);
+            contentRect.anchoredPosition = Vector2.zero;
+            contentRect.sizeDelta = Vector2.zero;
 
             VerticalLayoutGroup contentLayout = contentGO.GetComponent<VerticalLayoutGroup>();
             contentLayout.padding = new RectOffset(2, 2, 2, 2);
@@ -312,9 +524,10 @@ namespace JusticeIsAWeapon.Dialogue
             bodyGO.transform.SetParent(contentGO.transform, false);
             bodyText = bodyGO.GetComponent<TextMeshProUGUI>();
             bodyText.font = Font;
-            bodyText.fontSize = 28;
+            bodyText.fontSize = 30;
             bodyText.color = new Color(0.92f, 0.92f, 0.94f, 1f);
             bodyText.alignment = TextAlignmentOptions.TopLeft;
+            bodyText.raycastTarget = false;
 
             ScrollRect scrollRect = scrollGO.GetComponent<ScrollRect>();
             scrollRect.viewport = viewportRect;
@@ -324,6 +537,8 @@ namespace JusticeIsAWeapon.Dialogue
             scrollRect.movementType = ScrollRect.MovementType.Clamped;
             scrollRect.inertia = false;
             scrollRect.scrollSensitivity = 24;
+            scrollRect.verticalNormalizedPosition = 1f;
+            _scrollRect = scrollRect;
 
             // Choice list ------------------------------------------------------
             GameObject choicesGO = new GameObject("Choices", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(LayoutElement));
