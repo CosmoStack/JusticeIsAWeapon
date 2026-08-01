@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Gallery - Restricted
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Gallery - Restricted
+  speakerName: 
+  lineText: "I should not go back yet. Still need to interrogate some people.\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: CONTINUE
+    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  segments:
+  - kind: 0
+    text: 'I should not go back yet. Still need to interrogate some people.
+
+      
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: CONTINUE
+    linkTarget: Interrogation Room
+    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+    branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Private Office - Wastebasket
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Private Office - Wastebasket
+  speakerName: 
+  lineText: "Beneath shredded routine flyers sits one crumpled sheet of heavy cardstock:
+    a pre-drafted asset liquidation contract from Vance Wealth Management.\r\n\r\nThere
+    is nothing else of value here.\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: CONTINUE
+    nextNode: {fileID: 11400000, guid: 6a75c37489f05dc4d9f00e2e26972270, type: 2}
+  - choiceLabel: CONTINUE
+    nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
+  segments:
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) does not contain "Private Office - Wastebasket"
+      body:
+      - kind: 0
+        text: 'Beneath shredded routine flyers sits one crumpled sheet of heavy cardstock:
+          a pre-drafted asset liquidation contract from Vance Wealth Management.
+
+          
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+      - kind: 1
+        text: CONTINUE
+        linkTarget: Contract Clue Unlock
+        nextNode: {fileID: 11400000, guid: 6a75c37489f05dc4d9f00e2e26972270, type: 2}
+        branches: []
+    - condition: 
+      body:
+      - kind: 0
+        text: 'There is nothing else of value here.
+
+          
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+      - kind: 1
+        text: CONTINUE
+        linkTarget: Private Office
+        nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
+        branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

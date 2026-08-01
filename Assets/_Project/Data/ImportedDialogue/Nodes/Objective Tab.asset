@@ -1,0 +1,186 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Objective Tab
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Objective Tab
+  speakerName: 
+  lineText: " |  | <b>[OBJECTIVES]</b> |  |  | \r\n\r\nInvestigate the Exhibition
+    Hall.<s>Investigate the Exhibition Hall</s>\r\nTalk to Detective Miller outside
+    the gallery.<s>Talk to Detective Miller outside the gallery.</s>\r\nInterrogate
+    the suspects.<s>Interrogate the Suspects.</s>\r\nFind out about the key to the
+    Restricted Corridor.<s>Find out about the key to the Restricted Corridor.</s>\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: EXIT
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - choiceLabel: VICTIM
+    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - choiceLabel: SUSPECTS
+    nextNode: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
+  - choiceLabel: EVIDENCE
+    nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
+  - choiceLabel: TIMELINE
+    nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
+  segments:
+  - kind: 1
+    text: EXIT
+    linkTarget: Gallery Exterior
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: VICTIM
+    linkTarget: Case File
+    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | <b>[OBJECTIVES]</b> | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: SUSPECTS
+    linkTarget: Suspects Tab
+    nextNode: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: EVIDENCE
+    linkTarget: Evidence Tab
+    nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: TIMELINE
+    linkTarget: Timeline Tab
+    nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
+    branches: []
+  - kind: 0
+    text: '
+
+      
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:)does not contain"The Restricted Corridor Door"
+      body:
+      - kind: 0
+        text: Investigate the Exhibition Hall.
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+    - condition: 
+      body:
+      - kind: 0
+        text: '<s>Investigate the Exhibition Hall</s>
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+      - kind: 2
+        text: 
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches:
+        - condition: not _galleryAfterCorridor
+          body:
+          - kind: 0
+            text: Talk to Detective Miller outside the gallery.
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+        - condition: 
+          body:
+          - kind: 0
+            text: '<s>Talk to Detective Miller outside the gallery.</s>
+
+'
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+          - kind: 2
+            text: 
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches:
+            - condition: not ((history:) contains "Interview Yuki" and (history:)
+                contains "Interview Victor" and (history:) contains "Interview Thomas"
+                and (history:) contains "Interview Elena")
+              body:
+              - kind: 0
+                text: Interrogate the suspects.
+                linkTarget: 
+                nextNode: {fileID: 0}
+                branches: []
+            - condition: 
+              body:
+              - kind: 0
+                text: <s>Interrogate the Suspects.</s>
+                linkTarget: 
+                nextNode: {fileID: 0}
+                branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+      - kind: 2
+        text: 
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches:
+        - condition: (history:)does not contain"Miller - Key Handoff"
+          body:
+          - kind: 0
+            text: Find out about the key to the Restricted Corridor.
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+        - condition: 
+          body:
+          - kind: 0
+            text: <s>Find out about the key to the Restricted Corridor.</s>
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

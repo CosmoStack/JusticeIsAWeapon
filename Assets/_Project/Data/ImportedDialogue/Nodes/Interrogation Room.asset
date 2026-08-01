@@ -1,0 +1,269 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Interrogation Room
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Interrogation Room
+  speakerName: 
+  lineText: "\r\n\r\n<b>Detective Miller:</b>\r\n\"Alright, let's get this roster
+    organized. The assistant curator, Yuki, is the one who actually discovered the
+    body, though the security chief, Victor, is the one who made the 911 call. There
+    was another employee on-site\u2014Leo, the archive assistant\u2014but the kid
+    was running on fumes after pulling an all-night digitization shift. I let him
+    head home to get some sleep. We'll bring him back in later.\r\n\r\n\"As for the
+    rest... the victim's brother, Thomas, just arrived outside the tape, and we called
+    the ex-wife, Elena, earlier and had her brought down. They're all waiting. Let's
+    see whose story cracks first.\"\r\n\r\n[<b>Detective Miller:</b>\r\n\"You won't
+    believe this. A call from forensics just came over and the key you sent for examination...
+    it had Elena's fingerprints on it. They said it was fresh and was used recently
+    to unlock a door.\r\n\r\n\"We can finally catch her for something.\"\r\n\r\n<b>[CLUE
+    COLLECTED: Master Key Fingerprints]</b>\r\n\r\n]Who do you want to interrogate?\r\n\r\n\r\n\r\n\r\n\r\n\r\n<b>Detective
+    Miller:</b>\r\n\"That's everyone. And every single one of them is a dead end
+    on paper. We aren't getting anything else out of them right now. You have the
+    master key. Go back and crack open that Private Office before the city council
+    shuts us down.\"\r\n\r\n<b>Detective Miller:</b>\r\n\"We are missing something.
+    You need to go back and check the Private Office.\"\r\n\r\n<b>Detective Miller:</b>\r\n\"Detective.
+    I have another news for you. Forensics also just called me again. Marcus did
+    not ingest the poison. The vial was planted post-mortem, and the fatal blow was
+    delivered before the scene was staged. You can now actually use your ability
+    on the vase to find out who the killer is.\"\r\n\r\n<b>[ABILITY UNLOCKED: Time
+    Vision]</b>\r\n\r\n[Head to the Webb Gallery|Gallery - Restricted]\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Open Case File
+    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - choiceLabel: Yuki Tanaka - The Assistant Curator
+    nextNode: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}
+  - choiceLabel: Victor Hasting - Chief Security Officer
+    nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
+  - choiceLabel: Thomas Webb - The Brother
+    nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
+  - choiceLabel: Elena Vance - The Rival
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+  - choiceLabel: Head to the Webb Gallery
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - choiceLabel: Head to the Webb Gallery
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - choiceLabel: Head to the Webb Gallery
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  segments:
+  - kind: 1
+    text: Open Case File
+    linkTarget: Case File
+    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+    branches: []
+  - kind: 0
+    text: '
+
+      
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) does not contain "Interrogation Room"
+      body:
+      - kind: 0
+        text: "<b>Detective Miller:</b>\r\n\"Alright, let's get this roster organized.
+          The assistant curator, Yuki, is the one who actually discovered the body,
+          though the security chief, Victor, is the one who made the 911 call. There
+          was another employee on-site\u2014Leo, the archive assistant\u2014but the
+          kid was running on fumes after pulling an all-night digitization shift.
+          I let him head home to get some sleep. We'll bring him back in later.\r\n\r\n\"As
+          for the rest... the victim's brother, Thomas, just arrived outside the
+          tape, and we called the ex-wife, Elena, earlier and had her brought down.
+          They're all waiting. Let's see whose story cracks first.\"\r\n\r\n"
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+  - kind: 0
+    text: '[<b>Detective Miller:</b>
+
+      "You won''t believe this. A call from
+      forensics just came over and the key you sent for examination... it had Elena''s
+      fingerprints on it. They said it was fresh and was used recently to unlock
+      a door.
+
+      
+
+      "We can finally catch her for something."
+
+      
+
+      <b>[CLUE
+      COLLECTED: Master Key Fingerprints]</b>
+
+      
+
+      ]Who do you want to
+      interrogate?
+
+      
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: Yuki Tanaka - The Assistant Curator
+    linkTarget: Interview Yuki
+    nextNode: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}
+    branches: []
+  - kind: 0
+    text: '
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: Victor Hasting - Chief Security Officer
+    linkTarget: Interview Victor
+    nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
+    branches: []
+  - kind: 0
+    text: '
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: Thomas Webb - The Brother
+    linkTarget: Interview Thomas
+    nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
+    branches: []
+  - kind: 0
+    text: '
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: Elena Vance - The Rival
+    linkTarget: Interview Elena
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+    branches: []
+  - kind: 0
+    text: '
+
+      
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) contains "Interview Yuki" and (history:) contains "Interview
+        Victor" and (history:) contains "Interview Thomas" and (history:) contains
+        "Interview Elena" and (history:) contains "Miller - Key Handoff"
+      body:
+      - kind: 2
+        text: 
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches:
+        - condition: (history:) does not contain "Contract Clue Unlock"
+          body:
+          - kind: 0
+            text: '<b>Detective Miller:</b>
+
+              "That''s everyone. And
+              every single one of them is a dead end on paper. We aren''t getting
+              anything else out of them right now. You have the master key. Go back
+              and crack open that Private Office before the city council shuts us
+              down."
+
+              
+
+'
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+          - kind: 1
+            text: Head to the Webb Gallery
+            linkTarget: Gallery Exterior
+            nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+            branches: []
+        - condition: (history:)contains"Elena - Contract" and (history:)does not
+            contain"Key Clue Unlock"
+          body:
+          - kind: 0
+            text: '<b>Detective Miller:</b>
+
+              "We are missing something.
+              You need to go back and check the Private Office."
+
+              
+
+'
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+          - kind: 1
+            text: Head to the Webb Gallery
+            linkTarget: Gallery Exterior
+            nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+            branches: []
+        - condition: (history:)contains"Elena - Key"
+          body:
+          - kind: 0
+            text: '<b>Detective Miller:</b>
+
+              "Detective. I have another
+              news for you. Forensics also just called me again. Marcus did not ingest
+              the poison. The vial was planted post-mortem, and the fatal blow was
+              delivered before the scene was staged. You can now actually use your
+              ability on the vase to find out who the killer is."
+
+              
+
+              <b>[ABILITY
+              UNLOCKED: Time Vision]</b>
+
+              
+
+'
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+          - kind: 1
+            text: Head to the Webb Gallery
+            linkTarget: Gallery Exterior
+            nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+            branches: []
+        - condition: 
+          body:
+          - kind: 0
+            text: '[Head to the Webb Gallery|Gallery - Restricted]'
+            linkTarget: 
+            nextNode: {fileID: 0}
+            branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Elena - Relationship
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Elena - Relationship
+  speakerName: 
+  lineText: "You tap the 'Relationship' baseline on your clipboard. Miller sits up
+    slightly straighter to match her corporate energy.\r\n\r\n<b>Detective Miller:</b>
+    \r\n\"Let's talk about you and Marcus. Ex-spouses running rival galleries in
+    the same city... there had to be friction.\"\r\n\r\n<b>Elena Vance:</b> \r\n\"It
+    is a devastating loss for the art community. Marcus and I had a perfectly fine
+    working relationship. My statements regarding the gallery's portfolio are on
+    file with Detective Miller. If you'll excuse me, I have a board meeting to salvage.\"\r\n\r\n''[Investigator's
+    Note:]'' There is a total lack of humanity in her response. She's already treating
+    her ex-husband's death as a logistical problem to manage.\r\n \r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Back to Elena's Clipboard
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+  segments:
+  - kind: 0
+    text: "You tap the 'Relationship' baseline on your clipboard. Miller sits up
+      slightly straighter to match her corporate energy.\r\n\r\n<b>Detective Miller:</b>
+      \r\n\"Let's talk about you and Marcus. Ex-spouses running rival galleries in
+      the same city... there had to be friction.\"\r\n\r\n<b>Elena Vance:</b> \r\n\"It
+      is a devastating loss for the art community. Marcus and I had a perfectly fine
+      working relationship. My statements regarding the gallery's portfolio are on
+      file with Detective Miller. If you'll excuse me, I have a board meeting to
+      salvage.\"\r\n\r\n''[Investigator's Note:]'' There is a total lack of humanity
+      in her response. She's already treating her ex-husband's death as a logistical
+      problem to manage.\r\n \r\n"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: Back to Elena's Clipboard
+    linkTarget: Interview Elena
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+    branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

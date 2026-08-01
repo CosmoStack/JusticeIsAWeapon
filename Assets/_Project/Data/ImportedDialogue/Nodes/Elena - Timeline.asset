@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Elena - Timeline
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Elena - Timeline
+  speakerName: 
+  lineText: "You select the 'Timeline' baseline. \r\n\r\n<b>Detective Miller:</b>
+    \r\n\"When did you find out about the incident this morning?\"\r\n\r\n<b>Elena
+    Vance:</b> \r\n\"Your precinct called my office at 8:00 AM as a primary stakeholder
+    in the Webb estate. I cancelled a very important morning briefing to come down
+    here and cooperate out of respect for Marcus. But my patience, and my schedule,
+    are wearing extremely thin.\"\r\n\r\n''[Investigator's Note:]'' She frames her
+    presence here as a favor to the police rather than an obligation. She is controlling
+    the pace of the interview and giving us absolutely nothing to work with.\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Back to Elena's Clipboard
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+  segments:
+  - kind: 0
+    text: "You select the 'Timeline' baseline. \r\n\r\n<b>Detective Miller:</b> \r\n\"When
+      did you find out about the incident this morning?\"\r\n\r\n<b>Elena Vance:</b>
+      \r\n\"Your precinct called my office at 8:00 AM as a primary stakeholder in
+      the Webb estate. I cancelled a very important morning briefing to come down
+      here and cooperate out of respect for Marcus. But my patience, and my schedule,
+      are wearing extremely thin.\"\r\n\r\n''[Investigator's Note:]'' She frames
+      her presence here as a favor to the police rather than an obligation. She is
+      controlling the pace of the interview and giving us absolutely nothing to work
+      with.\r\n\r\n"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: Back to Elena's Clipboard
+    linkTarget: Interview Elena
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+    branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

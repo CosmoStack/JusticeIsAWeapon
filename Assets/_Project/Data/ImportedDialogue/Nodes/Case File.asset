@@ -1,0 +1,146 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Case File
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Case File
+  speakerName: 
+  lineText: " | <b>[ VICTIM ]</b> |  |  |  | \r\n\r\n<u><b>Victim Details</b></u>\r\n<b>Name:</b>
+    Marcus Webb\r\n<b>Profession:</b> Curator & Owner \r\n<b>Age:</b> 34 yrs 2 mo\r\n<b>Blood
+    Type:</b> AB+\r\n\r\n<u><b>Murder Details</b></u>\r\n<b>Time of Murder:</b> Between
+    10 PM and 12 PM last night.\r\n<b>Murder Weapon:</b> -<i>not confirmed</i>-\r\n<b>Official
+    Precinct Theory:</b> Death by self-administered overdose of synthetic depressants
+    leading to an accidental fatal fall, currently pushed by city council authority
+    as a suicide triggered by impending bankruptcy.\r\n\r\n<u> <b>Autopsy & Medical
+    Report</b> </u>\r\n<b>Primary Cause of Death:</b> Blunt force trauma to head
+    consistent with fatal fall.\r\n<b>Toxicology Screen:</b> Pending / Unverified.\r\n<b>Secondary
+    Findings:</b> Synthetic depressant vial recovered from victim's left jacket pocket.\r\n<b>Notes:</b>
+    Precinct narrative assumes fall induced by drug ingestion.\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: EXIT
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - choiceLabel: OBJECTIVES
+    nextNode: {fileID: 11400000, guid: b072e936fcae7fd44be16504779769c0, type: 2}
+  - choiceLabel: SUSPECTS
+    nextNode: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
+  - choiceLabel: EVIDENCE
+    nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
+  - choiceLabel: TIMELINE
+    nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
+  segments:
+  - kind: 1
+    text: EXIT
+    linkTarget: Gallery Exterior
+    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | <b>[ VICTIM ]</b> | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: OBJECTIVES
+    linkTarget: Objective Tab
+    nextNode: {fileID: 11400000, guid: b072e936fcae7fd44be16504779769c0, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: SUSPECTS
+    linkTarget: Suspects Tab
+    nextNode: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: EVIDENCE
+    linkTarget: Evidence Tab
+    nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
+    branches: []
+  - kind: 0
+    text: ' | '
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: TIMELINE
+    linkTarget: Timeline Tab
+    nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
+    branches: []
+  - kind: 0
+    text: '
+
+      
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 0
+    text: <u><b>Victim Details</b></u>
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 0
+    text: "\r\n<b>Name:</b> Marcus Webb\r\n<b>Profession:</b> Curator & Owner \r\n<b>Age:</b>
+      34 yrs 2 mo\r\n<b>Blood Type:</b> AB+\r\n\r\n"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 0
+    text: <u><b>Murder Details</b></u>
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 0
+    text: '
+
+      <b>Time of Murder:</b> Between 10 PM and 12 PM last night.
+
+      <b>Murder
+      Weapon:</b> -<i>not confirmed</i>-
+
+      <b>Official Precinct Theory:</b>
+      Death by self-administered overdose of synthetic depressants leading to an
+      accidental fatal fall, currently pushed by city council authority as a suicide
+      triggered by impending bankruptcy.
+
+      
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 0
+    text: <u> <b>Autopsy & Medical Report</b> </u>
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 0
+    text: "\r\n<b>Primary Cause of Death:</b> Blunt force trauma to head consistent
+      with fatal fall.\r\n<b>Toxicology Screen:</b> Pending / Unverified.\r\n<b>Secondary
+      Findings:</b> Synthetic depressant vial recovered from victim's left jacket
+      pocket.\r\n<b>Notes:</b> Precinct narrative assumes fall induced by drug ingestion.\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

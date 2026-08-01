@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Elena - Key
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Elena - Key
+  speakerName: 
+  lineText: "<b>Detective Miller:</b>\r\n\"You told me the contract was just a contingency
+    plan. Doesn't such a proposal usually requires a meeting? You told me you haven't
+    been in his office all week. But someone used an older, physical master key to
+    bypass the electronic lock last night. And judging by the fresh gouges on the
+    cylinder, they were in a massive hurry.\"\r\n\r\n<b>Elena Vance:</b>\r\n\"Are
+    you wearing a wire? No? Fine. Yes, I let myself into his office at 8:15 PM. He
+    was spiraling. I offered him a clean exit \u2014 sign over the exhibition rights,
+    and I would handle the debt. He screamed, threw the contract in the trash, and
+    I walked out. He was very much alive and entirely alone when I left him. So unless
+    you are arresting me for trespassing, we are done here.\"\r\n\r\n''[Investigator's
+    Note:]'' Elena admits to corporate espionage and trespassing \u2014 but her 8:15
+    PM timeline clears her of the murder itself, hours before Marcus actually died.\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: Back to Elena's Clipboard
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+  segments:
+  - kind: 0
+    text: "<b>Detective Miller:</b>\r\n\"You told me the contract was just a contingency
+      plan. Doesn't such a proposal usually requires a meeting? You told me you haven't
+      been in his office all week. But someone used an older, physical master key
+      to bypass the electronic lock last night. And judging by the fresh gouges on
+      the cylinder, they were in a massive hurry.\"\r\n\r\n<b>Elena Vance:</b>\r\n\"Are
+      you wearing a wire? No? Fine. Yes, I let myself into his office at 8:15 PM.
+      He was spiraling. I offered him a clean exit \u2014 sign over the exhibition
+      rights, and I would handle the debt. He screamed, threw the contract in the
+      trash, and I walked out. He was very much alive and entirely alone when I left
+      him. So unless you are arresting me for trespassing, we are done here.\"\r\n\r\n''[Investigator's
+      Note:]'' Elena admits to corporate espionage and trespassing \u2014 but her
+      8:15 PM timeline clears her of the murder itself, hours before Marcus actually
+      died.\r\n\r\n"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 1
+    text: Back to Elena's Clipboard
+    linkTarget: Interview Elena
+    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+    branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []

@@ -1,0 +1,247 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf27982398fffe4696d893c8d8f58e5, type: 3}
+  m_Name: Interview Victor
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
+  nodeId: Interview Victor
+  speakerName: 
+  lineText: "The camera cuts to Victor Hasting, the Chief Security Officer. He's
+    a large, rigid man sitting with his arms crossed. He looks more annoyed by the
+    disruption to his security protocols than devastated by his boss's death.\r\n\r\n<b>[DEDUCTION
+    CLIPBOARD ACTIVE]</b>\r\n\r\n\r\n\r\n<i>You currently have no physical clues
+    to present. Select a baseline topic for Detective Miller to press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective
+    Miller:</b>\r\n\"He's completely walled up behind his own security protocols.
+    We need the actual logs to punch a hole in this.\"\r\n\r\n<i>[VICTOR HASTING'S
+    STATEMENT LOGGED]</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
+  category: 0
+  requiredClue: {fileID: 0}
+  clueRevealed: {fileID: 0}
+  bodyLanguageOverride: 
+  isDeadEnd: 0
+  choices:
+  - choiceLabel: The Restricted Corridor Door
+    nextNode: {fileID: 11400000, guid: 12bfc5c9053694840adf854ce9a3c32a, type: 2}
+  - choiceLabel: Asset Liquidation Contract
+    nextNode: {fileID: 11400000, guid: 966a11ab2487bb54b9c649c87ddb216f, type: 2}
+  - choiceLabel: Master Key Fingerprints
+    nextNode: {fileID: 11400000, guid: 966a11ab2487bb54b9c649c87ddb216f, type: 2}
+  - choiceLabel: Press on Alibi
+    nextNode: {fileID: 11400000, guid: c367276b14288a0409fb65e6fb0aeb74, type: 2}
+  - choiceLabel: Press on Timeline
+    nextNode: {fileID: 11400000, guid: 2d044c61874187049b0ff9d1f273d3c5, type: 2}
+  - choiceLabel: Press on Relationship to Victim
+    nextNode: {fileID: 11400000, guid: cdff44cbd8f176045a59539e27eeceef, type: 2}
+  - choiceLabel: Return to the Roster
+    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - choiceLabel: Step out for now
+    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  segments:
+  - kind: 0
+    text: 'The camera cuts to Victor Hasting, the Chief Security Officer. He''s a
+      large, rigid man sitting with his arms crossed. He looks more annoyed by the
+      disruption to his security protocols than devastated by his boss''s death.
+
+      
+
+      <b>[DEDUCTION
+      CLIPBOARD ACTIVE]</b>
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) contains "The Restricted Corridor Door" and (history:)
+        does not contain "Miller - Key Handoff"
+      body:
+      - kind: 1
+        text: The Restricted Corridor Door
+        linkTarget: Miller - Key Handoff
+        nextNode: {fileID: 11400000, guid: 12bfc5c9053694840adf854ce9a3c32a, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+    - condition: (history:)contains"Contract Clue Unlock"
+      body:
+      - kind: 1
+        text: Asset Liquidation Contract
+        linkTarget: Victor - Restricted
+        nextNode: {fileID: 11400000, guid: 966a11ab2487bb54b9c649c87ddb216f, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+    - condition: (history:)contains"Key Clue Unlock" and (history:)contains"Elena
+        - Contract" and (history:) does not contain "Elena - Key"
+      body:
+      - kind: 1
+        text: Master Key Fingerprints
+        linkTarget: Victor - Restricted
+        nextNode: {fileID: 11400000, guid: 966a11ab2487bb54b9c649c87ddb216f, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+    - condition: 
+      body:
+      - kind: 0
+        text: '<i>You currently have no physical clues to present. Select a baseline
+          topic for Detective Miller to press her on.</i>
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+  - kind: 0
+    text: '
+
+'
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) does not contain "Victor - Alibi"
+      body:
+      - kind: 1
+        text: Press on Alibi
+        linkTarget: Victor - Alibi
+        nextNode: {fileID: 11400000, guid: c367276b14288a0409fb65e6fb0aeb74, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) does not contain "Victor - Timeline"
+      body:
+      - kind: 1
+        text: Press on Timeline
+        linkTarget: Victor - Timeline
+        nextNode: {fileID: 11400000, guid: 2d044c61874187049b0ff9d1f273d3c5, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) does not contain "Victor - Relationship"
+      body:
+      - kind: 1
+        text: Press on Relationship to Victim
+        linkTarget: Victor - Relationship
+        nextNode: {fileID: 11400000, guid: cdff44cbd8f176045a59539e27eeceef, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+  - kind: 2
+    text: 
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches:
+    - condition: (history:) contains "Victor - Alibi" and (history:) contains "Victor
+        - Timeline" and (history:) contains "Victor - Relationship"
+      body:
+      - kind: 0
+        text: '<b>Detective Miller:</b>
+
+          "He''s completely walled up behind
+          his own security protocols. We need the actual logs to punch a hole in
+          this."
+
+          
+
+          <i>[VICTOR HASTING''S STATEMENT LOGGED]</i>
+
+          
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+      - kind: 1
+        text: Return to the Roster
+        linkTarget: Interrogation Room
+        nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+    - condition: 
+      body:
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+      - kind: 1
+        text: Step out for now
+        linkTarget: Interrogation Room
+        nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+        branches: []
+      - kind: 0
+        text: '
+
+'
+        linkTarget: 
+        nextNode: {fileID: 0}
+        branches: []
+  - kind: 0
+    text: "\r\n\r"
+    linkTarget: 
+    nextNode: {fileID: 0}
+    branches: []
