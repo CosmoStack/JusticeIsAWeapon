@@ -111,8 +111,6 @@ namespace JusticeIsAWeapon.Dialogue
             CurrentText = null;
             _availableChoices.Clear();
             OnChoicesRefreshed?.Invoke();
-
-            Debug.Log($"[DialogueManager] Dialogue ended. Passages visited: {string.Join(" -> ", _visited)}");
             OnDialogueEnded?.Invoke();
         }
 
@@ -140,8 +138,6 @@ namespace JusticeIsAWeapon.Dialogue
             _visited.Add(node.nodeId);
             RecomputeVars();
             EvaluateNode(node);
-
-            Debug.Log($"[DialogueManager] Node: {node.nodeId} | available choices: {_availableChoices.Count}");
             OnNodeChanged?.Invoke(node);
 
             // No choices at all (or every branch gated off) = dead end.

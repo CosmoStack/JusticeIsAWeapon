@@ -35,7 +35,7 @@ namespace JusticeIsAWeapon.Dialogue
 
         private readonly List<GameObject> _choiceButtons = new List<GameObject>();
         private readonly List<string> _pages = new List<string>();
-        private LayoutElement _choiceListLayout;
+        private GameObject _choiceOverlay;
         private TMP_FontAsset _font;
         private RectTransform _viewportRect;
         private ScrollRect _scrollRect;
@@ -221,14 +221,16 @@ namespace JusticeIsAWeapon.Dialogue
                 return new List<string> { full };
             }
 
-            float maxHeight = viewportHeight * 0.94f;
+            float maxHeight = viewportHeight;
             var pages = new List<string>();
             var current = new StringBuilder();
 
             foreach (string token in SplitWords(full))
             {
                 string candidate = current.Length == 0 ? token : current + token;
-                if (current.Length > 0 && bodyText.GetPreferredValues(candidate).y > maxHeight)
+                // Measure with an explicit width so wrapping uses the actual
+                // viewport width regardless of the layout state of BodyText.
+                if (current.Length > 0 && bodyText.GetPreferredValues(candidate, viewportWidth, 0f).y > maxHeight)
                 {
                     pages.Add(current.ToString().Trim());
                     current.Clear();
@@ -309,26 +311,12 @@ namespace JusticeIsAWeapon.Dialogue
                 return;
             }
 
-            // Keep choices hidden until the player has read the final page.
+            // Choices live on a centered overlay and only appear once the
+            // player has read the final page of the current text.
             bool onLastPage = _pages.Count == 0 || _pageIndex >= _pages.Count - 1;
 
             DialogueManager manager = CurrentManager();
-            if (manager == null || !manager.IsActive || !onLastPage)
-            {
-                foreach (GameObject button in _choiceButtons)
-                {
-                    if (button != null)
-                    {
-                        Destroy(button.gameObject);
-                    }
-                }
-                _choiceButtons.Clear();
-                if (manager == null || !manager.IsActive)
-                {
-                    HidePanel();
-                }
-                return;
-            }
+            bool show = manager != null && manager.IsActive && onLastPage;
 
             foreach (GameObject button in _choiceButtons)
             {
@@ -339,16 +327,25 @@ namespace JusticeIsAWeapon.Dialogue
             }
             _choiceButtons.Clear();
 
+            if (_choiceOverlay != null)
+            {
+                _choiceOverlay.SetActive(show);
+            }
+
+            if (!show)
+            {
+                if (manager == null || !manager.IsActive)
+                {
+                    HidePanel();
+                }
+                return;
+            }
+
             IReadOnlyList<DialogueManager.DialogueChoice> choices = manager.AvailableChoices;
             for (int i = 0; i < choices.Count; i++)
             {
                 int index = i;
                 CreateChoiceButton(index, choices[i].label);
-            }
-
-            if (_choiceListLayout != null)
-            {
-                _choiceListLayout.preferredHeight = Mathf.Max(0, choices.Count * 44 + Mathf.Max(0, choices.Count - 1) * 6);
             }
 
             if (choices.Count == 0)
@@ -427,7 +424,7 @@ namespace JusticeIsAWeapon.Dialogue
 
             RectTransform panelRect = panel.GetComponent<RectTransform>();
             panelRect.anchorMin = new Vector2(0, 0);
-            panelRect.anchorMax = new Vector2(1, 0.35f);
+            panelRect.anchorMax = new Vector2(1, 0.4f);
             panelRect.pivot = new Vector2(0.5f, 0f);
             panelRect.offsetMin = Vector2.zero;
             panelRect.offsetMax = Vector2.zero;
@@ -540,16 +537,6 @@ namespace JusticeIsAWeapon.Dialogue
             scrollRect.verticalNormalizedPosition = 1f;
             _scrollRect = scrollRect;
 
-            // Choice list ------------------------------------------------------
-            GameObject choicesGO = new GameObject("Choices", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(LayoutElement));
-            choicesGO.transform.SetParent(columnGO.transform, false);
-            choiceList = choicesGO.GetComponent<VerticalLayoutGroup>();
-            choiceList.spacing = 6;
-            choiceList.childAlignment = TextAnchor.UpperLeft;
-            choiceList.childControlWidth = true;
-            choiceList.childControlHeight = true;
-            _choiceListLayout = choicesGO.GetComponent<LayoutElement>();
-
             // Restart button (handy for iterating on the tree in the test scene)
             GameObject restartGO = new GameObject("RestartButton", typeof(RectTransform), typeof(Image), typeof(Button));
             restartGO.transform.SetParent(panel.transform, false);
@@ -587,6 +574,40 @@ namespace JusticeIsAWeapon.Dialogue
                     manager.StartTree(manager.CurrentTree);
                 }
             });
+
+            // Choice overlay (centered on screen, separate from the text box) --
+            // No Graphic on the overlay itself, so clicks elsewhere pass through
+            // to the panel's advance area. Only the buttons have raycast targets.
+            GameObject overlayGO = new GameObject("ChoiceOverlay", typeof(RectTransform));
+            overlayGO.transform.SetParent(canvasGO.transform, false);
+            RectTransform overlayRect = overlayGO.GetComponent<RectTransform>();
+            overlayRect.anchorMin = Vector2.zero;
+            overlayRect.anchorMax = Vector2.one;
+            overlayRect.offsetMin = Vector2.zero;
+            overlayRect.offsetMax = Vector2.zero;
+            _choiceOverlay = overlayGO;
+
+            GameObject choicesGO = new GameObject("Choices",
+                typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
+            choicesGO.transform.SetParent(overlayGO.transform, false);
+
+            RectTransform choicesRect = choicesGO.GetComponent<RectTransform>();
+            choicesRect.anchorMin = new Vector2(0.5f, 0.5f);
+            choicesRect.anchorMax = new Vector2(0.5f, 0.5f);
+            choicesRect.pivot = new Vector2(0.5f, 0.5f);
+            choicesRect.anchoredPosition = new Vector2(0f, 30f);
+            choicesRect.sizeDelta = new Vector2(800f, 0f);
+
+            choiceList = choicesGO.GetComponent<VerticalLayoutGroup>();
+            choiceList.spacing = 6;
+            choiceList.childAlignment = TextAnchor.MiddleCenter;
+            choiceList.childControlWidth = true;
+            choiceList.childControlHeight = true;
+
+            ContentSizeFitter choicesFitter = choicesGO.GetComponent<ContentSizeFitter>();
+            choicesFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            overlayGO.SetActive(false);
 
             HidePanel();
         }
