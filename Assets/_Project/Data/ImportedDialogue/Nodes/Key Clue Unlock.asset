@@ -24,28 +24,11 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-  segments:
-  - kind: 0
-    text: 'You also found a key on the desk. It seems there are some fingerprints
-      on it.
-
-      
-
-      <i>Key sent to forensics.</i>
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Private Office
-    nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "You also found a key on the desk. It seems there are some fingerprints
+      on it.\r\n\r\n<i>Key sent to forensics.</i>\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}

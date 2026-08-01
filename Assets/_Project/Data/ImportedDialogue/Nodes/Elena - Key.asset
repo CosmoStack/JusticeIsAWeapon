@@ -34,8 +34,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Elena's Clipboard
     nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Detective Miller:</b>\r\n\"You told me the contract was just a contingency
       plan. Doesn't such a proposal usually requires a meeting? You told me you haven't
       been in his office all week. But someone used an older, physical master key
@@ -48,17 +48,8 @@ MonoBehaviour:
       him. So unless you are arresting me for trespassing, we are done here.\"\r\n\r\n''[Investigator's
       Note:]'' Elena admits to corporate espionage and trespassing \u2014 but her
       8:15 PM timeline clears her of the murder itself, hours before Marcus actually
-      died.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Elena's Clipboard
-    linkTarget: Interview Elena
-    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      died.\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Elena's Clipboard
+      target: Interview Elena
+      node: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}

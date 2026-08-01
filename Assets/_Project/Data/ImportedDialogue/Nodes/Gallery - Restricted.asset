@@ -23,23 +23,10 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
-  segments:
-  - kind: 0
-    text: 'I should not go back yet. Still need to interrogate some people.
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Interrogation Room
-    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "I should not go back yet. Still need to interrogate some people.\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Interrogation Room
+      node: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}

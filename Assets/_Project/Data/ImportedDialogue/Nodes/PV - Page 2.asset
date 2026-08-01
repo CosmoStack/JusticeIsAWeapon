@@ -30,36 +30,18 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 14fa6ff7e6ca3344a8eac0631713ccc3, type: 2}
   - choiceLabel: SKIP
     nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Visuals</b>\r\nThe rewind abruptly stops, freezing on 11:20 PM. Marcus
       stands behind his mahogany desk, furious and yelling silently, while a dark,
       hooded silhouette lunges forward toward the display pedestal.\r\n\r\n<b>Narrative</b>\r\n11:20
       PM \u2014 The rewind catches Marcus shouting at a shadowy figure, who lunges
-      directly toward the pedestal.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: PV - Page 3
-    nextNode: {fileID: 11400000, guid: 14fa6ff7e6ca3344a8eac0631713ccc3, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: SKIP
-    linkTarget: Post Vision - Vase
-    nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-    branches: []
-  - kind: 0
-    text: " \r\n\r\n<i>No. of Panels: </i>\r\n<i>1. Clock stopping</i>\r\n<i>2. Marcus
-      shouting</i>\r\n//3.\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      directly toward the pedestal.\r\n\r\n\r\n \r\n\r\n<i>No. of Panels: </i>\r\n<i>1.
+      Clock stopping</i>\r\n<i>2. Marcus shouting</i>\r\n//3.\r\n\r"
+    links:
+    - label: CONTINUE
+      target: PV - Page 3
+      node: {fileID: 11400000, guid: 14fa6ff7e6ca3344a8eac0631713ccc3, type: 2}
+    - label: SKIP
+      target: Post Vision - Vase
+      node: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}

@@ -23,23 +23,10 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}
-  segments:
-  - kind: 0
-    text: 'I should investigate the private office first.
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Restricted Corridor
-    nextNode: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "I should investigate the private office first.\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Restricted Corridor
+      node: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}

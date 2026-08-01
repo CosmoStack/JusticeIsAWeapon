@@ -31,37 +31,19 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 4dd116b66d124d4428c582c1ed164b82, type: 2}
   - choiceLabel: SKIP
     nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Visuals</b>\r\nClose-up shot\u2014the killer stoops down over Marcus,
       checks his wrist for a pulse, and pulls a small vial of synthetic depressants
       from their pocket. They slide the vial deep inside Marcus's jacket pocket to
       fake an overdose.\r\n\r\n<b>Narrative:</b>\r\nCold and deliberate. Planting
-      the poison to fake a financial suicide.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: PV - Page 5
-    nextNode: {fileID: 11400000, guid: 4dd116b66d124d4428c582c1ed164b82, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: SKIP
-    linkTarget: Post Vision - Vase
-    nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r\n<i>No. of Panels: 4</i>\r\n<i>1. Killer stooping over</i>\r\n<i>2.
-      Check wrist for pulse</i>\r\n<i>3. Pulls a small vial</i>\r\n<i>4. Slides into
-      Marcus's pocket</i>\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      the poison to fake a financial suicide.\r\n\r\n\r\n\r\n\r\n<i>No. of Panels:
+      4</i>\r\n<i>1. Killer stooping over</i>\r\n<i>2. Check wrist for pulse</i>\r\n<i>3.
+      Pulls a small vial</i>\r\n<i>4. Slides into Marcus's pocket</i>\r\n\r"
+    links:
+    - label: CONTINUE
+      target: PV - Page 5
+      node: {fileID: 11400000, guid: 4dd116b66d124d4428c582c1ed164b82, type: 2}
+    - label: SKIP
+      target: Post Vision - Vase
+      node: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}

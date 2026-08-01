@@ -38,107 +38,37 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 642c3ae184fa8794496ea16b713f58ce, type: 2}
   - choiceLabel: Exit the Private Office
     nextNode: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}
-  segments:
-  - kind: 1
-    text: Open Case File
-    linkTarget: Case File
-    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
-    branches: []
-  - kind: 2
+  blocks:
+  - condition: 
     text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:)contains"Elena - Key"
-      body:
-      - kind: 0
-        text: ' | '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 1
-        text: Use Time Vision
-        linkTarget: Private Office Time Vision
-        nextNode: {fileID: 11400000, guid: 96750268220970e4b9ef76586518e7b0, type: 2}
-        branches: []
-  - kind: 0
-    text: '
-
-      
-
-      Stepping into the office, the air feels heavy, bathed
-      in the rich, dim glow of warm interior lighting that casts long, dramatic shadows
-      against dark mahogany wainscoting and paneled wooden walls. An intimate, enclosed
-      study bathed in moody, ambient amber light.
-
-      
-
-      What do you want
-      to inspect?
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Search the desk and ledgers
-    linkTarget: Private Office - Desk
-    nextNode: {fileID: 11400000, guid: 0c7f2528f988b5d4292ee85394080ad0, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Examine the door lock
-    linkTarget: Private Office - Lock
-    nextNode: {fileID: 11400000, guid: f83d7a95e4c5f3c428fc0ec5d130c50f, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Look into the wastebasket
-    linkTarget: Private Office - Wastebasket
-    nextNode: {fileID: 11400000, guid: 942673d7f5ff78f41aaa1cdc357730fc, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Check the shattered porcelain vase
-    linkTarget: Private Office - Vase
-    nextNode: {fileID: 11400000, guid: 642c3ae184fa8794496ea16b713f58ce, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Exit the Private Office
-    linkTarget: Restricted Corridor
-    nextNode: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links:
+    - label: Open Case File
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - condition: (history:)contains"Elena - Key"
+    text: ' | '
+    links:
+    - label: Use Time Vision
+      target: Private Office Time Vision
+      node: {fileID: 11400000, guid: 96750268220970e4b9ef76586518e7b0, type: 2}
+  - condition: 
+    text: "\r\n\r\nStepping into the office, the air feels heavy, bathed in the rich,
+      dim glow of warm interior lighting that casts long, dramatic shadows against
+      dark mahogany wainscoting and paneled wooden walls. An intimate, enclosed study
+      bathed in moody, ambient amber light.\r\n\r\nWhat do you want to inspect?\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r"
+    links:
+    - label: Search the desk and ledgers
+      target: Private Office - Desk
+      node: {fileID: 11400000, guid: 0c7f2528f988b5d4292ee85394080ad0, type: 2}
+    - label: Examine the door lock
+      target: Private Office - Lock
+      node: {fileID: 11400000, guid: f83d7a95e4c5f3c428fc0ec5d130c50f, type: 2}
+    - label: Look into the wastebasket
+      target: Private Office - Wastebasket
+      node: {fileID: 11400000, guid: 942673d7f5ff78f41aaa1cdc357730fc, type: 2}
+    - label: Check the shattered porcelain vase
+      target: Private Office - Vase
+      node: {fileID: 11400000, guid: 642c3ae184fa8794496ea16b713f58ce, type: 2}
+    - label: Exit the Private Office
+      target: Restricted Corridor
+      node: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}

@@ -31,54 +31,22 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
   - choiceLabel: EVIDENCE
     nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
-  segments:
-  - kind: 1
-    text: EXIT
-    linkTarget: Gallery Exterior
-    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: VICTIM
-    linkTarget: Case File
-    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: OBJECTIVES
-    linkTarget: Objective Tab
-    nextNode: {fileID: 11400000, guid: b072e936fcae7fd44be16504779769c0, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: SUSPECTS
-    linkTarget: Suspects Tab
-    nextNode: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: EVIDENCE
-    linkTarget: Evidence Tab
-    nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
-    branches: []
-  - kind: 0
-    text: " | <b>[TIMELINE]</b>\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: " |  |  |  |  | <b>[TIMELINE]</b>\r\n\r"
+    links:
+    - label: EXIT
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+    - label: VICTIM
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+    - label: OBJECTIVES
+      target: Objective Tab
+      node: {fileID: 11400000, guid: b072e936fcae7fd44be16504779769c0, type: 2}
+    - label: SUSPECTS
+      target: Suspects Tab
+      node: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
+    - label: EVIDENCE
+      target: Evidence Tab
+      node: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}

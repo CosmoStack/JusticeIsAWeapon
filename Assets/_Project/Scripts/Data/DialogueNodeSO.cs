@@ -69,10 +69,11 @@ namespace JusticeIsAWeapon.Data
         [Header("Twine Import (read-only — populated by the Twee importer)")]
 
         /// <summary>
-        /// Parsed passage body: text, links and (if:)/(else:) branches as authored
-        /// in the Twee source. DialogueManager walks these at runtime to decide
-        /// what text to show and which choices are currently available.
+        /// Flattened passage body: ordered render blocks, each with a combined
+        /// condition, rich-text content and its links. DialogueManager walks
+        /// these at runtime to decide what text to show and which choices are
+        /// currently available.
         /// </summary>
-        public List<TweeSegment> segments;
+        public List<DialogueBlock> blocks;
     }
 }

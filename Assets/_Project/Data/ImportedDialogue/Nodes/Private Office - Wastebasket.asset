@@ -27,47 +27,28 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 6a75c37489f05dc4d9f00e2e26972270, type: 2}
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-  segments:
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "Private Office - Wastebasket"
-      body:
-      - kind: 0
-        text: 'Beneath shredded routine flyers sits one crumpled sheet of heavy cardstock:
-          a pre-drafted asset liquidation contract from Vance Wealth Management.
+  blocks:
+  - condition: (history:) does not contain "Private Office - Wastebasket"
+    text: 'Beneath shredded routine flyers sits one crumpled sheet of heavy cardstock:
+      a pre-drafted asset liquidation contract from Vance Wealth Management.
 
-          
+      
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 1
-        text: CONTINUE
-        linkTarget: Contract Clue Unlock
-        nextNode: {fileID: 11400000, guid: 6a75c37489f05dc4d9f00e2e26972270, type: 2}
-        branches: []
-    - condition: 
-      body:
-      - kind: 0
-        text: 'There is nothing else of value here.
+    links:
+    - label: CONTINUE
+      target: Contract Clue Unlock
+      node: {fileID: 11400000, guid: 6a75c37489f05dc4d9f00e2e26972270, type: 2}
+  - condition: not ((history:) does not contain "Private Office - Wastebasket")
+    text: 'There is nothing else of value here.
 
-          
+      
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 1
-        text: CONTINUE
-        linkTarget: Private Office
-        nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-        branches: []
-  - kind: 0
+    links:
+    - label: CONTINUE
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

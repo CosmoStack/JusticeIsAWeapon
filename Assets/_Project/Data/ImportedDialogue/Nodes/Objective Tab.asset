@@ -35,152 +35,68 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
   - choiceLabel: TIMELINE
     nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
-  segments:
-  - kind: 1
-    text: EXIT
-    linkTarget: Gallery Exterior
-    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: VICTIM
-    linkTarget: Case File
-    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | <b>[OBJECTIVES]</b> | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: SUSPECTS
-    linkTarget: Suspects Tab
-    nextNode: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: EVIDENCE
-    linkTarget: Evidence Tab
-    nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
-    branches: []
-  - kind: 0
-    text: ' | '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: TIMELINE
-    linkTarget: Timeline Tab
-    nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
-    branches: []
-  - kind: 0
+  blocks:
+  - condition: 
+    text: " |  | <b>[OBJECTIVES]</b> |  |  | \r\n\r\n"
+    links:
+    - label: EXIT
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+    - label: VICTIM
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+    - label: SUSPECTS
+      target: Suspects Tab
+      node: {fileID: 11400000, guid: a069e4ef34493d74da886539986ae291, type: 2}
+    - label: EVIDENCE
+      target: Evidence Tab
+      node: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
+    - label: TIMELINE
+      target: Timeline Tab
+      node: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
+  - condition: (history:)does not contain"The Restricted Corridor Door"
+    text: Investigate the Exhibition Hall.
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door")
+    text: '<s>Investigate the Exhibition Hall</s>
+
+'
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door") and
+      (not _galleryAfterCorridor)
+    text: Talk to Detective Miller outside the gallery.
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door") and
+      (not (not _galleryAfterCorridor))
+    text: '<s>Talk to Detective Miller outside the gallery.</s>
+
+'
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door") and
+      (not (not _galleryAfterCorridor)) and (not ((history:) contains "Interview
+      Yuki" and (history:) contains "Interview Victor" and (history:) contains "Interview
+      Thomas" and (history:) contains "Interview Elena"))
+    text: Interrogate the suspects.
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door") and
+      (not (not _galleryAfterCorridor)) and (not (not ((history:) contains "Interview
+      Yuki" and (history:) contains "Interview Victor" and (history:) contains "Interview
+      Thomas" and (history:) contains "Interview Elena")))
+    text: <s>Interrogate the Suspects.</s>
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door")
     text: '
 
-      
-
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:)does not contain"The Restricted Corridor Door"
-      body:
-      - kind: 0
-        text: Investigate the Exhibition Hall.
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-    - condition: 
-      body:
-      - kind: 0
-        text: '<s>Investigate the Exhibition Hall</s>
-
-'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 2
-        text: 
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches:
-        - condition: not _galleryAfterCorridor
-          body:
-          - kind: 0
-            text: Talk to Detective Miller outside the gallery.
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-        - condition: 
-          body:
-          - kind: 0
-            text: '<s>Talk to Detective Miller outside the gallery.</s>
-
-'
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-          - kind: 2
-            text: 
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches:
-            - condition: not ((history:) contains "Interview Yuki" and (history:)
-                contains "Interview Victor" and (history:) contains "Interview Thomas"
-                and (history:) contains "Interview Elena")
-              body:
-              - kind: 0
-                text: Interrogate the suspects.
-                linkTarget: 
-                nextNode: {fileID: 0}
-                branches: []
-            - condition: 
-              body:
-              - kind: 0
-                text: <s>Interrogate the Suspects.</s>
-                linkTarget: 
-                nextNode: {fileID: 0}
-                branches: []
-      - kind: 0
-        text: '
-
-'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 2
-        text: 
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches:
-        - condition: (history:)does not contain"Miller - Key Handoff"
-          body:
-          - kind: 0
-            text: Find out about the key to the Restricted Corridor.
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-        - condition: 
-          body:
-          - kind: 0
-            text: <s>Find out about the key to the Restricted Corridor.</s>
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-  - kind: 0
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door") and
+      ((history:)does not contain"Miller - Key Handoff")
+    text: Find out about the key to the Restricted Corridor.
+    links: []
+  - condition: not ((history:)does not contain"The Restricted Corridor Door") and
+      (not ((history:)does not contain"Miller - Key Handoff"))
+    text: <s>Find out about the key to the Restricted Corridor.</s>
+    links: []
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

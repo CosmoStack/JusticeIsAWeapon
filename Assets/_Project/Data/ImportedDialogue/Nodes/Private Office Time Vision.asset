@@ -24,42 +24,16 @@ MonoBehaviour:
   choices:
   - choiceLabel: Exit Time Vision Mode
     nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-  segments:
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:)does not contain"Private Office - Vase"
-      body:
-      - kind: 0
-        text: I don't see any meaningful object in here to use this ability on.
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-    - condition: 
-      body:
-      - kind: 0
-        text: '[Use Time Vision on Shattered Vase|PV - Page 1]'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 0
-    text: '
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Exit Time Vision Mode
-    linkTarget: Private Office
-    nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: (history:)does not contain"Private Office - Vase"
+    text: I don't see any meaningful object in here to use this ability on.
+    links: []
+  - condition: not ((history:)does not contain"Private Office - Vase")
+    text: '[Use Time Vision on Shattered Vase|PV - Page 1]'
+    links: []
+  - condition: 
+    text: "\r\n\r\n\r\n\r"
+    links:
+    - label: Exit Time Vision Mode
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}

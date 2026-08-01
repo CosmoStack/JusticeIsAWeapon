@@ -27,23 +27,14 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Visuals</b>\r\nHard cut from Thomas's run \u2014 no time skip, this
       is the same night. The palette drains to cold and dreary. Detective Miller
       is already standing outside the yellow tape under flashing blue lights, called
       to the scene the moment the case was flagged for his and the investigator's
-      joint assignment.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Taking Control
-    nextNode: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r\n<i>No. of Panels: 1</i>\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      joint assignment.\r\n\r\n\r\n\r\n<i>No. of Panels: 1</i>\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Taking Control
+      node: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}

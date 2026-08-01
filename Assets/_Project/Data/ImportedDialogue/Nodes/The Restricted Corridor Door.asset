@@ -26,34 +26,23 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: cd5340fbc48217e45b7071bac6b5dd68, type: 2}
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "You approach the heavy door leading to the back rooms and the Private
       Office. \r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
+    links: []
+  - condition: (history:) does not contain "The Restricted Corridor Door"
     text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "The Restricted Corridor Door"
-      body:
-      - kind: 1
-        text: CONTINUE
-        linkTarget: Interrogation Room Unlock
-        nextNode: {fileID: 11400000, guid: cd5340fbc48217e45b7071bac6b5dd68, type: 2}
-        branches: []
-    - condition: 
-      body:
-      - kind: 1
-        text: CONTINUE
-        linkTarget: Exhibition Hall
-        nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
-        branches: []
-  - kind: 0
+    links:
+    - label: CONTINUE
+      target: Interrogation Room Unlock
+      node: {fileID: 11400000, guid: cd5340fbc48217e45b7071bac6b5dd68, type: 2}
+  - condition: not ((history:) does not contain "The Restricted Corridor Door")
+    text: 
+    links:
+    - label: CONTINUE
+      target: Exhibition Hall
+      node: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

@@ -29,34 +29,17 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 322aae1a433ef684d829f4ac0a04b07f, type: 2}
   - choiceLabel: SKIP
     nextNode: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Visuals</b>\r\nSweeping shots across a glamorous, black-tie convention
       hall \u2014 warm lighting, tuxedos, evening gowns, the wealthy elite in full
       chatter.\r\n\r\n<b>Narrative</b>\r\nThe house microphone crackles \u2014 the
-      judges are ready to crown the evening's Grand Prize.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: CO - Page 2
-    nextNode: {fileID: 11400000, guid: 322aae1a433ef684d829f4ac0a04b07f, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: SKIP
-    linkTarget: Taking Control
-    nextNode: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r\n<i>No. of panels: 1</i>\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      judges are ready to crown the evening's Grand Prize.\r\n\r\n\r\n\r\n\r\n<i>No.
+      of panels: 1</i>\r\n\r"
+    links:
+    - label: CONTINUE
+      target: CO - Page 2
+      node: {fileID: 11400000, guid: 322aae1a433ef684d829f4ac0a04b07f, type: 2}
+    - label: SKIP
+      target: Taking Control
+      node: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}

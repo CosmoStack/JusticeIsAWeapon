@@ -28,23 +28,15 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Visuals</b>\r\nWide shot\u2014the hooded figure stands, steps over
       the broken porcelain, slips out of the office, and pulls the heavy office door
       shut behind them as the lock engages.\r\n\r\n<b>Narrative</b>\r\nThe killer
-      leaves the room locked. However every digital key card should leave a trail...\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Post Vision - Vase
-    nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r\n<i>No. of Panels: 3</i>\r\n<i>1. Killer stepping over the vase</i>\r\n<i>2.
-      Leaves the room</i>\r\n<i>3. Closes the door</i>\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      leaves the room locked. However every digital key card should leave a trail...\r\n\r\n\r\n\r\n<i>No.
+      of Panels: 3</i>\r\n<i>1. Killer stepping over the vase</i>\r\n<i>2. Leaves
+      the room</i>\r\n<i>3. Closes the door</i>\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Post Vision - Vase
+      node: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}

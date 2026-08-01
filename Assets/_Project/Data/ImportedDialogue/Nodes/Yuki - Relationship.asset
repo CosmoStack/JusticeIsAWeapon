@@ -31,8 +31,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Yuki's Clipboard
     nextNode: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<i>You selected the 'Relationship' baseline.</i>\r\n\r\n<b>Detective Miller:</b>
       \r\n\"Walk me through your dynamic with Marcus. You were his assistant curator.
       Was there any tension between you two?\"\r\n\r\n<b>Yuki Tanaka:</b> \r\n\"Strictly
@@ -40,17 +40,8 @@ MonoBehaviour:
       We were all under immense pressure to ensure everything was perfect, but that
       was just the nature of the job.\"\r\n\r\n''[Investigator's Note:]'' She's keeping
       it strictly about the work. It's a standard, careful answer. There's no visible
-      friction to press her on without something tangible to contradict her.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Yuki's Clipboard
-    linkTarget: Interview Yuki
-    nextNode: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      friction to press her on without something tangible to contradict her.\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Yuki's Clipboard
+      target: Interview Yuki
+      node: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}

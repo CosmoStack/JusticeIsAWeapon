@@ -32,8 +32,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Thomas's Clipboard
     nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "You tap the 'Relationship' baseline. \r\n\r\n<b>Detective Miller:</b>
       \r\n\"How were things between you two recently? Being brothers in the same
       business can complicate things.\"\r\n\r\n<b>Thomas Webb:</b> \r\n\"We were
@@ -43,17 +43,8 @@ MonoBehaviour:
       about this instead of finding the bastard who killed him?\"\r\n\r\n''[Investigator's
       Note:]'' He\u2019s using his grief to steer the conversation, but he got incredibly
       defensive the second gallery finances and \"liquidating inventory\" came up.
-      There is tension there, but no proof to press him on yet.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Thomas's Clipboard
-    linkTarget: Interview Thomas
-    nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      There is tension there, but no proof to press him on yet.\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Thomas's Clipboard
+      target: Interview Thomas
+      node: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}

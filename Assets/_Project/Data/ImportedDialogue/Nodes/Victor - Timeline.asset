@@ -40,69 +40,40 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Victor's Clipboard
     nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: 'You select the ''Timeline'' baseline.
 
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) contains "Yuki - Timeline"
-      body:
-      - kind: 0
-        text: "\r\n<b>Detective Miller:</b> \r\n\"Walk me through this morning. Yuki
-          says she came to you when the door wouldn't open.\"\r\n\r\n<b>Victor Hasting:</b>
-          \r\n\"She was panicked. Marcus held the only physical master keys, so the
-          only way into that office once it's deadbolted is an emergency system override
-          from my console. I blew the electronic lock at 7:35 AM. We walked in, saw
-          him on the floor, and I made the call to 911 immediately. Whatever happened
-          in there, he brought on himself.\"\r\n\r\n''[Investigator's Note:]'' He's
-          got the timeline down to the minute, completely validating Yuki's morning
-          story. He\u2019s using his strict adherence to protocol as a shield.\r\n"
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-    - condition: 
-      body:
-      - kind: 0
-        text: "\r\n<b>Detective Miller:</b> \r\n\"Walk me through your timeline for
-          this morning. When did you realize something was wrong?\"\r\n\r\n<b>Victor
-          Hasting:</b> \r\n\"His assistant, Yuki, came running to my desk at 7:35
-          AM. She was panicking because his office door was deadbolted and he wasn't
-          answering. I had to trigger an emergency system override from my console
-          to blow the electronic lock. We walked in, saw him on the floor, and I
-          made the call to 911 immediately. My system didn't fail; whatever happened
-          in there, he brought on himself.\"\r\n\r\n''[Investigator's Note:]'' He's
-          got the timeline down to the minute, but he immediately involves Yuki in
-          his sequence of events to validate his story. We need to verify this with
-          her.\r\n"
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 0
-    text: '
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Victor's Clipboard
-    linkTarget: Interview Victor
-    nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []
+  - condition: (history:) contains "Yuki - Timeline"
+    text: "\r\n<b>Detective Miller:</b> \r\n\"Walk me through this morning. Yuki
+      says she came to you when the door wouldn't open.\"\r\n\r\n<b>Victor Hasting:</b>
+      \r\n\"She was panicked. Marcus held the only physical master keys, so the only
+      way into that office once it's deadbolted is an emergency system override from
+      my console. I blew the electronic lock at 7:35 AM. We walked in, saw him on
+      the floor, and I made the call to 911 immediately. Whatever happened in there,
+      he brought on himself.\"\r\n\r\n''[Investigator's Note:]'' He's got the timeline
+      down to the minute, completely validating Yuki's morning story. He\u2019s using
+      his strict adherence to protocol as a shield.\r\n"
+    links: []
+  - condition: not ((history:) contains "Yuki - Timeline")
+    text: "\r\n<b>Detective Miller:</b> \r\n\"Walk me through your timeline for this
+      morning. When did you realize something was wrong?\"\r\n\r\n<b>Victor Hasting:</b>
+      \r\n\"His assistant, Yuki, came running to my desk at 7:35 AM. She was panicking
+      because his office door was deadbolted and he wasn't answering. I had to trigger
+      an emergency system override from my console to blow the electronic lock. We
+      walked in, saw him on the floor, and I made the call to 911 immediately. My
+      system didn't fail; whatever happened in there, he brought on himself.\"\r\n\r\n''[Investigator's
+      Note:]'' He's got the timeline down to the minute, but he immediately involves
+      Yuki in his sequence of events to validate his story. We need to verify this
+      with her.\r\n"
+    links: []
+  - condition: 
+    text: "\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Victor's Clipboard
+      target: Interview Victor
+      node: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}

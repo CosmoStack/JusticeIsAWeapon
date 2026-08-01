@@ -30,8 +30,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Victor's Clipboard
     nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "You select the 'Alibi' baseline.\r\n\r\n<b>Detective Miller:</b> \r\n\"Where
       were you last night when the gallery was locked down?\"\r\n\r\n<b>Victor Hasting:</b>
       \r\n\"At home, off shift. Damian Cross, my night guard, was on duty. He ran
@@ -39,17 +39,8 @@ MonoBehaviour:
       nobody came out. My system didn't fail.\"\r\n\r\n''[Investigator's Note:]''
       He blindly trusts his subordinate's report to protect his own system's integrity.
       Without getting our hands on those security logs or speaking to Damian directly,
-      this defense is a brick wall.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Victor's Clipboard
-    linkTarget: Interview Victor
-    nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      this defense is a brick wall.\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Victor's Clipboard
+      target: Interview Victor
+      node: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}

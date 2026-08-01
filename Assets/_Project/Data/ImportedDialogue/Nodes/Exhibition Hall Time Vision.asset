@@ -23,23 +23,10 @@ MonoBehaviour:
   choices:
   - choiceLabel: Exit Time Vision Mode
     nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
-  segments:
-  - kind: 0
-    text: 'I don''t see any meaningful object in here to use this ability on.
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Exit Time Vision Mode
-    linkTarget: Exhibition Hall
-    nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "I don't see any meaningful object in here to use this ability on.\r\n\r\n\r\n\r"
+    links:
+    - label: Exit Time Vision Mode
+      target: Exhibition Hall
+      node: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}

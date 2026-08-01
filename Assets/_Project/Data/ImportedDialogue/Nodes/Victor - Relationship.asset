@@ -31,8 +31,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Victor's Clipboard
     nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "You tap the 'Relationship' baseline. \r\n\r\n<b>Detective Miller:</b>
       \r\n\"How were things between you and Marcus recently? The gala must have been
       a security nightmare.\"\r\n\r\n<b>Victor Hasting:</b> \r\n\"It was handled.
@@ -41,17 +41,8 @@ MonoBehaviour:
       have personal problems; we had operational parameters.\"\r\n\r\n''[Investigator's
       Note:]'' He\u2019s entirely focused on defending his professional reputation.
       He treats the death as a logistical anomaly rather than a human tragedy, giving
-      us no emotional leverage to exploit.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Victor's Clipboard
-    linkTarget: Interview Victor
-    nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      us no emotional leverage to exploit.\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Victor's Clipboard
+      target: Interview Victor
+      node: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}

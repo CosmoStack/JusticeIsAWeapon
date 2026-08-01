@@ -28,8 +28,8 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
   - choiceLabel: '"Let''s check the scene. Local PD always misses something."'
     nextNode: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: '<b>Detective Miller:</b>
 
       "Marcus Webb, the gallery owner. Found
@@ -40,35 +40,18 @@ MonoBehaviour:
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: not ((history:) contains "The Politics")
-      body:
-      - kind: 1
-        text: '"Sounds like a dead end. So why are we here?"'
-        linkTarget: The Politics
-        nextNode: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
-        branches: []
-      - kind: 0
-        text: '
+    links: []
+  - condition: not ((history:) contains "The Politics")
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 1
-    text: '"Let''s check the scene. Local PD always misses something."'
-    linkTarget: The Handoff
-    nextNode: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}
-    branches: []
-  - kind: 0
+    links:
+    - label: '"Sounds like a dead end. So why are we here?"'
+      target: The Politics
+      node: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links:
+    - label: '"Let''s check the scene. Local PD always misses something."'
+      target: The Handoff
+      node: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}

@@ -24,24 +24,11 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-  segments:
-  - kind: 0
-    text: 'The electronic keypad works fine, but the physical deadbolt shows microscopic,
-      fresh metallic scratches in the keyway.
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Private Office
-    nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "The electronic keypad works fine, but the physical deadbolt shows microscopic,
+      fresh metallic scratches in the keyway.\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}

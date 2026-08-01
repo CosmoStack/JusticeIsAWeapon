@@ -30,8 +30,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Elena's Clipboard
     nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "You select the 'Alibi' baseline.\r\n\r\n<b>Detective Miller:</b> \r\n\"Where
       were you last night when the gallery was locked down?\"\r\n\r\n<b>Elena Vance:</b>
       \r\n\"I was working late at my own gallery across town, finalizing auction
@@ -39,17 +39,8 @@ MonoBehaviour:
       logs. I haven't set foot in Marcus's office all week.\"\r\n\r\n''[Investigator's
       Note:]'' She offers up her own security logs without blinking. It's a confident,
       perfectly practiced deflection. Unless we find physical evidence putting her
-      inside Marcus's gallery last night, we can't touch her.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Elena's Clipboard
-    linkTarget: Interview Elena
-    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      inside Marcus's gallery last night, we can't touch her.\r\n\r\n\r\n\r"
+    links:
+    - label: Back to Elena's Clipboard
+      target: Interview Elena
+      node: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}

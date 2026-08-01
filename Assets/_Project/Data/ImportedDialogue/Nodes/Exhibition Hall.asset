@@ -46,84 +46,54 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: fc8fd0502c13e1542b9c12351fdfb550, type: 2}
   - choiceLabel: The Restricted Corridor Door
     nextNode: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}
-  segments:
-  - kind: 1
-    text: Open Case File
-    linkTarget: Case File
-    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
-    branches: []
-  - kind: 2
+  blocks:
+  - condition: 
     text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:)contains"Elena - Key"
-      body:
-      - kind: 0
-        text: ' | '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 1
-        text: Use Time Vision
-        linkTarget: Exhibition Hall Time Vision
-        nextNode: {fileID: 11400000, guid: e83e3f71228068343937e3dd1712149d, type: 2}
-        branches: []
-  - kind: 0
+    links:
+    - label: Open Case File
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - condition: (history:)contains"Elena - Key"
+    text: ' | '
+    links:
+    - label: Use Time Vision
+      target: Exhibition Hall Time Vision
+      node: {fileID: 11400000, guid: e83e3f71228068343937e3dd1712149d, type: 2}
+  - condition: 
     text: '
 
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
+    links: []
+  - condition: (history:) contains "The Restricted Corridor Door"
     text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) contains "The Restricted Corridor Door"
-      body:
-      - kind: 1
-        text: Head outside
-        linkTarget: Gallery Exterior
-        nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-        branches: []
-    - condition: 
-      body:
-      - kind: 1
-        text: Head outside
-        linkTarget: Gallery Exterior - Restricted
-        nextNode: {fileID: 11400000, guid: 8fe2913b578c7b74e8568655a2004533, type: 2}
-        branches: []
-  - kind: 0
+    links:
+    - label: Head outside
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - condition: not ((history:) contains "The Restricted Corridor Door")
+    text: 
+    links:
+    - label: Head outside
+      target: Gallery Exterior - Restricted
+      node: {fileID: 11400000, guid: 8fe2913b578c7b74e8568655a2004533, type: 2}
+  - condition: 
     text: '
 
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "Exhibition Hall"
-      body:
-      - kind: 0
-        text: 'Ducking under the tape together, you enter a space designed to be
-          a pristine showroom.
+    links: []
+  - condition: (history:) does not contain "Exhibition Hall"
+    text: 'Ducking under the tape together, you enter a space designed to be a pristine
+      showroom.
 
-          
+      
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 0
+    links: []
+  - condition: 
     text: 'Pristine white marble/hardwood floor, harsh track lighting casting long
       shadows. Empty and near-empty display pedestals with faint dust outlines where
       sculptures once stood, blank stretches of wall where paintings were removed.
@@ -139,67 +109,32 @@ MonoBehaviour:
 
       
 
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: The Empty Displays
-    linkTarget: The Empty Displays
-    nextNode: {fileID: 11400000, guid: 8c58dc2cfc1c11946a1bc8b41f8fca4d, type: 2}
-    branches: []
-  - kind: 0
-    text: '
+      
+
+      
+
+      
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: The Scattered Gala Programs
-    linkTarget: The Scattered Gala Programs
-    nextNode: {fileID: 11400000, guid: fa89c3f9ec397dc4db01ebdde156926e, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: The Discarded Champagne Flutes
-    linkTarget: The Discarded Champagne Flutes
-    nextNode: {fileID: 11400000, guid: fc8fd0502c13e1542b9c12351fdfb550, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
+    links:
+    - label: The Empty Displays
+      target: The Empty Displays
+      node: {fileID: 11400000, guid: 8c58dc2cfc1c11946a1bc8b41f8fca4d, type: 2}
+    - label: The Scattered Gala Programs
+      target: The Scattered Gala Programs
+      node: {fileID: 11400000, guid: fa89c3f9ec397dc4db01ebdde156926e, type: 2}
+    - label: The Discarded Champagne Flutes
+      target: The Discarded Champagne Flutes
+      node: {fileID: 11400000, guid: fc8fd0502c13e1542b9c12351fdfb550, type: 2}
+  - condition: (history:) contains "Miller - Key Handoff"
     text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) contains "Miller - Key Handoff"
-      body:
-      - kind: 1
-        text: The Restricted Corridor Door
-        linkTarget: Restricted Corridor
-        nextNode: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}
-        branches: []
-    - condition: 
-      body:
-      - kind: 0
-        text: '[The Restricted Corridor Door]'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 0
+    links:
+    - label: The Restricted Corridor Door
+      target: Restricted Corridor
+      node: {fileID: 11400000, guid: ee6a12f5c42d5b94ab571944d6ae2d9a, type: 2}
+  - condition: not ((history:) contains "Miller - Key Handoff")
+    text: '[The Restricted Corridor Door]'
+    links: []
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

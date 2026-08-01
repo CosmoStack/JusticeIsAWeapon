@@ -25,30 +25,12 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-  segments:
-  - kind: 0
-    text: 'Jagged, heavy porcelain fragments lie scattered in a dark, dried pool
-      of blood beside the mahogany desk.
-
-      
-
-      <i>It could be the likely
-      cause of Marcus'' death and the murder weapon unless he actually took that
-      drug vial.</i>
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Private Office
-    nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "Jagged, heavy porcelain fragments lie scattered in a dark, dried pool
+      of blood beside the mahogany desk.\r\n\r\n<i>It could be the likely cause of
+      Marcus' death and the murder weapon unless he actually took that drug vial.</i>\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}

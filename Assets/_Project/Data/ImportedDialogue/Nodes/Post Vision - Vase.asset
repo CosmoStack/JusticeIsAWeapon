@@ -27,23 +27,14 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: ac1851879a9f1034eb724a7aa7b5fcee, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "That confirms it. The vase didn't shatter because of a clumsy fall\u2014it
       was the murder weapon. He was dead before that empty vial ever touched his
       pocket.\r\n\r\nThe killer didn't panic. They walked out and shut that heavy
       door behind them. If the electronic lock engaged when they left, there has
-      to be a digital footprint logged in the system\u2026\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Act 3
-    nextNode: {fileID: 11400000, guid: ac1851879a9f1034eb724a7aa7b5fcee, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      to be a digital footprint logged in the system\u2026\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Act 3
+      node: {fileID: 11400000, guid: ac1851879a9f1034eb724a7aa7b5fcee, type: 2}

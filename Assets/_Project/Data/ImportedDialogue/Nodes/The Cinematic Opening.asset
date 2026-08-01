@@ -25,25 +25,12 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: aabf6047593d733468283b161084b6e4, type: 2}
-  segments:
-  - kind: 0
-    text: 'The game opens on a passive observer, not the detective, watching the
+  blocks:
+  - condition: 
+    text: "The game opens on a passive observer, not the detective, watching the
       high-society downfall play out as a stylized comic-panel cutscene. Narrative
-      is delivered through dialogue boxes, not on-screen text or voiceover.
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: CO - Page 1
-    nextNode: {fileID: 11400000, guid: aabf6047593d733468283b161084b6e4, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      is delivered through dialogue boxes, not on-screen text or voiceover.\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: CO - Page 1
+      node: {fileID: 11400000, guid: aabf6047593d733468283b161084b6e4, type: 2}

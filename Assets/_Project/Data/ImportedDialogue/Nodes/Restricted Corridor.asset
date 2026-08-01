@@ -41,123 +41,46 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
   - choiceLabel: Back Alley
     nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
-  segments:
-  - kind: 2
+  blocks:
+  - condition: (history:) does not contain "Restricted Corridor"
+    text: '<b>[ACT 2: Unlocking the Paper Trail]</b>
+
+      
+
+'
+    links: []
+  - condition: 
     text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "Restricted Corridor"
-      body:
-      - kind: 0
-        text: '<b>[ACT 2: Unlocking the Paper Trail]</b>
-
-          
-
-'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 1
-    text: Open Case File
-    linkTarget: Case File
-    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:)contains"Elena - Key"
-      body:
-      - kind: 0
-        text: ' | '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 1
-        text: Use Time Vision
-        linkTarget: Restricted Corridor Time Vision
-        nextNode: {fileID: 11400000, guid: 831bacf5359de2749afb15c043156067, type: 2}
-        branches: []
-  - kind: 0
-    text: '
-
-      
-
-      A narrow 6-foot-wide restricted corridor connecting
-      a security booth and archive room to a private office and a doorway to back
-      alley. Heavy modern electronic-keypad security door at one end, dim overhead
-      strip lighting, cold gray-blue tones with deep shadows pooling in the corners.
-      Claustrophobic framing, muted color palette, faint rain-shadow patterns from
-      a distant window, cinematic noir lighting, comic art style.
-
-      
-
-      Where
-      do you want to go?
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Exhibition Hall
-    linkTarget: Exhibition Hall
-    nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Private Office
-    linkTarget: Private Office
-    nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Security Booth
-    linkTarget: Private Office - Restricted
-    nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Archive Room
-    linkTarget: Private Office - Restricted
-    nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back Alley
-    linkTarget: Private Office - Restricted
-    nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links:
+    - label: Open Case File
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - condition: (history:)contains"Elena - Key"
+    text: ' | '
+    links:
+    - label: Use Time Vision
+      target: Restricted Corridor Time Vision
+      node: {fileID: 11400000, guid: 831bacf5359de2749afb15c043156067, type: 2}
+  - condition: 
+    text: "\r\n\r\nA narrow 6-foot-wide restricted corridor connecting a security
+      booth and archive room to a private office and a doorway to back alley. Heavy
+      modern electronic-keypad security door at one end, dim overhead strip lighting,
+      cold gray-blue tones with deep shadows pooling in the corners. Claustrophobic
+      framing, muted color palette, faint rain-shadow patterns from a distant window,
+      cinematic noir lighting, comic art style.\r\n\r\nWhere do you want to go?\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r"
+    links:
+    - label: Exhibition Hall
+      target: Exhibition Hall
+      node: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
+    - label: Private Office
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
+    - label: Security Booth
+      target: Private Office - Restricted
+      node: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
+    - label: Archive Room
+      target: Private Office - Restricted
+      node: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
+    - label: Back Alley
+      target: Private Office - Restricted
+      node: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}

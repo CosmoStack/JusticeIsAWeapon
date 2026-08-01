@@ -22,10 +22,8 @@ MonoBehaviour:
   bodyLanguageOverride: 
   isDeadEnd: 1
   choices: []
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>[ACT 3: THE NIGHT SHIFT]</b>\r\n\r\nDEMO completed. Leave any suggestions
       in comments and wishlist for future updates.\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

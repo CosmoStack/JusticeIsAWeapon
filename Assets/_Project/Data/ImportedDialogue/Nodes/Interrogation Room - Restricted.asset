@@ -23,23 +23,10 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-  segments:
-  - kind: 0
-    text: 'I don''t have another reason to go there yet.
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Gallery Exterior
-    nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "I don't have another reason to go there yet.\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}

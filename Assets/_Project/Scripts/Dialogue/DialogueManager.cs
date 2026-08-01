@@ -179,65 +179,38 @@ namespace JusticeIsAWeapon.Dialogue
             _builder.Clear();
             _availableChoices.Clear();
 
-            if (node.segments != null)
+            if (node.blocks != null)
             {
-                WalkSegments(node.segments);
+                foreach (DialogueBlock block in node.blocks)
+                {
+                    bool active = string.IsNullOrEmpty(block.condition)
+                        || ConditionEvaluator.Evaluate(block.condition, HasVisited, GetVar);
+
+                    if (!active)
+                    {
+                        continue;
+                    }
+
+                    if (!string.IsNullOrEmpty(block.text))
+                    {
+                        _builder.Append(block.text);
+                    }
+
+                    if (block.links != null)
+                    {
+                        foreach (LinkData link in block.links)
+                        {
+                            _availableChoices.Add(new DialogueChoice
+                            {
+                                label = link.label,
+                                target = link.node
+                            });
+                        }
+                    }
+                }
             }
 
             CurrentText = _builder.ToString();
-        }
-
-        private void WalkSegments(List<TweeSegment> segments)
-        {
-            foreach (TweeSegment segment in segments)
-            {
-                switch (segment.kind)
-                {
-                    case SegmentKind.Text:
-                        _builder.Append(segment.text);
-                        break;
-
-                    case SegmentKind.Link:
-                        _availableChoices.Add(new DialogueChoice
-                        {
-                            label = segment.text,
-                            target = segment.nextNode
-                        });
-                        break;
-
-                    case SegmentKind.Conditional:
-                        WalkConditional(segment);
-                        break;
-                }
-            }
-        }
-
-        private void WalkConditional(TweeSegment segment)
-        {
-            if (segment.branches == null)
-            {
-                return;
-            }
-
-            bool entered = false;
-            foreach (TweeBranch branch in segment.branches)
-            {
-                bool active = string.IsNullOrEmpty(branch.condition)
-                    ? !entered
-                    : ConditionEvaluator.Evaluate(branch.condition, HasVisited, GetVar);
-
-                if (!active)
-                {
-                    continue;
-                }
-
-                if (branch.body != null)
-                {
-                    WalkSegments(branch.body);
-                }
-                entered = true;
-                break;
-            }
         }
     }
 }

@@ -28,24 +28,15 @@ MonoBehaviour:
   choices:
   - choiceLabel: Return to the Roster
     nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<i>You drag the 'Restricted Corridor Door' onto the interrogation tab,
       preparing to press the witness on who has access to the back rooms.</i>\r\n\r\n<b>Detective
       Miller:</b> \r\n\"Don't bother with that right now. Here's the key for the
       corridor. Once we're done with the roster, you can investigate the Private
       Office.\"\r\n\r\n<b>[ITEM REMOVED: The Restricted Corridor Door]</b>\r\n<b>[ITEM
-      ACQUIRED: Restricted Master Key]</b>\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Return to the Roster
-    linkTarget: Interrogation Room
-    nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      ACQUIRED: Restricted Master Key]</b>\r\n\r\n\r\n\r"
+    links:
+    - label: Return to the Roster
+      target: Interrogation Room
+      node: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}

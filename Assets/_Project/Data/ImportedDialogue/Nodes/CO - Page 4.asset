@@ -28,32 +28,16 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 4d8d4f66835589d4baaa147fcdd6471e, type: 2}
   - choiceLabel: SKIP
     nextNode: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Visuals</b>\r\nThomas running from the convention hall toward the Webb
       Gallery \u2014 splash SFX driving the urgency. The player just watched him
       on stage, so his identity is fully established. The gallery comes into view,
-      wrapped in police tape.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: CO - Page 5
-    nextNode: {fileID: 11400000, guid: 4d8d4f66835589d4baaa147fcdd6471e, type: 2}
-    branches: []
-  - kind: 0
-    text: " \r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: SKIP
-    linkTarget: Taking Control
-    nextNode: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}
-    branches: []
-  - kind: 0
-    text: " \r\n\r\n<i>No. of Panels: 1</i>\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      wrapped in police tape.\r\n\r\n \r\n \r\n\r\n<i>No. of Panels: 1</i>\r\n\r"
+    links:
+    - label: CONTINUE
+      target: CO - Page 5
+      node: {fileID: 11400000, guid: 4d8d4f66835589d4baaa147fcdd6471e, type: 2}
+    - label: SKIP
+      target: Taking Control
+      node: {fileID: 11400000, guid: 956c07dbfe61ad846b994308b1b49855, type: 2}

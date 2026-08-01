@@ -71,8 +71,8 @@ namespace JusticeIsAWeapon.Editor
                 }
 
                 node.nodeId = passage.name;
-                node.segments = ParseSegments(passage.body);
-                node.lineText = FlattenText(node.segments);
+                node.blocks = ParseBlocks(passage.body, null);
+                node.lineText = FlattenText(node.blocks);
                 node.speakerName = string.Empty;
                 node.choices = new List<DialogueChoiceSO>();
                 node.isDeadEnd = false;
@@ -193,28 +193,37 @@ namespace JusticeIsAWeapon.Editor
         }
 
         // ------------------------------------------------------------------
-        // Passage body -> segment tree
+        // Passage body -> flat render blocks
         // ------------------------------------------------------------------
 
-        private static List<TweeSegment> ParseSegments(string body)
+        /// <summary>
+        /// Parses a passage body into flat DialogueBlocks. Conditional nesting is
+        /// flattened here: each block carries the fully combined condition of all
+        /// enclosing (if:)/(else-if:)/(else:) chains, so the serialized data has
+        /// no recursive hierarchy (Unity's serialization depth limit is 10).
+        /// </summary>
+        private static List<DialogueBlock> ParseBlocks(string body, string context)
         {
-            var segments = new List<TweeSegment>();
+            var blocks = new List<DialogueBlock>();
             int i = 0;
             int n = body.Length;
             var textBuffer = new StringBuilder();
+            var pendingLinks = new List<LinkData>();
 
-            void FlushText()
+            void Flush()
             {
-                if (textBuffer.Length == 0)
+                if (textBuffer.Length == 0 && pendingLinks.Count == 0)
                 {
                     return;
                 }
-                segments.Add(new TweeSegment
+                blocks.Add(new DialogueBlock
                 {
-                    kind = SegmentKind.Text,
-                    text = ConvertMarkup(textBuffer.ToString())
+                    condition = context,
+                    text = ConvertMarkup(textBuffer.ToString()),
+                    links = pendingLinks.Count > 0 ? new List<LinkData>(pendingLinks) : null
                 });
                 textBuffer.Clear();
+                pendingLinks.Clear();
             }
 
             while (i < n)
@@ -230,7 +239,6 @@ namespace JusticeIsAWeapon.Editor
                 // Links [[label|target]], [[label->target]], [[target]]
                 if (body[i] == '[' && i + 1 < n && body[i + 1] == '[')
                 {
-                    FlushText();
                     int close = body.IndexOf("]]", i + 2);
                     if (close < 0)
                     {
@@ -261,11 +269,10 @@ namespace JusticeIsAWeapon.Editor
                         target = inner;
                     }
 
-                    segments.Add(new TweeSegment
+                    pendingLinks.Add(new LinkData
                     {
-                        kind = SegmentKind.Link,
-                        text = label.Trim(),
-                        linkTarget = target.Trim()
+                        label = label.Trim(),
+                        target = target.Trim()
                     });
                     continue;
                 }
@@ -311,24 +318,18 @@ namespace JusticeIsAWeapon.Editor
                     {
                         case "if":
                         {
-                            FlushText();
-                            var branches = new List<TweeBranch>
-                            {
-                                new TweeBranch
-                                {
-                                    condition = macroInner.Substring(colon + 1).Trim(),
-                                    body = ParseSegments(innerBody)
-                                }
-                            };
+                            Flush();
 
-                            // Chain (else-if:) / (else:) groups
-                            after = ParseElseChain(body, after, branches);
+                            var chainConds = new List<string> { macroInner.Substring(colon + 1).Trim() };
+                            var chainBodies = new List<string> { innerBody };
+                            after = ParseElseChain(body, after, chainConds, chainBodies);
 
-                            segments.Add(new TweeSegment
+                            for (int branch = 0; branch < chainConds.Count; branch++)
                             {
-                                kind = SegmentKind.Conditional,
-                                branches = branches
-                            });
+                                string branchExpr = ComputeBranchCondition(chainConds, branch);
+                                string childContext = CombineConditions(context, branchExpr);
+                                blocks.AddRange(ParseBlocks(chainBodies[branch], childContext));
+                            }
                             i = after;
                             break;
                         }
@@ -358,16 +359,15 @@ namespace JusticeIsAWeapon.Editor
                             string styleArg = macroInner.Substring(colon + 1).Trim();
                             if (styleArg.Contains("underline"))
                             {
-                                FlushText();
-                                List<TweeSegment> wrapped = ParseSegments(innerBody);
-                                foreach (TweeSegment inner in wrapped)
+                                List<DialogueBlock> wrapped = ParseBlocks(innerBody, context);
+                                foreach (DialogueBlock wrappedBlock in wrapped)
                                 {
-                                    if (inner.kind == SegmentKind.Text)
+                                    if (!string.IsNullOrEmpty(wrappedBlock.text))
                                     {
-                                        inner.text = "<u>" + inner.text + "</u>";
+                                        wrappedBlock.text = "<u>" + wrappedBlock.text + "</u>";
                                     }
                                 }
-                                segments.AddRange(wrapped);
+                                blocks.AddRange(wrapped);
                             }
                             i = after;
                             break;
@@ -385,11 +385,15 @@ namespace JusticeIsAWeapon.Editor
                 i++;
             }
 
-            FlushText();
-            return segments;
+            Flush();
+            return blocks;
         }
 
-        private static int ParseElseChain(string body, int after, List<TweeBranch> branches)
+        /// <summary>
+        /// Collects the (else-if:)/(else:) groups that immediately follow an (if:)
+        /// group into the chain condition/body lists.
+        /// </summary>
+        private static int ParseElseChain(string body, int after, List<string> conds, List<string> bodies)
         {
             int n = body.Length;
             while (true)
@@ -423,11 +427,8 @@ namespace JusticeIsAWeapon.Editor
                                 return save;
                             }
 
-                            branches.Add(new TweeBranch
-                            {
-                                condition = macroName == "else" ? null : macroInner.Substring(colon + 1).Trim(),
-                                body = ParseSegments(body.Substring(bodyStart + 1, bodyEnd - bodyStart - 1))
-                            });
+                            conds.Add(macroName == "else" ? null : macroInner.Substring(colon + 1).Trim());
+                            bodies.Add(body.Substring(bodyStart + 1, bodyEnd - bodyStart - 1));
                             after = bodyEnd + 1;
                             continue;
                         }
@@ -436,6 +437,42 @@ namespace JusticeIsAWeapon.Editor
 
                 return save;
             }
+        }
+
+        /// <summary>
+        /// Builds the condition expression under which chain branch `index` is the
+        /// active branch: its own condition AND none of the earlier branches
+        /// matched (else-if/else semantics).
+        /// </summary>
+        private static string ComputeBranchCondition(List<string> conds, int index)
+        {
+            var parts = new List<string>();
+            if (!string.IsNullOrEmpty(conds[index]))
+            {
+                parts.Add(conds[index]);
+            }
+            for (int j = 0; j < index; j++)
+            {
+                if (string.IsNullOrEmpty(conds[j]))
+                {
+                    continue;
+                }
+                parts.Add("not (" + conds[j] + ")");
+            }
+            return parts.Count == 0 ? null : string.Join(" and ", parts);
+        }
+
+        private static string CombineConditions(string context, string branchExpr)
+        {
+            if (string.IsNullOrEmpty(branchExpr))
+            {
+                return context;
+            }
+            if (string.IsNullOrEmpty(context))
+            {
+                return branchExpr;
+            }
+            return context + " and (" + branchExpr + ")";
         }
 
         /// <summary>Finds the closing bracket for an opening bracket, counting nesting depth.</summary>
@@ -487,74 +524,54 @@ namespace JusticeIsAWeapon.Editor
                     node.choices = new List<DialogueChoiceSO>();
                 }
                 node.choices.Clear();
-                CollectLinks(node.segments, node.choices, nodesByName, ref dangling);
+
+                if (node.blocks == null)
+                {
+                    continue;
+                }
+
+                foreach (DialogueBlock block in node.blocks)
+                {
+                    if (block.links == null)
+                    {
+                        continue;
+                    }
+
+                    foreach (LinkData link in block.links)
+                    {
+                        if (!nodesByName.TryGetValue(link.target, out DialogueNodeSO target))
+                        {
+                            Debug.LogWarning($"[TweeImporter] Dangling link '{link.target}' in passage '{node.nodeId}'");
+                            dangling++;
+                            continue;
+                        }
+
+                        link.node = target;
+                        node.choices.Add(new DialogueChoiceSO
+                        {
+                            choiceLabel = link.label,
+                            nextNode = target
+                        });
+                    }
+                }
             }
             return dangling;
         }
 
-        private static void CollectLinks(List<TweeSegment> segments, List<DialogueChoiceSO> choices,
-            Dictionary<string, DialogueNodeSO> nodesByName, ref int dangling)
-        {
-            if (segments == null)
-            {
-                return;
-            }
-
-            foreach (TweeSegment segment in segments)
-            {
-                if (segment.kind == SegmentKind.Link)
-                {
-                    if (!nodesByName.TryGetValue(segment.linkTarget, out DialogueNodeSO target))
-                    {
-                        Debug.LogWarning($"[TweeImporter] Dangling link '{segment.linkTarget}'");
-                        dangling++;
-                        continue;
-                    }
-
-                    segment.nextNode = target;
-                    choices.Add(new DialogueChoiceSO
-                    {
-                        choiceLabel = segment.text,
-                        nextNode = target
-                    });
-                }
-                else if (segment.kind == SegmentKind.Conditional && segment.branches != null)
-                {
-                    foreach (TweeBranch branch in segment.branches)
-                    {
-                        CollectLinks(branch.body, choices, nodesByName, ref dangling);
-                    }
-                }
-            }
-        }
-
-        private static string FlattenText(List<TweeSegment> segments)
+        private static string FlattenText(List<DialogueBlock> blocks)
         {
             var builder = new StringBuilder();
-            AppendText(segments, builder);
-            return builder.ToString();
-        }
-
-        private static void AppendText(List<TweeSegment> segments, StringBuilder builder)
-        {
-            if (segments == null)
+            if (blocks != null)
             {
-                return;
-            }
-            foreach (TweeSegment segment in segments)
-            {
-                if (segment.kind == SegmentKind.Text)
+                foreach (DialogueBlock block in blocks)
                 {
-                    builder.Append(segment.text);
-                }
-                else if (segment.kind == SegmentKind.Conditional && segment.branches != null)
-                {
-                    foreach (TweeBranch branch in segment.branches)
+                    if (!string.IsNullOrEmpty(block.text))
                     {
-                        AppendText(branch.body, builder);
+                        builder.Append(block.text);
                     }
                 }
             }
+            return builder.ToString();
         }
 
         private static string SanitizeFileName(string name)

@@ -29,8 +29,8 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 620aae6b554e6104485596f25e94a40f, type: 2}
   - choiceLabel: '"End of the day? We''d better get moving."'
     nextNode: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: '<b>Detective Miller:</b>
 
       "The city council is terrified. They
@@ -42,35 +42,18 @@ MonoBehaviour:
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: not ((history:) contains "The Evidence")
-      body:
-      - kind: 1
-        text: '"Tell me about the situation."'
-        linkTarget: The Evidence
-        nextNode: {fileID: 11400000, guid: 620aae6b554e6104485596f25e94a40f, type: 2}
-        branches: []
-      - kind: 0
-        text: '
+    links: []
+  - condition: not ((history:) contains "The Evidence")
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 1
-    text: '"End of the day? We''d better get moving."'
-    linkTarget: The Handoff
-    nextNode: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}
-    branches: []
-  - kind: 0
+    links:
+    - label: '"Tell me about the situation."'
+      target: The Evidence
+      node: {fileID: 11400000, guid: 620aae6b554e6104485596f25e94a40f, type: 2}
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links:
+    - label: '"End of the day? We''d better get moving."'
+      target: The Handoff
+      node: {fileID: 11400000, guid: 7b6e8b16820162a469f6aac4ee5f1293, type: 2}

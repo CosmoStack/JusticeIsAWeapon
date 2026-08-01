@@ -31,8 +31,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Elena's Clipboard
     nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "You tap the 'Relationship' baseline on your clipboard. Miller sits up
       slightly straighter to match her corporate energy.\r\n\r\n<b>Detective Miller:</b>
       \r\n\"Let's talk about you and Marcus. Ex-spouses running rival galleries in
@@ -42,17 +42,8 @@ MonoBehaviour:
       file with Detective Miller. If you'll excuse me, I have a board meeting to
       salvage.\"\r\n\r\n''[Investigator's Note:]'' There is a total lack of humanity
       in her response. She's already treating her ex-husband's death as a logistical
-      problem to manage.\r\n \r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Elena's Clipboard
-    linkTarget: Interview Elena
-    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      problem to manage.\r\n \r\n\r\n\r"
+    links:
+    - label: Back to Elena's Clipboard
+      target: Interview Elena
+      node: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}

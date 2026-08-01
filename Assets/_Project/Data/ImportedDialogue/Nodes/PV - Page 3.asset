@@ -32,37 +32,20 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: bf5ef96b3ea7b024a8f974b5580998a3, type: 2}
   - choiceLabel: SKIP
     nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "<b>Visuals</b>\r\nAction shot\u2014the hooded figure grabs the heavy porcelain
       vase and swings it with full force into Marcus's temple. Shards of porcelain
       scatter across the floor as Marcus collapses beside the desk, a dark pool of
       blood instantly spreading beneath his head.\r\n\r\n<b>Narrative/Audio</b>\r\n
-      The fatal blow is delivered before Marcus hits the ground.\r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: PV - Page 4
-    nextNode: {fileID: 11400000, guid: bf5ef96b3ea7b024a8f974b5580998a3, type: 2}
-    branches: []
-  - kind: 0
-    text: '
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: SKIP
-    linkTarget: Post Vision - Vase
-    nextNode: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r\n<i>No. of Panels: 4</i>\r\n<i>1. Hooded figure grabs the vase</i>\r\n<i>2.
-      Marcus gets in front of desk</i>\r\n<i>3. Vase crashes into Marcus's temple</i>\r\n<i>4.
+      The fatal blow is delivered before Marcus hits the ground.\r\n\r\n\r\n\r\n\r\n<i>No.
+      of Panels: 4</i>\r\n<i>1. Hooded figure grabs the vase</i>\r\n<i>2. Marcus
+      gets in front of desk</i>\r\n<i>3. Vase crashes into Marcus's temple</i>\r\n<i>4.
       Aftermath</i>\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links:
+    - label: CONTINUE
+      target: PV - Page 4
+      node: {fileID: 11400000, guid: bf5ef96b3ea7b024a8f974b5580998a3, type: 2}
+    - label: SKIP
+      target: Post Vision - Vase
+      node: {fileID: 11400000, guid: e4968c12c5b84c94e8c0b9d6d48b07b1, type: 2}

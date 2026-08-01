@@ -59,42 +59,29 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
   - choiceLabel: Head to the Webb Gallery
     nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-  segments:
-  - kind: 1
-    text: Open Case File
-    linkTarget: Case File
-    nextNode: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
-    branches: []
-  - kind: 0
+  blocks:
+  - condition: 
     text: '
 
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "Interrogation Room"
-      body:
-      - kind: 0
-        text: "<b>Detective Miller:</b>\r\n\"Alright, let's get this roster organized.
-          The assistant curator, Yuki, is the one who actually discovered the body,
-          though the security chief, Victor, is the one who made the 911 call. There
-          was another employee on-site\u2014Leo, the archive assistant\u2014but the
-          kid was running on fumes after pulling an all-night digitization shift.
-          I let him head home to get some sleep. We'll bring him back in later.\r\n\r\n\"As
-          for the rest... the victim's brother, Thomas, just arrived outside the
-          tape, and we called the ex-wife, Elena, earlier and had her brought down.
-          They're all waiting. Let's see whose story cracks first.\"\r\n\r\n"
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 0
+    links:
+    - label: Open Case File
+      target: Case File
+      node: {fileID: 11400000, guid: 8a07368a5cfc1cf42a94192573e4e01e, type: 2}
+  - condition: (history:) does not contain "Interrogation Room"
+    text: "<b>Detective Miller:</b>\r\n\"Alright, let's get this roster organized.
+      The assistant curator, Yuki, is the one who actually discovered the body, though
+      the security chief, Victor, is the one who made the 911 call. There was another
+      employee on-site\u2014Leo, the archive assistant\u2014but the kid was running
+      on fumes after pulling an all-night digitization shift. I let him head home
+      to get some sleep. We'll bring him back in later.\r\n\r\n\"As for the rest...
+      the victim's brother, Thomas, just arrived outside the tape, and we called
+      the ex-wife, Elena, earlier and had her brought down. They're all waiting.
+      Let's see whose story cracks first.\"\r\n\r\n"
+    links: []
+  - condition: 
     text: '[<b>Detective Miller:</b>
 
       "You won''t believe this. A call from
@@ -118,152 +105,98 @@ MonoBehaviour:
 
       
 
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Yuki Tanaka - The Assistant Curator
-    linkTarget: Interview Yuki
-    nextNode: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}
-    branches: []
-  - kind: 0
-    text: '
+      
 
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Victor Hasting - Chief Security Officer
-    linkTarget: Interview Victor
-    nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-    branches: []
-  - kind: 0
-    text: '
+      
 
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Thomas Webb - The Brother
-    linkTarget: Interview Thomas
-    nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
-    branches: []
-  - kind: 0
-    text: '
+      
 
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Elena Vance - The Rival
-    linkTarget: Interview Elena
-    nextNode: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
-    branches: []
-  - kind: 0
-    text: '
+      
 
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) contains "Interview Yuki" and (history:) contains "Interview
-        Victor" and (history:) contains "Interview Thomas" and (history:) contains
-        "Interview Elena" and (history:) contains "Miller - Key Handoff"
-      body:
-      - kind: 2
-        text: 
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches:
-        - condition: (history:) does not contain "Contract Clue Unlock"
-          body:
-          - kind: 0
-            text: '<b>Detective Miller:</b>
+    links:
+    - label: Yuki Tanaka - The Assistant Curator
+      target: Interview Yuki
+      node: {fileID: 11400000, guid: faaa8da6542ee0945b44a4f981ba923f, type: 2}
+    - label: Victor Hasting - Chief Security Officer
+      target: Interview Victor
+      node: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
+    - label: Thomas Webb - The Brother
+      target: Interview Thomas
+      node: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
+    - label: Elena Vance - The Rival
+      target: Interview Elena
+      node: {fileID: 11400000, guid: 7f2e4eacb43cc384281bf8edf37e8ae8, type: 2}
+  - condition: (history:) contains "Interview Yuki" and (history:) contains "Interview
+      Victor" and (history:) contains "Interview Thomas" and (history:) contains
+      "Interview Elena" and (history:) contains "Miller - Key Handoff" and ((history:)
+      does not contain "Contract Clue Unlock")
+    text: '<b>Detective Miller:</b>
 
-              "That''s everyone. And
-              every single one of them is a dead end on paper. We aren''t getting
-              anything else out of them right now. You have the master key. Go back
-              and crack open that Private Office before the city council shuts us
-              down."
+      "That''s everyone. And every single one
+      of them is a dead end on paper. We aren''t getting anything else out of them
+      right now. You have the master key. Go back and crack open that Private Office
+      before the city council shuts us down."
 
-              
+      
 
 '
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-          - kind: 1
-            text: Head to the Webb Gallery
-            linkTarget: Gallery Exterior
-            nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-            branches: []
-        - condition: (history:)contains"Elena - Contract" and (history:)does not
-            contain"Key Clue Unlock"
-          body:
-          - kind: 0
-            text: '<b>Detective Miller:</b>
+    links:
+    - label: Head to the Webb Gallery
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - condition: (history:) contains "Interview Yuki" and (history:) contains "Interview
+      Victor" and (history:) contains "Interview Thomas" and (history:) contains
+      "Interview Elena" and (history:) contains "Miller - Key Handoff" and ((history:)contains"Elena
+      - Contract" and (history:)does not contain"Key Clue Unlock" and not ((history:)
+      does not contain "Contract Clue Unlock"))
+    text: '<b>Detective Miller:</b>
 
-              "We are missing something.
-              You need to go back and check the Private Office."
+      "We are missing something. You need to
+      go back and check the Private Office."
 
-              
+      
 
 '
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-          - kind: 1
-            text: Head to the Webb Gallery
-            linkTarget: Gallery Exterior
-            nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-            branches: []
-        - condition: (history:)contains"Elena - Key"
-          body:
-          - kind: 0
-            text: '<b>Detective Miller:</b>
+    links:
+    - label: Head to the Webb Gallery
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - condition: (history:) contains "Interview Yuki" and (history:) contains "Interview
+      Victor" and (history:) contains "Interview Thomas" and (history:) contains
+      "Interview Elena" and (history:) contains "Miller - Key Handoff" and ((history:)contains"Elena
+      - Key" and not ((history:) does not contain "Contract Clue Unlock") and not
+      ((history:)contains"Elena - Contract" and (history:)does not contain"Key Clue
+      Unlock"))
+    text: '<b>Detective Miller:</b>
 
-              "Detective. I have another
-              news for you. Forensics also just called me again. Marcus did not ingest
-              the poison. The vial was planted post-mortem, and the fatal blow was
-              delivered before the scene was staged. You can now actually use your
-              ability on the vase to find out who the killer is."
+      "Detective. I have another news for you.
+      Forensics also just called me again. Marcus did not ingest the poison. The
+      vial was planted post-mortem, and the fatal blow was delivered before the scene
+      was staged. You can now actually use your ability on the vase to find out who
+      the killer is."
 
-              
+      
 
-              <b>[ABILITY
-              UNLOCKED: Time Vision]</b>
+      <b>[ABILITY UNLOCKED: Time Vision]</b>
 
-              
+      
 
 '
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-          - kind: 1
-            text: Head to the Webb Gallery
-            linkTarget: Gallery Exterior
-            nextNode: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
-            branches: []
-        - condition: 
-          body:
-          - kind: 0
-            text: '[Head to the Webb Gallery|Gallery - Restricted]'
-            linkTarget: 
-            nextNode: {fileID: 0}
-            branches: []
-  - kind: 0
+    links:
+    - label: Head to the Webb Gallery
+      target: Gallery Exterior
+      node: {fileID: 11400000, guid: 3b9db2c955038ff4abc7f08ad13024c5, type: 2}
+  - condition: (history:) contains "Interview Yuki" and (history:) contains "Interview
+      Victor" and (history:) contains "Interview Thomas" and (history:) contains
+      "Interview Elena" and (history:) contains "Miller - Key Handoff" and (not ((history:)
+      does not contain "Contract Clue Unlock") and not ((history:)contains"Elena
+      - Contract" and (history:)does not contain"Key Clue Unlock") and not ((history:)contains"Elena
+      - Key"))
+    text: '[Head to the Webb Gallery|Gallery - Restricted]'
+    links: []
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

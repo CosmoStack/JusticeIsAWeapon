@@ -45,199 +45,114 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
   - choiceLabel: Step out for now
     nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "The camera shifts to Thomas Webb. He looks like a man vibrating out of
       his skin\u2014sweating, pacing slightly even while seated, and openly hostile.
       He is using his grief as a blunt instrument to keep you both at bay.\r\n\r\n<b>[DEDUCTION
       CLIPBOARD ACTIVE]</b>\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) contains "The Restricted Corridor Door" and (history:)
-        does not contain "Miller - Key Handoff"
-      body:
-      - kind: 1
-        text: The Restricted Corridor Door
-        linkTarget: Miller - Key Handoff
-        nextNode: {fileID: 11400000, guid: 12bfc5c9053694840adf854ce9a3c32a, type: 2}
-        branches: []
-      - kind: 0
-        text: '
-
-'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-    - condition: (history:)contains"Contract Clue Unlock"
-      body:
-      - kind: 1
-        text: Asset Liquidation Contract
-        linkTarget: Thomas - Restricted
-        nextNode: {fileID: 11400000, guid: af24ed8d0db731940af0194b15813c52, type: 2}
-        branches: []
-      - kind: 0
-        text: '
-
-'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-    - condition: (history:)contains"Key Clue Unlock" and (history:)contains"Elena
-        - Contract" and (history:) does not contain "Elena - Key"
-      body:
-      - kind: 1
-        text: Master Key Fingerprints
-        linkTarget: Thomas - Restricted
-        nextNode: {fileID: 11400000, guid: af24ed8d0db731940af0194b15813c52, type: 2}
-        branches: []
-      - kind: 0
-        text: '
-
-'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-    - condition: 
-      body:
-      - kind: 0
-        text: '<i>You currently have no physical clues to present. Select a baseline
-          topic for Detective Miller to press her on.</i>
-
-'
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 0
+    links: []
+  - condition: (history:) contains "The Restricted Corridor Door" and (history:)
+      does not contain "Miller - Key Handoff"
     text: '
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "Thomas - Alibi"
-      body:
-      - kind: 1
-        text: Press on Alibi
-        linkTarget: Thomas - Alibi
-        nextNode: {fileID: 11400000, guid: b81a691f7648aca40b69ff33c353bd1e, type: 2}
-        branches: []
-      - kind: 0
-        text: '
+    links:
+    - label: The Restricted Corridor Door
+      target: Miller - Key Handoff
+      node: {fileID: 11400000, guid: 12bfc5c9053694840adf854ce9a3c32a, type: 2}
+  - condition: (history:)contains"Contract Clue Unlock" and not ((history:) contains
+      "The Restricted Corridor Door" and (history:) does not contain "Miller - Key
+      Handoff")
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "Thomas - Timeline"
-      body:
-      - kind: 1
-        text: Press on Timeline
-        linkTarget: Thomas - Timeline
-        nextNode: {fileID: 11400000, guid: f32b71ba0f530214cb81a6858b18d636, type: 2}
-        branches: []
-      - kind: 0
-        text: '
+    links:
+    - label: Asset Liquidation Contract
+      target: Thomas - Restricted
+      node: {fileID: 11400000, guid: af24ed8d0db731940af0194b15813c52, type: 2}
+  - condition: (history:)contains"Key Clue Unlock" and (history:)contains"Elena -
+      Contract" and (history:) does not contain "Elena - Key" and not ((history:)
+      contains "The Restricted Corridor Door" and (history:) does not contain "Miller
+      - Key Handoff") and not ((history:)contains"Contract Clue Unlock")
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) does not contain "Thomas - Relationship"
-      body:
-      - kind: 1
-        text: Press on Relationship to Victim
-        linkTarget: Thomas - Relationship
-        nextNode: {fileID: 11400000, guid: 45057aabbf3ae274bace72308cb674a5, type: 2}
-        branches: []
-      - kind: 0
-        text: '
+    links:
+    - label: Master Key Fingerprints
+      target: Thomas - Restricted
+      node: {fileID: 11400000, guid: af24ed8d0db731940af0194b15813c52, type: 2}
+  - condition: not ((history:) contains "The Restricted Corridor Door" and (history:)
+      does not contain "Miller - Key Handoff") and not ((history:)contains"Contract
+      Clue Unlock") and not ((history:)contains"Key Clue Unlock" and (history:)contains"Elena
+      - Contract" and (history:) does not contain "Elena - Key")
+    text: '<i>You currently have no physical clues to present. Select a baseline
+      topic for Detective Miller to press her on.</i>
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 2
-    text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:) contains "Thomas - Alibi" and (history:) contains "Thomas
-        - Timeline" and (history:) contains "Thomas - Relationship"
-      body:
-      - kind: 0
-        text: '<b>Detective Miller:</b>
-
-          "He''s loud, but he''s safe behind
-          a room full of witnesses. Until we have paper proving he had a reason to
-          want Marcus dead, pushing him is just going to get us a harassment complaint."
-
-          
-
-          <i>[THOMAS
-          WEBB''S STATEMENT LOGGED]</i>
-
-          
+    links: []
+  - condition: 
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 1
-        text: Return to the Roster
-        linkTarget: Interrogation Room
-        nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
-        branches: []
-      - kind: 0
-        text: '
+    links: []
+  - condition: (history:) does not contain "Thomas - Alibi"
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-    - condition: 
-      body:
-      - kind: 0
-        text: '
+    links:
+    - label: Press on Alibi
+      target: Thomas - Alibi
+      node: {fileID: 11400000, guid: b81a691f7648aca40b69ff33c353bd1e, type: 2}
+  - condition: (history:) does not contain "Thomas - Timeline"
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-      - kind: 1
-        text: Step out for now
-        linkTarget: Interrogation Room
-        nextNode: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
-        branches: []
-      - kind: 0
-        text: '
+    links:
+    - label: Press on Timeline
+      target: Thomas - Timeline
+      node: {fileID: 11400000, guid: f32b71ba0f530214cb81a6858b18d636, type: 2}
+  - condition: (history:) does not contain "Thomas - Relationship"
+    text: '
 
 '
-        linkTarget: 
-        nextNode: {fileID: 0}
-        branches: []
-  - kind: 0
+    links:
+    - label: Press on Relationship to Victim
+      target: Thomas - Relationship
+      node: {fileID: 11400000, guid: 45057aabbf3ae274bace72308cb674a5, type: 2}
+  - condition: (history:) contains "Thomas - Alibi" and (history:) contains "Thomas
+      - Timeline" and (history:) contains "Thomas - Relationship"
+    text: '<b>Detective Miller:</b>
+
+      "He''s loud, but he''s safe behind a
+      room full of witnesses. Until we have paper proving he had a reason to want
+      Marcus dead, pushing him is just going to get us a harassment complaint."
+
+      
+
+      <i>[THOMAS
+      WEBB''S STATEMENT LOGGED]</i>
+
+      
+
+      
+
+'
+    links:
+    - label: Return to the Roster
+      target: Interrogation Room
+      node: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - condition: not ((history:) contains "Thomas - Alibi" and (history:) contains
+      "Thomas - Timeline" and (history:) contains "Thomas - Relationship")
+    text: '
+
+      
+
+'
+    links:
+    - label: Step out for now
+      target: Interrogation Room
+      node: {fileID: 11400000, guid: 814d63f17eee8284dabb89ebb6d4214b, type: 2}
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

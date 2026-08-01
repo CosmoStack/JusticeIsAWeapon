@@ -26,38 +26,27 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 4d8d7a0eb2e12294eb533cd9b4144c76, type: 2}
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: 'A false-bottom drawer, pried open and left ajar, holds an urgent batch
       of final financial notices and heavily leveraged bank loans.
 
       
 
 '
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 2
+    links: []
+  - condition: (history:)does not contain "Private Office - Desk"
     text: 
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches:
-    - condition: (history:)does not contain "Private Office - Desk"
-      body:
-      - kind: 1
-        text: CONTINUE
-        linkTarget: Key Clue Unlock
-        nextNode: {fileID: 11400000, guid: 4d8d7a0eb2e12294eb533cd9b4144c76, type: 2}
-        branches: []
-    - condition: 
-      body:
-      - kind: 1
-        text: CONTINUE
-        linkTarget: Private Office
-        nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
-        branches: []
-  - kind: 0
+    links:
+    - label: CONTINUE
+      target: Key Clue Unlock
+      node: {fileID: 11400000, guid: 4d8d7a0eb2e12294eb533cd9b4144c76, type: 2}
+  - condition: not ((history:)does not contain "Private Office - Desk")
+    text: 
+    links:
+    - label: CONTINUE
+      target: Private Office
+      node: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
+  - condition: 
     text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+    links: []

@@ -23,19 +23,10 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
-  segments:
-  - kind: 0
-    text: "You look at the blank walls and empty pedestals. \r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Exhibition Hall
-    nextNode: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "You look at the blank walls and empty pedestals. \r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Exhibition Hall
+      node: {fileID: 11400000, guid: d0020c2b004d90346ab495d4934fb433, type: 2}

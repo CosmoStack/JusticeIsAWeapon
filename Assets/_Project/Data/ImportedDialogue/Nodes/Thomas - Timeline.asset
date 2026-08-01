@@ -30,8 +30,8 @@ MonoBehaviour:
   choices:
   - choiceLabel: Back to Thomas's Clipboard
     nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
-  segments:
-  - kind: 0
+  blocks:
+  - condition: 
     text: "You select the 'Timeline' baseline.\r\n\r\n<b>Detective Miller:</b> \r\n\"Walk
       me through your timeline for this morning. When did you get the news?\"\r\n\r\n<b>Thomas
       Webb:</b> \r\n\"I was still backstage at the convention hall, holding his damn
@@ -39,17 +39,8 @@ MonoBehaviour:
       here. I dropped everything and practically sprinted the whole way to the gallery.
       That's it. That's all I know.\"\r\n\r\n''[Investigator's Note:]'' His timeline
       matches the sequence of events perfectly. He got the call from Yuki and arrived
-      exactly when expected. \r\n\r\n"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: Back to Thomas's Clipboard
-    linkTarget: Interview Thomas
-    nextNode: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+      exactly when expected. \r\n\r\n\r\n\r"
+    links:
+    - label: Back to Thomas's Clipboard
+      target: Interview Thomas
+      node: {fileID: 11400000, guid: 43285a71efa702440943b9c9862ccd41, type: 2}

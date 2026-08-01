@@ -23,25 +23,10 @@ MonoBehaviour:
   choices:
   - choiceLabel: CONTINUE
     nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-  segments:
-  - kind: 0
-    text: '<b>Detective Miller:</b>
-
-      "I don''t think that''s a good idea.
-
-      
-
-'
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
-  - kind: 1
-    text: CONTINUE
-    linkTarget: Interview Victor
-    nextNode: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
-    branches: []
-  - kind: 0
-    text: "\r\n\r"
-    linkTarget: 
-    nextNode: {fileID: 0}
-    branches: []
+  blocks:
+  - condition: 
+    text: "<b>Detective Miller:</b>\r\n\"I don't think that's a good idea.\r\n\r\n\r\n\r"
+    links:
+    - label: CONTINUE
+      target: Interview Victor
+      node: {fileID: 11400000, guid: 9c490066bd760e743a9b803bb319e8b2, type: 2}
