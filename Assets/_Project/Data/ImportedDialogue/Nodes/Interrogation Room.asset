@@ -25,8 +25,8 @@ MonoBehaviour:
     see whose story cracks first.\"\r\n\r\n[<b>Detective Miller:</b>\r\n\"You won't
     believe this. A call from forensics just came over and the key you sent for examination...
     it had Elena's fingerprints on it. They said it was fresh and was used recently
-    to unlock a door.\r\n\r\n\"We can finally catch her for something.\"\r\n\r\n<b>[CLUE
-    COLLECTED: Master Key Fingerprints]</b>\r\n\r\n]Who do you want to interrogate?\r\n\r\n\r\n\r\n\r\n\r\n\r\n<b>Detective
+    to unlock a door.\r\n\r\n\"We can finally catch her for something.\"\r\n\r\n<b>CLUE
+    COLLECTED: Master Key Fingerprints</b>\r\n\r\n]Who do you want to interrogate?\r\n\r\n\r\n\r\n\r\n\r\n\r\n<b>Detective
     Miller:</b>\r\n\"That's everyone. And every single one of them is a dead end
     on paper. We aren't getting anything else out of them right now. You have the
     master key. Go back and crack open that Private Office before the city council
@@ -35,8 +35,8 @@ MonoBehaviour:
     I have another news for you. Forensics also just called me again. Marcus did
     not ingest the poison. The vial was planted post-mortem, and the fatal blow was
     delivered before the scene was staged. You can now actually use your ability
-    on the vase to find out who the killer is.\"\r\n\r\n<b>[ABILITY UNLOCKED: Time
-    Vision]</b>\r\n\r\n[Head to the Webb Gallery|Gallery - Restricted]\r\n\r"
+    on the vase to find out who the killer is.\"\r\n\r\n<b>ABILITY UNLOCKED: Time
+    Vision</b>\r\n\r\n[Head to the Webb Gallery|Gallery - Restricted]\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -95,8 +95,8 @@ MonoBehaviour:
 
       
 
-      <b>[CLUE
-      COLLECTED: Master Key Fingerprints]</b>
+      <b>CLUE
+      COLLECTED: Master Key Fingerprints</b>
 
       
 
@@ -180,7 +180,7 @@ MonoBehaviour:
 
       
 
-      <b>[ABILITY UNLOCKED: Time Vision]</b>
+      <b>ABILITY UNLOCKED: Time Vision</b>
 
       
 

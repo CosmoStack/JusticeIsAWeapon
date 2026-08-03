@@ -18,7 +18,7 @@ MonoBehaviour:
     were you last night when the gallery was locked down?\"\r\n\r\n<b>Elena Vance:</b>
     \r\n\"I was working late at my own gallery across town, finalizing auction logistics,
     and then I went home. You are welcome to pull my building's security logs. I
-    haven't set foot in Marcus's office all week.\"\r\n\r\n''[Investigator's Note:]''
+    haven't set foot in Marcus's office all week.\"\r\n\r\n<b>Investigator's Note:</b>
     She offers up her own security logs without blinking. It's a confident, perfectly
     practiced deflection. Unless we find physical evidence putting her inside Marcus's
     gallery last night, we can't touch her.\r\n\r\n\r\n\r"
@@ -36,8 +36,8 @@ MonoBehaviour:
       were you last night when the gallery was locked down?\"\r\n\r\n<b>Elena Vance:</b>
       \r\n\"I was working late at my own gallery across town, finalizing auction
       logistics, and then I went home. You are welcome to pull my building's security
-      logs. I haven't set foot in Marcus's office all week.\"\r\n\r\n''[Investigator's
-      Note:]'' She offers up her own security logs without blinking. It's a confident,
+      logs. I haven't set foot in Marcus's office all week.\"\r\n\r\n<b>Investigator's
+      Note:</b> She offers up her own security logs without blinking. It's a confident,
       perfectly practiced deflection. Unless we find physical evidence putting her
       inside Marcus's gallery last night, we can't touch her.\r\n\r\n\r\n\r"
     links:

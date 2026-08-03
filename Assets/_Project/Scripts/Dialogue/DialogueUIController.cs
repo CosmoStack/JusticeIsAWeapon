@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using JusticeIsAWeapon.Data;
 using TMPro;
 using UnityEngine;
@@ -33,14 +36,54 @@ namespace JusticeIsAWeapon.Dialogue
         public TextMeshProUGUI bodyText;
         public VerticalLayoutGroup choiceList;
 
+        [Header("Typewriter")]
+        [Tooltip("Reveals the text character by character instead of showing it all at once.")]
+        public bool enableTypewriter = true;
+        [Tooltip("Characters revealed per second while typing.")]
+        public float typingSpeed = 55f;
+
         private readonly List<GameObject> _choiceButtons = new List<GameObject>();
         private readonly List<string> _pages = new List<string>();
+        private readonly List<string> _pageSpeakers = new List<string>();
         private GameObject _choiceOverlay;
         private TMP_FontAsset _font;
         private RectTransform _viewportRect;
         private ScrollRect _scrollRect;
         private int _pageIndex;
-        private static TMP_FontAsset _sharedFont;
+        private bool _isConversation;
+        private Coroutine _typingRoutine;
+        private bool _isTyping;
+
+        // Conversation layout (runtime-built, shown only during speaker turns)
+        private GameObject _canvasGO;
+        private GameObject _conversationRoot;
+        private TextMeshProUGUI _conversationNameText;
+        private TextMeshProUGUI _conversationBodyText;
+        private RectTransform _conversationBubbleRect;
+        private Image _conversationBubble;
+        private Image _spriteImage;
+        private TextMeshProUGUI _spriteLabel;
+        private VerticalLayoutGroup _conversationChoiceList;
+        private Transform _clueTileParent;
+        private TextMeshProUGUI _alibiContent;
+        private TextMeshProUGUI _timelineContent;
+        private TextMeshProUGUI _relationshipContent;
+        private string _bandSuspectPrefix = string.Empty;
+        private string _pendingBandNodeId = string.Empty;
+        private readonly List<ClueDataSO> _collectedClues = new List<ClueDataSO>();
+
+        /// <summary>The text widget currently on screen (narration body or conversation body).</summary>
+        private TextMeshProUGUI ActiveBody
+        {
+            get
+            {
+                if (_isConversation && _conversationBodyText != null)
+                {
+                    return _conversationBodyText;
+                }
+                return bodyText;
+            }
+        }
 
         private TMP_FontAsset Font
         {
@@ -48,56 +91,66 @@ namespace JusticeIsAWeapon.Dialogue
             {
                 if (_font == null)
                 {
-                    // 1) A sharp dynamic OS font (rendered at screen resolution).
-                    _font = CreateSharpFont();
-                    // 2) Fallback: the project's SDF font asset.
+                    // The project's SDF font asset (TextMesh Pro default).
+                    _font = TMP_Settings.defaultFontAsset;
                     if (_font == null)
                     {
-                        _font = TMP_Settings.defaultFontAsset;
-                    }
-                    if (_font == null)
-                    {
+                        // SDF font shipped inside TMP's Essential Resources
+                        // ("Assets/TextMesh Pro/Resources/...").
                         _font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
                     }
+                    if (_font == null)
+                    {
+                        // Last resort: convert an OS font at runtime. Segoe UI is
+                        // Windows 10's default UI font, Calibri and Arial cover
+                        // older systems, and the built-in legacy font covers
+                        // everything else.
+                        _font = CreateOSFontFallback();
+                    }
+                    Debug.Log($"[DialogueUIController] Using font: {(_font != null ? _font.name : "TMP default")}");
                 }
                 return _font;
             }
         }
 
         /// <summary>
-        /// Creates an in-memory dynamic TMP font from an OS font. Dynamic fonts
-        /// are rasterized at the exact screen size, so text stays sharp instead
-        /// of being scaled up from a small SDF atlas.
+        /// Creates a TMP font asset from an installed OS font. Never throws:
+        /// TMP can fail to load the face of dynamic OS fonts, in which case we
+        /// log a warning and let TMP fall back to its own default.
         /// </summary>
-        private static TMP_FontAsset CreateSharpFont()
+        private static TMP_FontAsset CreateOSFontFallback()
         {
-            if (_sharedFont != null)
-            {
-                return _sharedFont;
-            }
-
             try
             {
-                UnityEngine.Font osFont = UnityEngine.Font.CreateDynamicFontFromOSFont(new[] { "Segoe UI", "Arial" }, 96);
+                // UnityEngine.Font — qualified because the instance Font property shadows the type name.
+                // Sample at 90px so the SDF atlas gets real glyph detail instead of a blurry 30px face.
+                UnityEngine.Font osFont = UnityEngine.Font.CreateDynamicFontFromOSFont(new[] { "Segoe UI", "Calibri", "Arial" }, 90);
                 if (osFont == null)
                 {
-                    return null;
+                    osFont = Resources.GetBuiltinResource<UnityEngine.Font>("LegacyRuntime.ttf");
                 }
-                TMP_FontAsset asset = TMP_FontAsset.CreateFontAsset(osFont);
-                asset.name = "DynamicOSFont";
-                _sharedFont = asset;
-                return asset;
+                if (osFont != null)
+                {
+                    TMP_FontAsset created = TMP_FontAsset.CreateFontAsset(osFont);
+                    if (created != null)
+                    {
+                        Debug.Log($"[DialogueUIController] Using OS font fallback: {osFont.name}");
+                    }
+                    return created;
+                }
             }
-            catch (System.Exception e)
+            catch (Exception ex)
             {
-                Debug.LogWarning("[DialogueUI] OS font creation failed, using SDF font instead: " + e.Message);
-                return null;
+                Debug.LogWarning($"[DialogueUIController] Could not create an OS font fallback — text will use TMP's default. {ex.Message}");
             }
+            return null;
         }
 
         private void Update()
         {
-            if (panel == null || !panel.activeSelf)
+            bool panelActive = panel != null && panel.activeSelf;
+            bool conversationActive = _conversationRoot != null && _conversationRoot.activeSelf;
+            if (!panelActive && !conversationActive)
             {
                 return;
             }
@@ -139,6 +192,7 @@ namespace JusticeIsAWeapon.Dialogue
 
         private void OnDisable()
         {
+            StopTyping();
             DialogueManager manager = CurrentManager();
             if (manager == null)
             {
@@ -156,13 +210,15 @@ namespace JusticeIsAWeapon.Dialogue
 
         private void HandleNodeChanged(DialogueNodeSO node)
         {
-            ShowPanel();
             RefreshBody();
             RefreshChoices();
+            CollectRevealedClue(node);
+            NoteNodeChanged(node);
         }
 
         private void HandleDialogueEnded()
         {
+            StopTyping();
             HidePanel();
         }
 
@@ -184,44 +240,100 @@ namespace JusticeIsAWeapon.Dialogue
                 }
             }
 
-            if (bodyText != null)
+            TextMeshProUGUI text = ActiveBody;
+            if (text == null)
             {
-                _pages.Clear();
-                string full = manager.CurrentText ?? string.Empty;
-                if (full.Length > 0)
+                return;
+            }
+
+            // Determine the display mode BEFORE activating a panel: pagination
+            // measures real rects, so the layout must be active while measuring.
+            string full = SanitizeMarkup(manager.CurrentText ?? string.Empty);
+            List<Turn> turns = full.Length > 0 ? ParseTurns(full) : new List<Turn>();
+            _isConversation = turns.Count > 0;
+            ShowPanel();
+
+            _pages.Clear();
+            _pageSpeakers.Clear();
+            if (_isConversation)
+            {
+                // Conversation mode: one page per speaker turn, each with its
+                // own name tag. Preamble (if any) becomes a nameless page, and
+                // long turns are paginated normally.
+                foreach (Turn turn in turns)
                 {
-                    _pages.AddRange(BuildPages(full));
+                    foreach (string page in BuildPages(turn.text, text, _conversationBubbleRect))
+                    {
+                        _pages.Add(page);
+                        _pageSpeakers.Add(turn.speaker);
+                    }
                 }
-                _pageIndex = 0;
-                bodyText.text = _pages.Count > 0 ? _pages[0] : string.Empty;
-                if (_scrollRect != null)
+
+                // Choices appear below the bubble, shrinking it. Re-paginate the
+                // final page against the reduced height so nothing gets clipped
+                // when the options pop in.
+                float reserve = EstimateChoiceReserve();
+                if (reserve > 0f && _pages.Count > 0)
                 {
-                    _scrollRect.verticalNormalizedPosition = 1f;
+                    string last = _pages[_pages.Count - 1];
+                    List<string> repaginated = BuildPages(last, text, _conversationBubbleRect, reserve);
+                    if (repaginated.Count > 1)
+                    {
+                        string lastSpeaker = _pageSpeakers[_pageSpeakers.Count - 1];
+                        _pages.RemoveAt(_pages.Count - 1);
+                        _pageSpeakers.RemoveAt(_pageSpeakers.Count - 1);
+                        foreach (string page in repaginated)
+                        {
+                            _pages.Add(page);
+                            _pageSpeakers.Add(lastSpeaker);
+                        }
+                    }
                 }
             }
+            else if (full.Length > 0)
+            {
+                _pages.AddRange(BuildPages(full, text, _viewportRect));
+            }
+
+            _pageIndex = 0;
+            text.text = _pages.Count > 0 ? _pages[0] : string.Empty;
+            if (_scrollRect != null)
+            {
+                _scrollRect.verticalNormalizedPosition = 1f;
+            }
+            UpdateNameTag();
+            UpdateSprite();
+            SetBubbleMode(_isConversation);
+            StartTyping();
         }
 
         /// <summary>
-        /// Splits long text into pages that fit the text area. Choices are only
-        /// shown on the last page, so the player clicks / presses Enter to read
-        /// the rest before options appear.
+        /// Splits long text into pages that fit the given text area. Choices are
+        /// only shown on the last page, so the player clicks / presses Enter to
+        /// read the rest before options appear.
         /// </summary>
-        private List<string> BuildPages(string full)
+        private List<string> BuildPages(string full, TextMeshProUGUI text, RectTransform rect, float reserveHeight = 0f)
         {
-            if (_viewportRect == null || bodyText == null)
+            if (rect == null || text == null)
             {
                 return new List<string> { full };
             }
 
             Canvas.ForceUpdateCanvases();
-            float viewportHeight = _viewportRect.rect.height;
-            float viewportWidth = _viewportRect.rect.width;
+            float viewportHeight = rect.rect.height;
+            // Measure at the text's own width (its rect already subtracts the
+            // bubble/panel margins). Measuring at the parent rect's width
+            // underestimates the wrapped height, which overflows the masked
+            // bubble bottom once choices shrink it.
+            float viewportWidth = text.rectTransform != null && text.rectTransform.rect.width > 1f
+                ? text.rectTransform.rect.width
+                : rect.rect.width;
             if (viewportHeight <= 1f || viewportWidth <= 1f)
             {
                 return new List<string> { full };
             }
 
-            float maxHeight = viewportHeight;
+            float maxHeight = Mathf.Max(1f, viewportHeight - reserveHeight);
             var pages = new List<string>();
             var current = new StringBuilder();
 
@@ -229,8 +341,8 @@ namespace JusticeIsAWeapon.Dialogue
             {
                 string candidate = current.Length == 0 ? token : current + token;
                 // Measure with an explicit width so wrapping uses the actual
-                // viewport width regardless of the layout state of BodyText.
-                if (current.Length > 0 && bodyText.GetPreferredValues(candidate, viewportWidth, 0f).y > maxHeight)
+                // viewport width regardless of the layout state of the text.
+                if (current.Length > 0 && text.GetPreferredValues(candidate, viewportWidth, 0f).y > maxHeight)
                 {
                     pages.Add(current.ToString().Trim());
                     current.Clear();
@@ -247,6 +359,25 @@ namespace JusticeIsAWeapon.Dialogue
                 pages.Add(full);
             }
             return pages;
+        }
+
+        /// <summary>
+        /// Approximate height the choice buttons will occupy under the bubble
+        /// (44px per button + 6px spacing + layout spacing/buffer).
+        /// </summary>
+        private float EstimateChoiceReserve()
+        {
+            DialogueManager manager = CurrentManager();
+            if (manager == null || !manager.IsActive)
+            {
+                return 0f;
+            }
+            int count = manager.AvailableChoices.Count;
+            if (count <= 0)
+            {
+                return 0f;
+            }
+            return count * 44f + (count - 1) * 6f + 12f;
         }
 
         /// <summary>Tokenizes text keeping spaces/newlines as separate tokens so pages split at word boundaries.</summary>
@@ -278,11 +409,18 @@ namespace JusticeIsAWeapon.Dialogue
         }
 
         /// <summary>
-        /// Advances to the next page of the current dialogue. Returns false when
-        /// already on the last page (choices are showing then — click those instead).
+        /// Advances to the next page of the current dialogue. While text is
+        /// typing out, the first press completes the page instantly instead of
+        /// advancing. Returns false when already on the last page with the text
+        /// fully shown (choices are showing then — click those instead).
         /// </summary>
         public bool AdvancePage()
         {
+            if (_isTyping)
+            {
+                CompleteTyping();
+                return true;
+            }
             if (_pages.Count == 0)
             {
                 return false;
@@ -290,33 +428,512 @@ namespace JusticeIsAWeapon.Dialogue
             if (_pageIndex < _pages.Count - 1)
             {
                 _pageIndex++;
-                if (bodyText != null)
+                TextMeshProUGUI text = ActiveBody;
+                if (text != null)
                 {
-                    bodyText.text = _pages[_pageIndex];
+                    text.text = _pages[_pageIndex];
                 }
                 if (_scrollRect != null)
                 {
                     _scrollRect.verticalNormalizedPosition = 1f;
                 }
+                UpdateNameTag();
+                UpdateSprite();
+                StartTyping();
                 RefreshChoices();
                 return true;
             }
             return false;
         }
 
+        // ------------------------------------------------------------------
+        // Conversation turns
+        // ------------------------------------------------------------------
+
+        private struct Turn
+        {
+            public string speaker;
+            public string text;
+        }
+
+        /// <summary>
+        /// Splits rich text into speaker turns. A turn starts at a bold label
+        /// ending in ':' (e.g. <b>Detective Miller:</b>) and runs until the
+        /// next label. Bold headers without a colon (''Visuals'', ''Narrative'')
+        /// are not turns, so pure narration stays in the normal display mode.
+        /// </summary>
+        private static List<Turn> ParseTurns(string text)
+        {
+            var turns = new List<Turn>();
+            var labels = new List<Match>();
+            foreach (Match m in Regex.Matches(text, "<b>(?<name>[^<]*?)</b>"))
+            {
+                if (m.Groups["name"].Value.TrimEnd().EndsWith(":"))
+                {
+                    labels.Add(m);
+                }
+            }
+            if (labels.Count == 0)
+            {
+                return turns;
+            }
+
+            // Preamble before the first label (e.g. "You select the 'Alibi' baseline.")
+            string preamble = text.Substring(0, labels[0].Index).Trim();
+            if (preamble.Length > 0)
+            {
+                turns.Add(new Turn { speaker = string.Empty, text = preamble });
+            }
+
+            for (int i = 0; i < labels.Count; i++)
+            {
+                Match label = labels[i];
+                int start = label.Index + label.Length;
+                int end = i + 1 < labels.Count ? labels[i + 1].Index : text.Length;
+                string line = text.Substring(start, end - start).Trim();
+                if (line.Length == 0)
+                {
+                    continue;
+                }
+                turns.Add(new Turn
+                {
+                    speaker = label.Groups["name"].Value.TrimEnd(':').Trim(),
+                    text = line
+                });
+            }
+            return turns;
+        }
+
+        /// <summary>Shows the current page's speaker name above the conversation bubble.</summary>
+        private void UpdateNameTag()
+        {
+            if (!_isConversation || _conversationNameText == null || _pageSpeakers == null
+                || _pageSpeakers.Count == 0 || _pageIndex >= _pageSpeakers.Count)
+            {
+                return;
+            }
+            string name = _pageSpeakers[_pageIndex];
+            _conversationNameText.gameObject.SetActive(!string.IsNullOrEmpty(name));
+            _conversationNameText.text = name;
+            _conversationNameText.fontStyle = FontStyles.Bold;
+            _conversationNameText.color = SpeakerColor(name);
+        }
+
+        /// <summary>
+        /// Puts the current speaker's portrait in the left slot. Falls back to a
+        /// placeholder box with the speaker's name when no portrait exists.
+        /// </summary>
+        private void UpdateSprite()
+        {
+            if (_spriteImage == null)
+            {
+                return;
+            }
+            string name = _isConversation && _pageSpeakers != null && _pageIndex < _pageSpeakers.Count
+                ? _pageSpeakers[_pageIndex]
+                : string.Empty;
+
+            Sprite sprite = string.IsNullOrEmpty(name) ? null : FindSpeakerSprite(name);
+            if (sprite != null)
+            {
+                _spriteImage.sprite = sprite;
+                _spriteImage.color = Color.white;
+                if (_spriteLabel != null)
+                {
+                    _spriteLabel.gameObject.SetActive(false);
+                }
+                return;
+            }
+
+            _spriteImage.sprite = null;
+            _spriteImage.color = new Color(0.2f, 0.21f, 0.28f, 1f);
+            if (_spriteLabel != null)
+            {
+                _spriteLabel.gameObject.SetActive(true);
+                _spriteLabel.text = string.IsNullOrEmpty(name) ? "?" : name;
+            }
+        }
+
+        /// <summary>
+        /// Looks up a portrait for the speaker. Only knows the interviewee via
+        /// the tree's suspect back-reference; everyone else gets the placeholder.
+        /// </summary>
+        private Sprite FindSpeakerSprite(string speakerName)
+        {
+            SuspectDataSO suspect = CurrentManager()?.CurrentTree?.suspect;
+            if (suspect != null && !string.IsNullOrEmpty(suspect.suspectName)
+                && speakerName.StartsWith(suspect.suspectName, StringComparison.OrdinalIgnoreCase))
+            {
+                return suspect.portrait;
+            }
+            return null;
+        }
+
+        /// <summary>Turns the conversation bubble background on/off.</summary>
+        private void SetBubbleMode(bool on)
+        {
+            if (_conversationBubble != null)
+            {
+                _conversationBubble.color = on
+                    ? new Color(0.16f, 0.17f, 0.24f, 0.92f)
+                    : new Color(0f, 0f, 0f, 0f);
+            }
+        }
+
+        private static Color SpeakerColor(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return new Color(0.92f, 0.92f, 0.94f, 1f);
+            }
+            if (name.IndexOf("Miller", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return new Color(0.95f, 0.78f, 0.4f, 1f);
+            }
+            if (name.IndexOf("Note", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return new Color(0.68f, 0.68f, 0.75f, 1f);
+            }
+            return new Color(0.88f, 0.92f, 0.97f, 1f);
+        }
+
+        // ------------------------------------------------------------------
+        // Clues + right panel bands
+        // ------------------------------------------------------------------
+
+        /// <summary>Adds a clue tile to the clue bar (deduplicated). Public so scenes can seed collected clues.</summary>
+        public void AddClue(ClueDataSO clue)
+        {
+            if (clue == null || _collectedClues.Contains(clue))
+            {
+                return;
+            }
+            _collectedClues.Add(clue);
+            if (_clueTileParent != null)
+            {
+                CreateClueTile(clue);
+            }
+        }
+
+        private void CreateClueTile(ClueDataSO clue)
+        {
+            GameObject tileGO = new GameObject("ClueTile", typeof(RectTransform), typeof(Image), typeof(LayoutElement));
+            tileGO.transform.SetParent(_clueTileParent, false);
+            tileGO.GetComponent<Image>().color = new Color(0.18f, 0.19f, 0.26f, 1f);
+
+            LayoutElement layout = tileGO.GetComponent<LayoutElement>();
+            layout.preferredWidth = 130;
+            layout.preferredHeight = 90;
+
+            GameObject labelGO = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
+            labelGO.transform.SetParent(tileGO.transform, false);
+
+            TextMeshProUGUI label = labelGO.GetComponent<TextMeshProUGUI>();
+            label.font = Font;
+            label.fontSize = 19;
+            label.color = new Color(0.95f, 0.95f, 0.97f, 1f);
+            label.alignment = TextAlignmentOptions.Center;
+            label.textWrappingMode = TextWrappingModes.Normal;
+            label.text = clue.clueTitle ?? clue.name;
+            label.raycastTarget = false;
+
+            RectTransform labelRect = labelGO.GetComponent<RectTransform>();
+            labelRect.anchorMin = Vector2.zero;
+            labelRect.anchorMax = Vector2.one;
+            labelRect.offsetMin = new Vector2(6, 6);
+            labelRect.offsetMax = new Vector2(-6, -6);
+        }
+
+        private void CollectRevealedClue(DialogueNodeSO node)
+        {
+            if (node == null || node.clueRevealed == null)
+            {
+                return;
+            }
+            AddClue(node.clueRevealed);
+        }
+
+        /// <summary>
+        /// Node-entry bookkeeping for the Alibi / Timeline / Relationship bands.
+        /// Bands are wiped whenever the conversation moves to another suspect
+        /// (or to a non-suspect passage), so old answers never leak over. The
+        /// answer itself is recorded only once the topic conversation finishes.
+        /// </summary>
+        private void NoteNodeChanged(DialogueNodeSO node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+            string id = node.nodeId ?? string.Empty;
+            string prefix = SuspectPrefix(id);
+            if (prefix != _bandSuspectPrefix)
+            {
+                _bandSuspectPrefix = prefix;
+                ClearBands();
+            }
+            _pendingBandNodeId = IsTopicNode(id) ? id : string.Empty;
+        }
+
+        /// <summary>
+        /// Records the topic's answer into its band. Called when the topic
+        /// conversation has been fully read — the final page is showing and
+        /// the "back to clipboard" choices are on screen.
+        /// </summary>
+        private void FillPendingBand()
+        {
+            if (_pendingBandNodeId.Length == 0)
+            {
+                return;
+            }
+            DialogueManager manager = CurrentManager();
+            DialogueNodeSO node = manager != null ? manager.CurrentNode : null;
+            if (node == null || node.nodeId != _pendingBandNodeId)
+            {
+                _pendingBandNodeId = string.Empty;
+                return;
+            }
+
+            string full = SanitizeMarkup(manager.CurrentText ?? string.Empty);
+            if (node.nodeId.EndsWith(" - Alibi", StringComparison.Ordinal))
+            {
+                SetBand(_alibiContent, ExtractAnswer(node.nodeId, full));
+            }
+            else if (node.nodeId.EndsWith(" - Timeline", StringComparison.Ordinal))
+            {
+                SetBand(_timelineContent, ExtractAnswer(node.nodeId, full));
+            }
+            else if (node.nodeId.EndsWith(" - Relationship", StringComparison.Ordinal))
+            {
+                SetBand(_relationshipContent, ExtractAnswer(node.nodeId, full));
+            }
+            _pendingBandNodeId = string.Empty;
+        }
+
+        private static bool IsTopicNode(string nodeId)
+        {
+            return nodeId.EndsWith(" - Alibi", StringComparison.Ordinal)
+                || nodeId.EndsWith(" - Timeline", StringComparison.Ordinal)
+                || nodeId.EndsWith(" - Relationship", StringComparison.Ordinal);
+        }
+
+        /// <summary>Extracts the suspect part of a passage id ("Elena - Alibi" and "Interview Elena" → "Elena").</summary>
+        /// <summary>
+        /// Runtime fallback for markup that failed to convert at import time
+        /// (e.g. ''[Investigator's Note:]'' — apostrophes inside the label break
+        /// the importer's old regex). Converts leftover ''...'' to bold so the
+        /// raw brackets never leak into the UI.
+        /// </summary>
+        private static string SanitizeMarkup(string text)
+        {
+            if (string.IsNullOrEmpty(text) || !text.Contains("''", StringComparison.Ordinal))
+            {
+                return text;
+            }
+            return Regex.Replace(text, "''(.+?)''", "<b>$1</b>");
+        }
+
+        private static string SuspectPrefix(string nodeId)
+        {
+            if (nodeId.StartsWith("Interview ", StringComparison.Ordinal))
+            {
+                return nodeId.Substring(10).Trim();
+            }
+            int cut = nodeId.IndexOf(" - ", StringComparison.Ordinal);
+            return cut > 0 ? nodeId.Substring(0, cut) : string.Empty;
+        }
+
+        private void ClearBands()
+        {
+            if (_alibiContent != null)
+            {
+                _alibiContent.text = "Not recorded yet";
+            }
+            if (_timelineContent != null)
+            {
+                _timelineContent.text = "Not recorded yet";
+            }
+            if (_relationshipContent != null)
+            {
+                _relationshipContent.text = "Not recorded yet";
+            }
+        }
+
+        private static void SetBand(TextMeshProUGUI content, string text)
+        {
+            if (content == null || string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+            content.text = text;
+            // The band's content lives under Viewport (child of ScrollArea);
+            // snap back to the top when a new answer lands.
+            Transform viewport = content.transform.parent;
+            if (viewport != null && viewport.parent != null)
+            {
+                ScrollRect scroll = viewport.parent.GetComponent<ScrollRect>();
+                if (scroll != null)
+                {
+                    scroll.verticalNormalizedPosition = 1f;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Pulls the suspect's answer out of a topic node: the turn whose
+        /// speaker starts with the passage's suspect prefix ("Elena - Alibi"
+        /// → "Elena Vance"'s line). Falls back to the last non-Miller line.
+        /// </summary>
+        private static string ExtractAnswer(string nodeId, string fullText)
+        {
+            List<Turn> turns = ParseTurns(fullText);
+            if (turns.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            string suspectPrefix = string.Empty;
+            int cut = nodeId.IndexOf(" - ", StringComparison.Ordinal);
+            if (cut > 0)
+            {
+                suspectPrefix = nodeId.Substring(0, cut);
+            }
+
+            if (suspectPrefix.Length > 0)
+            {
+                foreach (Turn turn in turns)
+                {
+                    if (turn.speaker.StartsWith(suspectPrefix, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return StripQuotes(turn.text);
+                    }
+                }
+            }
+
+            for (int i = turns.Count - 1; i >= 0; i--)
+            {
+                Turn turn = turns[i];
+                if (!string.IsNullOrEmpty(turn.speaker) && !IsMetaSpeaker(turn.speaker))
+                {
+                    return StripQuotes(turn.text);
+                }
+            }
+            return string.Empty;
+        }
+
+        private static bool IsMetaSpeaker(string speaker)
+        {
+            return speaker.IndexOf("Miller", StringComparison.OrdinalIgnoreCase) >= 0
+                || speaker.IndexOf("Note", StringComparison.OrdinalIgnoreCase) >= 0
+                || speaker.StartsWith("[", StringComparison.Ordinal);
+        }
+
+        private static string StripQuotes(string text)
+        {
+            string trimmed = text.Trim();
+            if (trimmed.Length >= 2 && trimmed[0] == '"' && trimmed[trimmed.Length - 1] == '"')
+            {
+                return trimmed.Substring(1, trimmed.Length - 2).Trim();
+            }
+            return trimmed;
+        }
+
+        // ------------------------------------------------------------------
+        // Typewriter
+        // ------------------------------------------------------------------
+
+        /// <summary>
+        /// Starts revealing the current page character by character. TMP's
+        /// maxVisibleCharacters is used so rich-text tags are never shown as
+        /// characters themselves.
+        /// </summary>
+        private void StartTyping()
+        {
+            StopTyping();
+            TextMeshProUGUI text = ActiveBody;
+            if (!enableTypewriter || text == null)
+            {
+                RefreshChoices();
+                return;
+            }
+
+            text.ForceMeshUpdate();
+            int total = text.textInfo.characterCount;
+            if (total <= 0)
+            {
+                RefreshChoices();
+                return;
+            }
+
+            _isTyping = true;
+            text.maxVisibleCharacters = 0;
+            _typingRoutine = StartCoroutine(TypeText(total, text));
+        }
+
+        private void StopTyping()
+        {
+            if (_typingRoutine != null)
+            {
+                StopCoroutine(_typingRoutine);
+                _typingRoutine = null;
+            }
+            _isTyping = false;
+        }
+
+        /// <summary>Reveals the whole current page at once (skip).</summary>
+        private void CompleteTyping()
+        {
+            TextMeshProUGUI text = ActiveBody;
+            if (text != null)
+            {
+                text.maxVisibleCharacters = int.MaxValue;
+            }
+            StopTyping();
+            RefreshChoices();
+        }
+
+        private IEnumerator TypeText(int total, TextMeshProUGUI text)
+        {
+            float revealed = 0f;
+            while (text.maxVisibleCharacters < total)
+            {
+                if (typingSpeed <= 0f)
+                {
+                    break;
+                }
+                revealed += typingSpeed * Time.deltaTime;
+                int target = Mathf.Clamp(Mathf.FloorToInt(revealed), 0, total);
+                if (target > text.maxVisibleCharacters)
+                {
+                    text.maxVisibleCharacters = target;
+                }
+                yield return null;
+            }
+            _typingRoutine = null;
+            CompleteTyping();
+        }
+
         private void RefreshChoices()
         {
-            if (choiceList == null)
+            VerticalLayoutGroup activeList = _isConversation ? _conversationChoiceList : choiceList;
+            if (activeList == null)
             {
                 return;
             }
 
-            // Choices live on a centered overlay and only appear once the
-            // player has read the final page of the current text.
+            // Choices only appear once the player has read the final page of
+            // the current text. In conversation mode they live inside the
+            // dialogue column; in narration mode on the centered overlay.
             bool onLastPage = _pages.Count == 0 || _pageIndex >= _pages.Count - 1;
+            bool typingFinished = !_isTyping;
 
             DialogueManager manager = CurrentManager();
-            bool show = manager != null && manager.IsActive && onLastPage;
+            bool show = manager != null && manager.IsActive && onLastPage && typingFinished;
+
+            if (_choiceOverlay != null)
+            {
+                _choiceOverlay.SetActive(!_isConversation && show);
+            }
 
             foreach (GameObject button in _choiceButtons)
             {
@@ -326,11 +943,6 @@ namespace JusticeIsAWeapon.Dialogue
                 }
             }
             _choiceButtons.Clear();
-
-            if (_choiceOverlay != null)
-            {
-                _choiceOverlay.SetActive(show);
-            }
 
             if (!show)
             {
@@ -345,19 +957,26 @@ namespace JusticeIsAWeapon.Dialogue
             for (int i = 0; i < choices.Count; i++)
             {
                 int index = i;
-                CreateChoiceButton(index, choices[i].label);
+                CreateChoiceButton(index, choices[i].label, activeList);
             }
 
             if (choices.Count == 0)
             {
                 HidePanel();
             }
+
+            // Record the topic answer once the conversation finishes: the final
+            // page is showing and the "back to clipboard" choices are visible.
+            if (show)
+            {
+                FillPendingBand();
+            }
         }
 
-        private void CreateChoiceButton(int index, string label)
+        private void CreateChoiceButton(int index, string label, VerticalLayoutGroup list)
         {
             GameObject buttonGO = new GameObject("Choice_" + index, typeof(RectTransform), typeof(Image), typeof(Button), typeof(LayoutElement));
-            buttonGO.transform.SetParent(choiceList.transform, false);
+            buttonGO.transform.SetParent(list.transform, false);
 
             Image background = buttonGO.GetComponent<Image>();
             background.color = new Color(0.13f, 0.13f, 0.18f, 1f);
@@ -407,6 +1026,7 @@ namespace JusticeIsAWeapon.Dialogue
             GameObject canvasGO = new GameObject("DialogueCanvas",
                 typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
             canvasGO.transform.SetParent(transform, false);
+            _canvasGO = canvasGO;
 
             Canvas canvas = canvasGO.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -571,7 +1191,7 @@ namespace JusticeIsAWeapon.Dialogue
                 DialogueManager manager = CurrentManager();
                 if (manager != null && manager.CurrentTree != null)
                 {
-                    manager.StartTree(manager.CurrentTree);
+                    RestartDialogue();
                 }
             });
 
@@ -592,10 +1212,13 @@ namespace JusticeIsAWeapon.Dialogue
             choicesGO.transform.SetParent(overlayGO.transform, false);
 
             RectTransform choicesRect = choicesGO.GetComponent<RectTransform>();
-            choicesRect.anchorMin = new Vector2(0.5f, 0.5f);
-            choicesRect.anchorMax = new Vector2(0.5f, 0.5f);
-            choicesRect.pivot = new Vector2(0.5f, 0.5f);
-            choicesRect.anchoredPosition = new Vector2(0f, 30f);
+            // Anchor to the narration panel's top edge so the list grows
+            // upward and can never cover the panel's text, no matter how many
+            // choices are active.
+            choicesRect.anchorMin = new Vector2(0.5f, 0.4f);
+            choicesRect.anchorMax = new Vector2(0.5f, 0.4f);
+            choicesRect.pivot = new Vector2(0.5f, 0f);
+            choicesRect.anchoredPosition = new Vector2(0f, 12f);
             choicesRect.sizeDelta = new Vector2(800f, 0f);
 
             choiceList = choicesGO.GetComponent<VerticalLayoutGroup>();
@@ -609,19 +1232,348 @@ namespace JusticeIsAWeapon.Dialogue
 
             overlayGO.SetActive(false);
 
+            BuildConversationLayout();
             HidePanel();
+        }
+
+        // ------------------------------------------------------------------
+        // Runtime conversation layout (shown during speaker turns)
+        // ------------------------------------------------------------------
+
+        /// <summary>
+        /// Builds the full-screen conversation layout: speaker sprite (left),
+        /// name tag + bubble + choices (middle), Alibi/Timeline/Relationship
+        /// bands (right), and the clue bar (bottom quarter).
+        /// </summary>
+        private void BuildConversationLayout()
+        {
+            if (_conversationRoot != null || _canvasGO == null)
+            {
+                return;
+            }
+
+            _conversationRoot = new GameObject("ConversationLayout", typeof(RectTransform));
+            _conversationRoot.transform.SetParent(_canvasGO.transform, false);
+            RectTransform rootRect = _conversationRoot.GetComponent<RectTransform>();
+            rootRect.anchorMin = Vector2.zero;
+            rootRect.anchorMax = Vector2.one;
+            rootRect.offsetMin = Vector2.zero;
+            rootRect.offsetMax = Vector2.zero;
+
+            // Top 3/4: three columns --------------------------------------
+            GameObject topGO = new GameObject("TopArea", typeof(RectTransform));
+            topGO.transform.SetParent(_conversationRoot.transform, false);
+            RectTransform topRect = topGO.GetComponent<RectTransform>();
+            topRect.anchorMin = new Vector2(0f, 0.25f);
+            topRect.anchorMax = Vector2.one;
+            topRect.offsetMin = Vector2.zero;
+            topRect.offsetMax = Vector2.zero;
+
+            // Left: speaker sprite -----------------------------------------
+            GameObject spriteGO = new GameObject("SpeakerSprite", typeof(RectTransform), typeof(Image));
+            spriteGO.transform.SetParent(topGO.transform, false);
+            _spriteImage = spriteGO.GetComponent<Image>();
+
+            RectTransform spriteRect = spriteGO.GetComponent<RectTransform>();
+            spriteRect.anchorMin = new Vector2(0f, 0f);
+            spriteRect.anchorMax = new Vector2(0.22f, 1f);
+            spriteRect.offsetMin = new Vector2(16, 16);
+            spriteRect.offsetMax = new Vector2(-8, -8);
+
+            GameObject spriteLabelGO = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
+            spriteLabelGO.transform.SetParent(spriteGO.transform, false);
+            _spriteLabel = spriteLabelGO.GetComponent<TextMeshProUGUI>();
+            _spriteLabel.font = Font;
+            _spriteLabel.fontSize = 24;
+            _spriteLabel.alignment = TextAlignmentOptions.Center;
+            _spriteLabel.color = new Color(0.75f, 0.78f, 0.85f, 1f);
+            _spriteLabel.textWrappingMode = TextWrappingModes.Normal;
+            _spriteLabel.raycastTarget = false;
+
+            RectTransform spriteLabelRect = spriteLabelGO.GetComponent<RectTransform>();
+            spriteLabelRect.anchorMin = Vector2.zero;
+            spriteLabelRect.anchorMax = Vector2.one;
+            spriteLabelRect.offsetMin = new Vector2(8, 8);
+            spriteLabelRect.offsetMax = new Vector2(-8, -8);
+
+            // Middle: name tag + bubble + choices --------------------------
+            GameObject middleGO = new GameObject("MiddleColumn", typeof(RectTransform), typeof(VerticalLayoutGroup));
+            middleGO.transform.SetParent(topGO.transform, false);
+
+            RectTransform middleRect = middleGO.GetComponent<RectTransform>();
+            middleRect.anchorMin = new Vector2(0.22f, 0f);
+            middleRect.anchorMax = new Vector2(0.68f, 1f);
+            middleRect.offsetMin = Vector2.zero;
+            middleRect.offsetMax = Vector2.zero;
+
+            VerticalLayoutGroup middleLayout = middleGO.GetComponent<VerticalLayoutGroup>();
+            middleLayout.padding = new RectOffset(12, 12, 8, 8);
+            middleLayout.spacing = 8;
+            middleLayout.childAlignment = TextAnchor.UpperCenter;
+            middleLayout.childControlWidth = true;
+            middleLayout.childControlHeight = true;
+            middleLayout.childForceExpandWidth = true;
+            middleLayout.childForceExpandHeight = false;
+
+            GameObject nameGO = new GameObject("TurnName", typeof(RectTransform), typeof(TextMeshProUGUI), typeof(LayoutElement));
+            nameGO.transform.SetParent(middleGO.transform, false);
+            _conversationNameText = nameGO.GetComponent<TextMeshProUGUI>();
+            _conversationNameText.font = Font;
+            _conversationNameText.fontSize = 32;
+            _conversationNameText.fontStyle = FontStyles.Bold;
+            _conversationNameText.alignment = TextAlignmentOptions.Center;
+            _conversationNameText.raycastTarget = false;
+            nameGO.GetComponent<LayoutElement>().preferredHeight = 36;
+
+            // Bubble doubles as the click-to-advance area (like the narration panel).
+            GameObject bubbleGO = new GameObject("Bubble", typeof(RectTransform), typeof(Image), typeof(RectMask2D), typeof(LayoutElement));
+            bubbleGO.transform.SetParent(middleGO.transform, false);
+            _conversationBubble = bubbleGO.GetComponent<Image>();
+            _conversationBubbleRect = bubbleGO.GetComponent<RectTransform>();
+            bubbleGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
+            bubbleGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
+
+            EventTrigger clickTrigger = bubbleGO.AddComponent<EventTrigger>();
+            var clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
+            clickEntry.callback.AddListener(_ => AdvancePage());
+            clickTrigger.triggers.Add(clickEntry);
+
+            GameObject bodyGO = new GameObject("BodyText", typeof(RectTransform), typeof(TextMeshProUGUI));
+            bodyGO.transform.SetParent(bubbleGO.transform, false);
+            _conversationBodyText = bodyGO.GetComponent<TextMeshProUGUI>();
+            _conversationBodyText.font = Font;
+            _conversationBodyText.fontSize = 30;
+            _conversationBodyText.color = new Color(0.92f, 0.92f, 0.94f, 1f);
+            _conversationBodyText.alignment = TextAlignmentOptions.TopLeft;
+            _conversationBodyText.raycastTarget = false;
+
+            RectTransform bodyRect = bodyGO.GetComponent<RectTransform>();
+            bodyRect.anchorMin = Vector2.zero;
+            bodyRect.anchorMax = Vector2.one;
+            bodyRect.offsetMin = new Vector2(14, 12);
+            bodyRect.offsetMax = new Vector2(-14, -12);
+
+            // Choices live inside the middle column during conversations.
+            GameObject choicesGO = new GameObject("ConversationChoices", typeof(RectTransform), typeof(VerticalLayoutGroup), typeof(ContentSizeFitter));
+            choicesGO.transform.SetParent(middleGO.transform, false);
+            _conversationChoiceList = choicesGO.GetComponent<VerticalLayoutGroup>();
+            _conversationChoiceList.spacing = 6;
+            _conversationChoiceList.childAlignment = TextAnchor.MiddleCenter;
+            _conversationChoiceList.childControlWidth = true;
+            _conversationChoiceList.childControlHeight = true;
+            choicesGO.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            // Right: Alibi / Timeline / Relationship bands -------------------
+            GameObject rightGO = new GameObject("RightPanel", typeof(RectTransform), typeof(VerticalLayoutGroup));
+            rightGO.transform.SetParent(topGO.transform, false);
+
+            RectTransform rightRect = rightGO.GetComponent<RectTransform>();
+            rightRect.anchorMin = new Vector2(0.68f, 0f);
+            rightRect.anchorMax = Vector2.one;
+            rightRect.offsetMin = new Vector2(8, 16);
+            rightRect.offsetMax = new Vector2(-16, -16);
+
+            VerticalLayoutGroup rightLayout = rightGO.GetComponent<VerticalLayoutGroup>();
+            rightLayout.padding = new RectOffset(0, 0, 0, 0);
+            rightLayout.spacing = 10;
+            rightLayout.childAlignment = TextAnchor.UpperLeft;
+            rightLayout.childControlWidth = true;
+            rightLayout.childControlHeight = true;
+            rightLayout.childForceExpandWidth = true;
+            rightLayout.childForceExpandHeight = true;
+
+            _alibiContent = BuildInfoBand(rightGO.transform, "Alibi");
+            _timelineContent = BuildInfoBand(rightGO.transform, "Timeline");
+            _relationshipContent = BuildInfoBand(rightGO.transform, "Relationship");
+
+            // Restart button (handy for iterating in the test scene)
+            GameObject restartGO = new GameObject("RestartButton", typeof(RectTransform), typeof(Image), typeof(Button));
+            restartGO.transform.SetParent(_conversationRoot.transform, false);
+
+            RectTransform restartRect = restartGO.GetComponent<RectTransform>();
+            restartRect.anchorMin = new Vector2(1, 1);
+            restartRect.anchorMax = new Vector2(1, 1);
+            restartRect.pivot = new Vector2(1, 1);
+            restartRect.anchoredPosition = new Vector2(-16, -12);
+            restartRect.sizeDelta = new Vector2(110, 40);
+
+            Image restartBg = restartGO.GetComponent<Image>();
+            restartBg.color = new Color(0.2f, 0.2f, 0.26f, 1f);
+
+            GameObject restartLabelGO = new GameObject("Label", typeof(RectTransform), typeof(TextMeshProUGUI));
+            restartLabelGO.transform.SetParent(restartGO.transform, false);
+
+            TextMeshProUGUI restartLabel = restartLabelGO.GetComponent<TextMeshProUGUI>();
+            restartLabel.text = "Restart";
+            restartLabel.font = Font;
+            restartLabel.fontSize = 22;
+            restartLabel.alignment = TextAlignmentOptions.Center;
+            restartLabel.raycastTarget = false;
+
+            RectTransform restartLabelRect = restartLabelGO.GetComponent<RectTransform>();
+            restartLabelRect.anchorMin = Vector2.zero;
+            restartLabelRect.anchorMax = Vector2.one;
+            restartLabelRect.offsetMin = Vector2.zero;
+            restartLabelRect.offsetMax = Vector2.zero;
+
+            restartGO.GetComponent<Button>().onClick.AddListener(() => RestartDialogue());
+
+            // Clue bar (bottom 1/4) ----------------------------------------
+            GameObject clueBarGO = new GameObject("ClueBar", typeof(RectTransform), typeof(Image));
+            clueBarGO.transform.SetParent(_conversationRoot.transform, false);
+            clueBarGO.GetComponent<Image>().color = new Color(0.08f, 0.08f, 0.12f, 0.95f);
+
+            RectTransform clueBarRect = clueBarGO.GetComponent<RectTransform>();
+            clueBarRect.anchorMin = Vector2.zero;
+            clueBarRect.anchorMax = new Vector2(1f, 0.25f);
+            clueBarRect.offsetMin = Vector2.zero;
+            clueBarRect.offsetMax = Vector2.zero;
+
+            GameObject clueRowGO = new GameObject("ClueRow", typeof(RectTransform), typeof(HorizontalLayoutGroup), typeof(ContentSizeFitter));
+            clueRowGO.transform.SetParent(clueBarGO.transform, false);
+
+            RectTransform clueRowRect = clueRowGO.GetComponent<RectTransform>();
+            clueRowRect.anchorMin = new Vector2(0f, 0f);
+            clueRowRect.anchorMax = new Vector2(1f, 1f);
+            clueRowRect.offsetMin = new Vector2(16, 12);
+            clueRowRect.offsetMax = new Vector2(-16, -12);
+
+            HorizontalLayoutGroup clueRow = clueRowGO.GetComponent<HorizontalLayoutGroup>();
+            clueRow.padding = new RectOffset(0, 0, 0, 0);
+            clueRow.spacing = 10;
+            clueRow.childAlignment = TextAnchor.UpperLeft;
+            clueRow.childControlWidth = true;
+            clueRow.childControlHeight = true;
+            clueRow.childForceExpandWidth = false;
+            clueRow.childForceExpandHeight = false;
+
+            GameObject cluesLabelGO = new GameObject("CluesLabel", typeof(RectTransform), typeof(TextMeshProUGUI), typeof(LayoutElement));
+            cluesLabelGO.transform.SetParent(clueRowGO.transform, false);
+
+            TextMeshProUGUI cluesLabel = cluesLabelGO.GetComponent<TextMeshProUGUI>();
+            cluesLabel.font = Font;
+            cluesLabel.fontSize = 26;
+            cluesLabel.fontStyle = FontStyles.Bold;
+            cluesLabel.color = new Color(0.85f, 0.75f, 0.5f, 1f);
+            cluesLabel.text = "CLUES";
+            cluesLabel.alignment = TextAlignmentOptions.Left;
+            cluesLabel.raycastTarget = false;
+            cluesLabelGO.GetComponent<LayoutElement>().preferredWidth = 110;
+            cluesLabelGO.GetComponent<LayoutElement>().preferredHeight = 90;
+
+            _clueTileParent = clueRowGO.transform;
+
+            _conversationRoot.SetActive(false);
+        }
+
+        /// <summary>Builds one titled info band (Alibi / Timeline / Relationship) with a placeholder message.</summary>
+        private TextMeshProUGUI BuildInfoBand(Transform parent, string title)
+        {
+            GameObject bandGO = new GameObject(title, typeof(RectTransform), typeof(Image), typeof(LayoutElement), typeof(VerticalLayoutGroup));
+            bandGO.transform.SetParent(parent, false);
+            bandGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
+            bandGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
+            bandGO.GetComponent<Image>().color = new Color(0.1f, 0.11f, 0.16f, 0.9f);
+
+            VerticalLayoutGroup bandLayout = bandGO.GetComponent<VerticalLayoutGroup>();
+            bandLayout.padding = new RectOffset(10, 10, 8, 8);
+            bandLayout.spacing = 4;
+            bandLayout.childAlignment = TextAnchor.UpperLeft;
+            bandLayout.childControlWidth = true;
+            bandLayout.childControlHeight = true;
+            bandLayout.childForceExpandWidth = true;
+            bandLayout.childForceExpandHeight = false;
+
+            GameObject titleGO = new GameObject("Title", typeof(RectTransform), typeof(TextMeshProUGUI), typeof(LayoutElement));
+            titleGO.transform.SetParent(bandGO.transform, false);
+
+            TextMeshProUGUI titleText = titleGO.GetComponent<TextMeshProUGUI>();
+            titleText.font = Font;
+            titleText.fontSize = 24;
+            titleText.fontStyle = FontStyles.Bold;
+            titleText.color = new Color(0.85f, 0.75f, 0.5f, 1f);
+            titleText.text = title;
+            titleText.alignment = TextAlignmentOptions.TopLeft;
+            titleText.raycastTarget = false;
+            titleGO.GetComponent<LayoutElement>().preferredHeight = 30;
+
+            // Scrollable content: long answers can be scrolled inside the band.
+            GameObject scrollGO = new GameObject("ScrollArea", typeof(RectTransform), typeof(Image), typeof(ScrollRect), typeof(LayoutElement));
+            scrollGO.transform.SetParent(bandGO.transform, false);
+            scrollGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
+            scrollGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
+            scrollGO.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+
+            GameObject viewportGO = new GameObject("Viewport", typeof(RectTransform), typeof(RectMask2D));
+            viewportGO.transform.SetParent(scrollGO.transform, false);
+            RectTransform viewportRect = viewportGO.GetComponent<RectTransform>();
+            viewportRect.anchorMin = Vector2.zero;
+            viewportRect.anchorMax = Vector2.one;
+            viewportRect.offsetMin = Vector2.zero;
+            viewportRect.offsetMax = Vector2.zero;
+
+            GameObject contentGO = new GameObject("Content", typeof(RectTransform), typeof(ContentSizeFitter), typeof(TextMeshProUGUI));
+            contentGO.transform.SetParent(viewportGO.transform, false);
+            RectTransform contentRect = contentGO.GetComponent<RectTransform>();
+            contentRect.anchorMin = new Vector2(0f, 1f);
+            contentRect.anchorMax = new Vector2(1f, 1f);
+            contentRect.pivot = new Vector2(0.5f, 1f);
+            contentRect.anchoredPosition = Vector2.zero;
+            contentRect.sizeDelta = Vector2.zero;
+
+            ContentSizeFitter fitter = contentGO.GetComponent<ContentSizeFitter>();
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+            TextMeshProUGUI content = contentGO.GetComponent<TextMeshProUGUI>();
+            content.font = Font;
+            content.fontSize = 20;
+            content.color = new Color(0.85f, 0.87f, 0.9f, 1f);
+            content.text = "Not recorded yet";
+            content.alignment = TextAlignmentOptions.TopLeft;
+            content.textWrappingMode = TextWrappingModes.Normal;
+            content.raycastTarget = false;
+            content.margin = new Vector4(2f, 0f, 2f, 0f);
+
+            ScrollRect scrollRect = scrollGO.GetComponent<ScrollRect>();
+            scrollRect.viewport = viewportRect;
+            scrollRect.content = contentRect;
+            scrollRect.horizontal = false;
+            scrollRect.vertical = true;
+            scrollRect.movementType = ScrollRect.MovementType.Clamped;
+            scrollRect.inertia = false;
+            scrollRect.scrollSensitivity = 24;
+            scrollRect.verticalNormalizedPosition = 1f;
+
+            return content;
+        }
+
+        /// <summary>Restarts the tree and wipes the right-panel bands for a clean test run.</summary>
+        private void RestartDialogue()
+        {
+            _bandSuspectPrefix = string.Empty;
+            _pendingBandNodeId = string.Empty;
+            ClearBands();
+            CurrentManager()?.RestartTree();
         }
 
         private void ShowPanel()
         {
+            if (_conversationRoot != null)
+            {
+                _conversationRoot.SetActive(_isConversation);
+            }
             if (panel != null)
             {
-                panel.SetActive(true);
+                panel.SetActive(!_isConversation);
             }
         }
 
         private void HidePanel()
         {
+            if (_conversationRoot != null)
+            {
+                _conversationRoot.SetActive(false);
+            }
             if (panel != null)
             {
                 panel.SetActive(false);

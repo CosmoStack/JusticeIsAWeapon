@@ -23,9 +23,10 @@ MonoBehaviour:
     was spiraling. I offered him a clean exit \u2014 sign over the exhibition rights,
     and I would handle the debt. He screamed, threw the contract in the trash, and
     I walked out. He was very much alive and entirely alone when I left him. So unless
-    you are arresting me for trespassing, we are done here.\"\r\n\r\n''[Investigator's
-    Note:]'' Elena admits to corporate espionage and trespassing \u2014 but her 8:15
-    PM timeline clears her of the murder itself, hours before Marcus actually died.\r\n\r\n\r\n\r"
+    you are arresting me for trespassing, we are done here.\"\r\n\r\n<b>Investigator's
+    Note:</b> Elena admits to corporate espionage and trespassing \u2014 but her
+    8:15 PM timeline clears her of the murder itself, hours before Marcus actually
+    died.\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -45,8 +46,8 @@ MonoBehaviour:
       He was spiraling. I offered him a clean exit \u2014 sign over the exhibition
       rights, and I would handle the debt. He screamed, threw the contract in the
       trash, and I walked out. He was very much alive and entirely alone when I left
-      him. So unless you are arresting me for trespassing, we are done here.\"\r\n\r\n''[Investigator's
-      Note:]'' Elena admits to corporate espionage and trespassing \u2014 but her
+      him. So unless you are arresting me for trespassing, we are done here.\"\r\n\r\n<b>Investigator's
+      Note:</b> Elena admits to corporate espionage and trespassing \u2014 but her
       8:15 PM timeline clears her of the murder itself, hours before Marcus actually
       died.\r\n\r\n\r\n\r"
     links:

@@ -30,8 +30,8 @@ MonoBehaviour:
     interesting to interrogate them again?\"<b>Detective Miller:</b>\r\n\"You won't
     believe this. A call from forensics just came over and the key you sent for examination...
     it had Elena's fingerprints on it. They said it was fresh and was used recently
-    to unlock a door.\r\n\r\n\"We can finally catch her for something.\"\r\n\r\n<b>[CLUE
-    COLLECTED: Master Key Fingerprints]</b>\r\n\r\n\r\n\r\n\r\n\r"
+    to unlock a door.\r\n\r\n\"We can finally catch her for something.\"\r\n\r\n<b>CLUE
+    COLLECTED: Master Key Fingerprints</b>\r\n\r\n\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -127,8 +127,8 @@ MonoBehaviour:
 
       
 
-      <b>[CLUE
-      COLLECTED: Master Key Fingerprints]</b>'
+      <b>CLUE
+      COLLECTED: Master Key Fingerprints</b>'
     links: []
   - condition: 
     text: '

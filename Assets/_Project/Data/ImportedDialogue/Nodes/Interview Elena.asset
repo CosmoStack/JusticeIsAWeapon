@@ -17,12 +17,12 @@ MonoBehaviour:
   lineText: "The camera settles on Elena Vance. She sits with perfect posture, checking
     an expensive watch. She is Marcus's ex-wife and a rival gallery owner, but she
     projects the icy, untouchable aura of a corporate CEO who has somewhere much
-    better to be.\r\n\r\n<b>[DEDUCTION CLIPBOARD ACTIVE]</b>\r\n\r\n\r\n\r\n<i>You
+    better to be.\r\n\r\n<b>DEDUCTION CLIPBOARD ACTIVE</b>\r\n\r\n\r\n\r\n<i>You
     currently have no physical clues to present. Select a baseline topic for Detective
     Miller to press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective Miller:</b>\r\n\"She's
     a fortress. Unless we find a paper trail proving she was in that building last
-    night, she's going to walk right out of here to her board meeting.\"\r\n\r\n<i>[ELENA
-    VANCE'S STATEMENT LOGGED]</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
+    night, she's going to walk right out of here to her board meeting.\"\r\n\r\n<i>ELENA
+    VANCE'S STATEMENT LOGGED</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -54,7 +54,7 @@ MonoBehaviour:
 
       
 
-      <b>[DEDUCTION CLIPBOARD ACTIVE]</b>
+      <b>DEDUCTION CLIPBOARD ACTIVE</b>
 
 '
     links: []
@@ -138,8 +138,8 @@ MonoBehaviour:
 
       
 
-      <i>[ELENA VANCE''S
-      STATEMENT LOGGED]</i>
+      <i>ELENA VANCE''S
+      STATEMENT LOGGED</i>
 
       
 

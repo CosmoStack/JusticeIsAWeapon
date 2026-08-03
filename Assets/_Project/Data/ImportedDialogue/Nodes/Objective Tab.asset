@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Objective Tab
   speakerName: 
-  lineText: " |  | <b>[OBJECTIVES]</b> |  |  | \r\n\r\nInvestigate the Exhibition
-    Hall.<s>Investigate the Exhibition Hall</s>\r\nTalk to Detective Miller outside
-    the gallery.<s>Talk to Detective Miller outside the gallery.</s>\r\nInterrogate
-    the suspects.<s>Interrogate the Suspects.</s>\r\nFind out about the key to the
-    Restricted Corridor.<s>Find out about the key to the Restricted Corridor.</s>\r\n\r"
+  lineText: " |  | <b>OBJECTIVES</b> |  |  | \r\n\r\nInvestigate the Exhibition Hall.<s>Investigate
+    the Exhibition Hall</s>\r\nTalk to Detective Miller outside the gallery.<s>Talk
+    to Detective Miller outside the gallery.</s>\r\nInterrogate the suspects.<s>Interrogate
+    the Suspects.</s>\r\nFind out about the key to the Restricted Corridor.<s>Find
+    out about the key to the Restricted Corridor.</s>\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -37,7 +37,7 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
   blocks:
   - condition: 
-    text: " |  | <b>[OBJECTIVES]</b> |  |  | \r\n\r\n"
+    text: " |  | <b>OBJECTIVES</b> |  |  | \r\n\r\n"
     links:
     - label: EXIT
       target: Gallery Exterior
