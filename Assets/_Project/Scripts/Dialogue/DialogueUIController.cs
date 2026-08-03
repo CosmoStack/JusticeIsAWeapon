@@ -53,7 +53,6 @@ namespace JusticeIsAWeapon.Dialogue
         private bool _isConversation;
         private Coroutine _typingRoutine;
         private bool _isTyping;
-        private static TMP_FontAsset _sharedFont;
 
         // Conversation layout (runtime-built, shown only during speaker turns)
         private GameObject _canvasGO;
@@ -91,50 +90,14 @@ namespace JusticeIsAWeapon.Dialogue
             {
                 if (_font == null)
                 {
-                    // 1) A sharp dynamic OS font (rendered at screen resolution).
-                    _font = CreateSharpFont();
-                    // 2) Fallback: the project's SDF font asset.
-                    if (_font == null)
-                    {
-                        _font = TMP_Settings.defaultFontAsset;
-                    }
+                    // The project's SDF font asset (TextMesh Pro default).
+                    _font = TMP_Settings.defaultFontAsset;
                     if (_font == null)
                     {
                         _font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
                     }
                 }
                 return _font;
-            }
-        }
-
-        /// <summary>
-        /// Creates an in-memory dynamic TMP font from an OS font. Dynamic fonts
-        /// are rasterized at the exact screen size, so text stays sharp instead
-        /// of being scaled up from a small SDF atlas.
-        /// </summary>
-        private static TMP_FontAsset CreateSharpFont()
-        {
-            if (_sharedFont != null)
-            {
-                return _sharedFont;
-            }
-
-            try
-            {
-                UnityEngine.Font osFont = UnityEngine.Font.CreateDynamicFontFromOSFont(new[] { "Segoe UI", "Arial" }, 96);
-                if (osFont == null)
-                {
-                    return null;
-                }
-                TMP_FontAsset asset = TMP_FontAsset.CreateFontAsset(osFont);
-                asset.name = "DynamicOSFont";
-                _sharedFont = asset;
-                return asset;
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogWarning("[DialogueUI] OS font creation failed, using SDF font instead: " + e.Message);
-                return null;
             }
         }
 
@@ -260,6 +223,27 @@ namespace JusticeIsAWeapon.Dialogue
                         _pageSpeakers.Add(turn.speaker);
                     }
                 }
+
+                // Choices appear below the bubble, shrinking it. Re-paginate the
+                // final page against the reduced height so nothing gets clipped
+                // when the options pop in.
+                float reserve = EstimateChoiceReserve();
+                if (reserve > 0f && _pages.Count > 0)
+                {
+                    string last = _pages[_pages.Count - 1];
+                    List<string> repaginated = BuildPages(last, text, _conversationBubbleRect, reserve);
+                    if (repaginated.Count > 1)
+                    {
+                        string lastSpeaker = _pageSpeakers[_pageSpeakers.Count - 1];
+                        _pages.RemoveAt(_pages.Count - 1);
+                        _pageSpeakers.RemoveAt(_pageSpeakers.Count - 1);
+                        foreach (string page in repaginated)
+                        {
+                            _pages.Add(page);
+                            _pageSpeakers.Add(lastSpeaker);
+                        }
+                    }
+                }
             }
             else if (full.Length > 0)
             {
@@ -283,7 +267,7 @@ namespace JusticeIsAWeapon.Dialogue
         /// only shown on the last page, so the player clicks / presses Enter to
         /// read the rest before options appear.
         /// </summary>
-        private List<string> BuildPages(string full, TextMeshProUGUI text, RectTransform rect)
+        private List<string> BuildPages(string full, TextMeshProUGUI text, RectTransform rect, float reserveHeight = 0f)
         {
             if (rect == null || text == null)
             {
@@ -298,7 +282,7 @@ namespace JusticeIsAWeapon.Dialogue
                 return new List<string> { full };
             }
 
-            float maxHeight = viewportHeight;
+            float maxHeight = Mathf.Max(1f, viewportHeight - reserveHeight);
             var pages = new List<string>();
             var current = new StringBuilder();
 
@@ -324,6 +308,25 @@ namespace JusticeIsAWeapon.Dialogue
                 pages.Add(full);
             }
             return pages;
+        }
+
+        /// <summary>
+        /// Approximate height the choice buttons will occupy under the bubble
+        /// (44px per button + 6px spacing + layout spacing/buffer).
+        /// </summary>
+        private float EstimateChoiceReserve()
+        {
+            DialogueManager manager = CurrentManager();
+            if (manager == null || !manager.IsActive)
+            {
+                return 0f;
+            }
+            int count = manager.AvailableChoices.Count;
+            if (count <= 0)
+            {
+                return 0f;
+            }
+            return count * 44f + (count - 1) * 6f + 12f;
         }
 
         /// <summary>Tokenizes text keeping spaces/newlines as separate tokens so pages split at word boundaries.</summary>
@@ -668,7 +671,65 @@ namespace JusticeIsAWeapon.Dialogue
             {
                 return;
             }
-            content.text = text;
+            content.text = SummarizeToFit(text, content);
+        }
+
+        /// <summary>
+        /// Dynamically summarizes band text so it always fits its panel: rich
+        /// tags are stripped, then the text is truncated at a word boundary with
+        /// an ellipsis if measuring shows it would overflow.
+        /// </summary>
+        private static string SummarizeToFit(string text, TextMeshProUGUI target)
+        {
+            string plain = Regex.Replace(text, "<[^>]+>", string.Empty).Trim();
+            if (string.IsNullOrEmpty(plain))
+            {
+                return plain;
+            }
+
+            Canvas.ForceUpdateCanvases();
+            float width = target.rectTransform.rect.width;
+            RectTransform bandRect = target.transform.parent as RectTransform;
+            // Band height minus the title row (30), band padding (16) and spacing (4).
+            float maxHeight = (bandRect != null ? bandRect.rect.height : 0f) - 30f - 16f - 4f;
+            if (width <= 1f || maxHeight <= 1f)
+            {
+                return plain;
+            }
+
+            if (target.GetPreferredValues(plain, width, 0f).y <= maxHeight)
+            {
+                return plain;
+            }
+
+            int lo = 0;
+            int hi = plain.Length;
+            while (lo < hi)
+            {
+                int mid = (lo + hi + 1) / 2;
+                if (target.GetPreferredValues(plain.Substring(0, mid), width, 0f).y <= maxHeight)
+                {
+                    lo = mid;
+                }
+                else
+                {
+                    hi = mid - 1;
+                }
+            }
+
+            int end = plain.LastIndexOf(' ', Mathf.Max(0, lo - 1));
+            if (end < Mathf.Max(1, lo - 12))
+            {
+                end = lo;
+            }
+
+            string withEllipsis = plain.Substring(0, end).TrimEnd() + "\u2026";
+            while (end > 0 && target.GetPreferredValues(withEllipsis, width, 0f).y > maxHeight)
+            {
+                end--;
+                withEllipsis = plain.Substring(0, end).TrimEnd() + "\u2026";
+            }
+            return withEllipsis;
         }
 
         /// <summary>
@@ -1351,7 +1412,7 @@ namespace JusticeIsAWeapon.Dialogue
         /// <summary>Builds one titled info band (Alibi / Timeline / Relationship) with a placeholder message.</summary>
         private TextMeshProUGUI BuildInfoBand(Transform parent, string title)
         {
-            GameObject bandGO = new GameObject(title, typeof(RectTransform), typeof(Image), typeof(LayoutElement), typeof(VerticalLayoutGroup));
+            GameObject bandGO = new GameObject(title, typeof(RectTransform), typeof(Image), typeof(RectMask2D), typeof(LayoutElement), typeof(VerticalLayoutGroup));
             bandGO.transform.SetParent(parent, false);
             bandGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
             bandGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
