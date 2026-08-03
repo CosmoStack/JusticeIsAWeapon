@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using JusticeIsAWeapon.Data;
@@ -33,6 +34,12 @@ namespace JusticeIsAWeapon.Dialogue
         public TextMeshProUGUI bodyText;
         public VerticalLayoutGroup choiceList;
 
+        [Header("Typewriter")]
+        [Tooltip("Reveals the text character by character instead of showing it all at once.")]
+        public bool enableTypewriter = true;
+        [Tooltip("Characters revealed per second while typing.")]
+        public float typingSpeed = 55f;
+
         private readonly List<GameObject> _choiceButtons = new List<GameObject>();
         private readonly List<string> _pages = new List<string>();
         private GameObject _choiceOverlay;
@@ -40,6 +47,8 @@ namespace JusticeIsAWeapon.Dialogue
         private RectTransform _viewportRect;
         private ScrollRect _scrollRect;
         private int _pageIndex;
+        private Coroutine _typingRoutine;
+        private bool _isTyping;
         private static TMP_FontAsset _sharedFont;
 
         private TMP_FontAsset Font
@@ -139,6 +148,7 @@ namespace JusticeIsAWeapon.Dialogue
 
         private void OnDisable()
         {
+            StopTyping();
             DialogueManager manager = CurrentManager();
             if (manager == null)
             {
@@ -163,6 +173,7 @@ namespace JusticeIsAWeapon.Dialogue
 
         private void HandleDialogueEnded()
         {
+            StopTyping();
             HidePanel();
         }
 
@@ -198,6 +209,7 @@ namespace JusticeIsAWeapon.Dialogue
                 {
                     _scrollRect.verticalNormalizedPosition = 1f;
                 }
+                StartTyping();
             }
         }
 
@@ -278,11 +290,18 @@ namespace JusticeIsAWeapon.Dialogue
         }
 
         /// <summary>
-        /// Advances to the next page of the current dialogue. Returns false when
-        /// already on the last page (choices are showing then — click those instead).
+        /// Advances to the next page of the current dialogue. While text is
+        /// typing out, the first press completes the page instantly instead of
+        /// advancing. Returns false when already on the last page with the text
+        /// fully shown (choices are showing then — click those instead).
         /// </summary>
         public bool AdvancePage()
         {
+            if (_isTyping)
+            {
+                CompleteTyping();
+                return true;
+            }
             if (_pages.Count == 0)
             {
                 return false;
@@ -298,10 +317,84 @@ namespace JusticeIsAWeapon.Dialogue
                 {
                     _scrollRect.verticalNormalizedPosition = 1f;
                 }
+                StartTyping();
                 RefreshChoices();
                 return true;
             }
             return false;
+        }
+
+        // ------------------------------------------------------------------
+        // Typewriter
+        // ------------------------------------------------------------------
+
+        /// <summary>
+        /// Starts revealing the current page character by character. TMP's
+        /// maxVisibleCharacters is used so rich-text tags are never shown as
+        /// characters themselves.
+        /// </summary>
+        private void StartTyping()
+        {
+            StopTyping();
+            if (!enableTypewriter || bodyText == null)
+            {
+                RefreshChoices();
+                return;
+            }
+
+            bodyText.ForceMeshUpdate();
+            int total = bodyText.textInfo.characterCount;
+            if (total <= 0)
+            {
+                RefreshChoices();
+                return;
+            }
+
+            _isTyping = true;
+            bodyText.maxVisibleCharacters = 0;
+            _typingRoutine = StartCoroutine(TypeText(total));
+        }
+
+        private void StopTyping()
+        {
+            if (_typingRoutine != null)
+            {
+                StopCoroutine(_typingRoutine);
+                _typingRoutine = null;
+            }
+            _isTyping = false;
+        }
+
+        /// <summary>Reveals the whole current page at once (skip).</summary>
+        private void CompleteTyping()
+        {
+            if (bodyText != null)
+            {
+                bodyText.maxVisibleCharacters = int.MaxValue;
+            }
+            StopTyping();
+            RefreshChoices();
+        }
+
+        private IEnumerator TypeText(int total)
+        {
+            float revealed = 0f;
+            while (bodyText.maxVisibleCharacters < total)
+            {
+                if (typingSpeed <= 0f)
+                {
+                    break;
+                }
+                revealed += typingSpeed * Time.deltaTime;
+                int target = Mathf.Clamp(Mathf.FloorToInt(revealed), 0, total);
+                if (target > bodyText.maxVisibleCharacters)
+                {
+                    bodyText.maxVisibleCharacters = target;
+                }
+                yield return null;
+            }
+            _typingRoutine = null;
+            CompleteTyping();
         }
 
         private void RefreshChoices()
@@ -314,9 +407,10 @@ namespace JusticeIsAWeapon.Dialogue
             // Choices live on a centered overlay and only appear once the
             // player has read the final page of the current text.
             bool onLastPage = _pages.Count == 0 || _pageIndex >= _pages.Count - 1;
+            bool typingFinished = !_isTyping;
 
             DialogueManager manager = CurrentManager();
-            bool show = manager != null && manager.IsActive && onLastPage;
+            bool show = manager != null && manager.IsActive && onLastPage && typingFinished;
 
             foreach (GameObject button in _choiceButtons)
             {
