@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c56f96fec8c74f47b9c90f17507805b, type: 3}
+  m_Name: OpeningCutscene_Act1
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.ComicPanelSequenceSO
+  panels:
+  - panelType: 0
+    image: {fileID: 0}
+    videoClip: {fileID: 0}
+    captionText: Scene 1
+    holdDuration: 1
+    sfxCueId: 
+  - panelType: 0
+    image: {fileID: 0}
+    videoClip: {fileID: 0}
+    captionText: Scene 2
+    holdDuration: 2
+    sfxCueId: 
+  - panelType: 0
+    image: {fileID: 0}
+    videoClip: {fileID: 0}
+    captionText: Scene 3
+    holdDuration: 3
+    sfxCueId: 
+  - panelType: 0
+    image: {fileID: 0}
+    videoClip: {fileID: 0}
+    captionText: Scene 4
+    holdDuration: 4
+    sfxCueId: 
+  - panelType: 0
+    image: {fileID: 0}
+    videoClip: {fileID: 0}
+    captionText: Scene 5
+    holdDuration: 5
+    sfxCueId: 
