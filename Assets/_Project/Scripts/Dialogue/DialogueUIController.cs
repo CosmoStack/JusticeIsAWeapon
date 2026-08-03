@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using JusticeIsAWeapon.Data;
 using TMPro;
 using UnityEngine;
@@ -42,11 +43,14 @@ namespace JusticeIsAWeapon.Dialogue
 
         private readonly List<GameObject> _choiceButtons = new List<GameObject>();
         private readonly List<string> _pages = new List<string>();
+        private readonly List<string> _pageSpeakers = new List<string>();
         private GameObject _choiceOverlay;
         private TMP_FontAsset _font;
         private RectTransform _viewportRect;
         private ScrollRect _scrollRect;
+        private Image _bodyBackground;
         private int _pageIndex;
+        private bool _isConversation;
         private Coroutine _typingRoutine;
         private bool _isTyping;
         private static TMP_FontAsset _sharedFont;
@@ -198,10 +202,31 @@ namespace JusticeIsAWeapon.Dialogue
             if (bodyText != null)
             {
                 _pages.Clear();
+                _pageSpeakers.Clear();
+                _isConversation = false;
                 string full = manager.CurrentText ?? string.Empty;
                 if (full.Length > 0)
                 {
-                    _pages.AddRange(BuildPages(full));
+                    List<Turn> turns = ParseTurns(full);
+                    if (turns.Count > 0)
+                    {
+                        // Conversation mode: one page per speaker turn, each
+                        // with its own name tag. Preamble (if any) becomes a
+                        // nameless page, and long turns are paginated normally.
+                        _isConversation = true;
+                        foreach (Turn turn in turns)
+                        {
+                            foreach (string page in BuildPages(turn.text))
+                            {
+                                _pages.Add(page);
+                                _pageSpeakers.Add(turn.speaker);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _pages.AddRange(BuildPages(full));
+                    }
                 }
                 _pageIndex = 0;
                 bodyText.text = _pages.Count > 0 ? _pages[0] : string.Empty;
@@ -209,6 +234,8 @@ namespace JusticeIsAWeapon.Dialogue
                 {
                     _scrollRect.verticalNormalizedPosition = 1f;
                 }
+                UpdateNameTag();
+                SetBubbleMode(_isConversation);
                 StartTyping();
             }
         }
@@ -317,11 +344,122 @@ namespace JusticeIsAWeapon.Dialogue
                 {
                     _scrollRect.verticalNormalizedPosition = 1f;
                 }
+                UpdateNameTag();
                 StartTyping();
                 RefreshChoices();
                 return true;
             }
             return false;
+        }
+
+        // ------------------------------------------------------------------
+        // Conversation turns
+        // ------------------------------------------------------------------
+
+        private struct Turn
+        {
+            public string speaker;
+            public string text;
+        }
+
+        /// <summary>
+        /// Splits rich text into speaker turns. A turn starts at a bold label
+        /// ending in ':' (e.g. <b>Detective Miller:</b>) and runs until the
+        /// next label. Bold headers without a colon (''Visuals'', ''Narrative'')
+        /// are not turns, so pure narration stays in the normal display mode.
+        /// </summary>
+        private static List<Turn> ParseTurns(string text)
+        {
+            var turns = new List<Turn>();
+            var labels = new List<Match>();
+            foreach (Match m in Regex.Matches(text, "<b>(?<name>[^<]*?)</b>"))
+            {
+                if (m.Groups["name"].Value.TrimEnd().EndsWith(":"))
+                {
+                    labels.Add(m);
+                }
+            }
+            if (labels.Count == 0)
+            {
+                return turns;
+            }
+
+            // Preamble before the first label (e.g. "You select the 'Alibi' baseline.")
+            string preamble = text.Substring(0, labels[0].Index).Trim();
+            if (preamble.Length > 0)
+            {
+                turns.Add(new Turn { speaker = string.Empty, text = preamble });
+            }
+
+            for (int i = 0; i < labels.Count; i++)
+            {
+                Match label = labels[i];
+                int start = label.Index + label.Length;
+                int end = i + 1 < labels.Count ? labels[i + 1].Index : text.Length;
+                string line = text.Substring(start, end - start).Trim();
+                if (line.Length == 0)
+                {
+                    continue;
+                }
+                turns.Add(new Turn
+                {
+                    speaker = label.Groups["name"].Value.TrimEnd(':').Trim(),
+                    text = line
+                });
+            }
+            return turns;
+        }
+
+        /// <summary>Shows the current page's speaker name (conversation mode only).</summary>
+        private void UpdateNameTag()
+        {
+            if (speakerText == null || !_isConversation || _pageSpeakers == null
+                || _pageSpeakers.Count == 0 || _pageIndex >= _pageSpeakers.Count)
+            {
+                return;
+            }
+            string name = _pageSpeakers[_pageIndex];
+            if (string.IsNullOrEmpty(name))
+            {
+                if (speakerText.gameObject.activeSelf)
+                {
+                    speakerText.gameObject.SetActive(false);
+                }
+                return;
+            }
+            speakerText.gameObject.SetActive(true);
+            speakerText.text = name;
+            speakerText.fontStyle = FontStyles.Bold;
+            speakerText.color = SpeakerColor(name);
+        }
+
+        private static Color SpeakerColor(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return new Color(0.92f, 0.92f, 0.94f, 1f);
+            }
+            if (name.IndexOf("Miller", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return new Color(0.95f, 0.78f, 0.4f, 1f);
+            }
+            if (name.IndexOf("Note", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return new Color(0.68f, 0.68f, 0.75f, 1f);
+            }
+            return new Color(0.88f, 0.92f, 0.97f, 1f);
+        }
+
+        /// <summary>Turns the text area into a visible speech bubble during conversations.</summary>
+        private void SetBubbleMode(bool on)
+        {
+            if (_bodyBackground == null)
+            {
+                return;
+            }
+            _bodyBackground.color = on
+                ? new Color(0.13f, 0.14f, 0.2f, 0.85f)
+                : new Color(0f, 0f, 0f, 0f);
         }
 
         // ------------------------------------------------------------------
@@ -575,7 +713,8 @@ namespace JusticeIsAWeapon.Dialogue
             scrollGO.transform.SetParent(columnGO.transform, false);
             scrollGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
             scrollGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
-            scrollGO.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+            _bodyBackground = scrollGO.GetComponent<Image>();
+            _bodyBackground.color = new Color(0f, 0f, 0f, 0f);
 
             EventTrigger clickTrigger = scrollGO.AddComponent<EventTrigger>();
             var clickEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerClick };
