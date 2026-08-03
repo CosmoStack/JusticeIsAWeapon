@@ -95,11 +95,55 @@ namespace JusticeIsAWeapon.Dialogue
                     _font = TMP_Settings.defaultFontAsset;
                     if (_font == null)
                     {
+                        // SDF font shipped inside TMP's Essential Resources
+                        // ("Assets/TextMesh Pro/Resources/...").
                         _font = Resources.Load<TMP_FontAsset>("Fonts & Materials/LiberationSans SDF");
                     }
+                    if (_font == null)
+                    {
+                        // Last resort: convert an OS font at runtime. Segoe UI is
+                        // Windows 10's default UI font, Calibri and Arial cover
+                        // older systems, and the built-in legacy font covers
+                        // everything else.
+                        _font = CreateOSFontFallback();
+                    }
+                    Debug.Log($"[DialogueUIController] Using font: {(_font != null ? _font.name : "TMP default")}");
                 }
                 return _font;
             }
+        }
+
+        /// <summary>
+        /// Creates a TMP font asset from an installed OS font. Never throws:
+        /// TMP can fail to load the face of dynamic OS fonts, in which case we
+        /// log a warning and let TMP fall back to its own default.
+        /// </summary>
+        private static TMP_FontAsset CreateOSFontFallback()
+        {
+            try
+            {
+                // UnityEngine.Font — qualified because the instance Font property shadows the type name.
+                // Sample at 90px so the SDF atlas gets real glyph detail instead of a blurry 30px face.
+                UnityEngine.Font osFont = UnityEngine.Font.CreateDynamicFontFromOSFont(new[] { "Segoe UI", "Calibri", "Arial" }, 90);
+                if (osFont == null)
+                {
+                    osFont = Resources.GetBuiltinResource<UnityEngine.Font>("LegacyRuntime.ttf");
+                }
+                if (osFont != null)
+                {
+                    TMP_FontAsset created = TMP_FontAsset.CreateFontAsset(osFont);
+                    if (created != null)
+                    {
+                        Debug.Log($"[DialogueUIController] Using OS font fallback: {osFont.name}");
+                    }
+                    return created;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[DialogueUIController] Could not create an OS font fallback — text will use TMP's default. {ex.Message}");
+            }
+            return null;
         }
 
         private void Update()
