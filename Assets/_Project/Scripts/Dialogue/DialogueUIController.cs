@@ -69,6 +69,7 @@ namespace JusticeIsAWeapon.Dialogue
         private TextMeshProUGUI _alibiContent;
         private TextMeshProUGUI _timelineContent;
         private TextMeshProUGUI _relationshipContent;
+        private string _bandSuspectPrefix = string.Empty;
         private readonly List<ClueDataSO> _collectedClues = new List<ClueDataSO>();
 
         /// <summary>The text widget currently on screen (narration body or conversation body).</summary>
@@ -202,7 +203,6 @@ namespace JusticeIsAWeapon.Dialogue
         private void HandleNodeChanged(DialogueNodeSO node)
         {
             RefreshBody();
-            ShowPanel();
             RefreshChoices();
             CollectRevealedClue(node);
             FillBandsFromNode(node);
@@ -238,33 +238,34 @@ namespace JusticeIsAWeapon.Dialogue
                 return;
             }
 
+            // Determine the display mode BEFORE activating a panel: pagination
+            // measures real rects, so the layout must be active while measuring.
+            string full = manager.CurrentText ?? string.Empty;
+            List<Turn> turns = full.Length > 0 ? ParseTurns(full) : new List<Turn>();
+            _isConversation = turns.Count > 0;
+            ShowPanel();
+
             _pages.Clear();
             _pageSpeakers.Clear();
-            _isConversation = false;
-            string full = manager.CurrentText ?? string.Empty;
-            if (full.Length > 0)
+            if (_isConversation)
             {
-                List<Turn> turns = ParseTurns(full);
-                if (turns.Count > 0)
+                // Conversation mode: one page per speaker turn, each with its
+                // own name tag. Preamble (if any) becomes a nameless page, and
+                // long turns are paginated normally.
+                foreach (Turn turn in turns)
                 {
-                    // Conversation mode: one page per speaker turn, each
-                    // with its own name tag. Preamble (if any) becomes a
-                    // nameless page, and long turns are paginated normally.
-                    _isConversation = true;
-                    foreach (Turn turn in turns)
+                    foreach (string page in BuildPages(turn.text, text, _conversationBubbleRect))
                     {
-                        foreach (string page in BuildPages(turn.text, text, _conversationBubbleRect))
-                        {
-                            _pages.Add(page);
-                            _pageSpeakers.Add(turn.speaker);
-                        }
+                        _pages.Add(page);
+                        _pageSpeakers.Add(turn.speaker);
                     }
                 }
-                else
-                {
-                    _pages.AddRange(BuildPages(full, text, _viewportRect));
-                }
             }
+            else if (full.Length > 0)
+            {
+                _pages.AddRange(BuildPages(full, text, _viewportRect));
+            }
+
             _pageIndex = 0;
             text.text = _pages.Count > 0 ? _pages[0] : string.Empty;
             if (_scrollRect != null)
@@ -602,6 +603,8 @@ namespace JusticeIsAWeapon.Dialogue
         /// Fills the Alibi / Timeline / Relationship bands from the conversation
         /// content whenever the player navigates to one of those topics. The
         /// passage naming convention ("Elena - Alibi", ...) drives detection.
+        /// Bands are wiped whenever the conversation moves to another suspect
+        /// (or to a non-suspect passage), so old answers never leak over.
         /// </summary>
         private void FillBandsFromNode(DialogueNodeSO node)
         {
@@ -610,6 +613,13 @@ namespace JusticeIsAWeapon.Dialogue
                 return;
             }
             string id = node.nodeId ?? string.Empty;
+            string prefix = SuspectPrefix(id);
+            if (prefix != _bandSuspectPrefix)
+            {
+                _bandSuspectPrefix = prefix;
+                ClearBands();
+            }
+
             string full = CurrentManager()?.CurrentText ?? string.Empty;
             if (id.EndsWith(" - Alibi", StringComparison.Ordinal))
             {
@@ -622,6 +632,33 @@ namespace JusticeIsAWeapon.Dialogue
             else if (id.EndsWith(" - Relationship", StringComparison.Ordinal))
             {
                 SetBand(_relationshipContent, ExtractAnswer(id, full));
+            }
+        }
+
+        /// <summary>Extracts the suspect part of a passage id ("Elena - Alibi" and "Interview Elena" → "Elena").</summary>
+        private static string SuspectPrefix(string nodeId)
+        {
+            if (nodeId.StartsWith("Interview ", StringComparison.Ordinal))
+            {
+                return nodeId.Substring(10).Trim();
+            }
+            int cut = nodeId.IndexOf(" - ", StringComparison.Ordinal);
+            return cut > 0 ? nodeId.Substring(0, cut) : string.Empty;
+        }
+
+        private void ClearBands()
+        {
+            if (_alibiContent != null)
+            {
+                _alibiContent.text = "Not recorded yet";
+            }
+            if (_timelineContent != null)
+            {
+                _timelineContent.text = "Not recorded yet";
+            }
+            if (_relationshipContent != null)
+            {
+                _relationshipContent.text = "Not recorded yet";
             }
         }
 
@@ -1039,7 +1076,7 @@ namespace JusticeIsAWeapon.Dialogue
                 DialogueManager manager = CurrentManager();
                 if (manager != null && manager.CurrentTree != null)
                 {
-                    manager.RestartTree();
+                    RestartDialogue();
                 }
             });
 
@@ -1261,7 +1298,7 @@ namespace JusticeIsAWeapon.Dialogue
             restartLabelRect.offsetMin = Vector2.zero;
             restartLabelRect.offsetMax = Vector2.zero;
 
-            restartGO.GetComponent<Button>().onClick.AddListener(() => CurrentManager()?.RestartTree());
+            restartGO.GetComponent<Button>().onClick.AddListener(() => RestartDialogue());
 
             // Clue bar (bottom 1/4) ----------------------------------------
             GameObject clueBarGO = new GameObject("ClueBar", typeof(RectTransform), typeof(Image));
@@ -1355,6 +1392,14 @@ namespace JusticeIsAWeapon.Dialogue
             content.raycastTarget = false;
 
             return content;
+        }
+
+        /// <summary>Restarts the tree and wipes the right-panel bands for a clean test run.</summary>
+        private void RestartDialogue()
+        {
+            _bandSuspectPrefix = string.Empty;
+            ClearBands();
+            CurrentManager()?.RestartTree();
         }
 
         private void ShowPanel()
