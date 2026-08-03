@@ -577,7 +577,7 @@ namespace JusticeIsAWeapon.Dialogue
             label.font = Font;
             label.fontSize = 19;
             label.color = new Color(0.95f, 0.95f, 0.97f, 1f);
-            label.alignment = TextAlignmentOptions.MiddleCenter;
+            label.alignment = TextAlignmentOptions.Center;
             label.textWrappingMode = TextWrappingModes.Normal;
             label.text = clue.clueTitle ?? clue.name;
             label.raycastTarget = false;
