@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -577,7 +578,7 @@ namespace JusticeIsAWeapon.Dialogue
             label.fontSize = 19;
             label.color = new Color(0.95f, 0.95f, 0.97f, 1f);
             label.alignment = TextAlignmentOptions.MiddleCenter;
-            label.textWrappingMode = TextWrappingModes.Wrap;
+            label.textWrappingMode = TextWrappingModes.Normal;
             label.text = clue.clueTitle ?? clue.name;
             label.raycastTarget = false;
 
@@ -1131,7 +1132,7 @@ namespace JusticeIsAWeapon.Dialogue
             _spriteLabel.fontSize = 24;
             _spriteLabel.alignment = TextAlignmentOptions.Center;
             _spriteLabel.color = new Color(0.75f, 0.78f, 0.85f, 1f);
-            _spriteLabel.textWrappingMode = TextWrappingModes.Wrap;
+            _spriteLabel.textWrappingMode = TextWrappingModes.Normal;
             _spriteLabel.raycastTarget = false;
 
             RectTransform spriteLabelRect = spriteLabelGO.GetComponent<RectTransform>();
@@ -1300,7 +1301,7 @@ namespace JusticeIsAWeapon.Dialogue
             cluesLabel.fontStyle = FontStyles.Bold;
             cluesLabel.color = new Color(0.85f, 0.75f, 0.5f, 1f);
             cluesLabel.text = "CLUES";
-            cluesLabel.alignment = TextAlignmentOptions.MiddleLeft;
+            cluesLabel.alignment = TextAlignmentOptions.Left;
             cluesLabel.raycastTarget = false;
             cluesLabelGO.GetComponent<LayoutElement>().preferredWidth = 110;
             cluesLabelGO.GetComponent<LayoutElement>().preferredHeight = 90;
@@ -1337,7 +1338,7 @@ namespace JusticeIsAWeapon.Dialogue
             titleText.fontStyle = FontStyles.Bold;
             titleText.color = new Color(0.85f, 0.75f, 0.5f, 1f);
             titleText.text = title;
-            titleText.alignment = TextAlignmentOptions.UpperLeft;
+            titleText.alignment = TextAlignmentOptions.TopLeft;
             titleText.raycastTarget = false;
             titleGO.GetComponent<LayoutElement>().preferredHeight = 30;
 
@@ -1349,8 +1350,8 @@ namespace JusticeIsAWeapon.Dialogue
             content.fontSize = 20;
             content.color = new Color(0.85f, 0.87f, 0.9f, 1f);
             content.text = "Not recorded yet";
-            content.alignment = TextAlignmentOptions.UpperLeft;
-            content.textWrappingMode = TextWrappingModes.Wrap;
+            content.alignment = TextAlignmentOptions.TopLeft;
+            content.textWrappingMode = TextWrappingModes.Normal;
             content.raycastTarget = false;
 
             return content;
