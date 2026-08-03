@@ -69,6 +69,7 @@ namespace JusticeIsAWeapon.Dialogue
         private TextMeshProUGUI _timelineContent;
         private TextMeshProUGUI _relationshipContent;
         private string _bandSuspectPrefix = string.Empty;
+        private string _pendingBandNodeId = string.Empty;
         private readonly List<ClueDataSO> _collectedClues = new List<ClueDataSO>();
 
         /// <summary>The text widget currently on screen (narration body or conversation body).</summary>
@@ -168,7 +169,7 @@ namespace JusticeIsAWeapon.Dialogue
             RefreshBody();
             RefreshChoices();
             CollectRevealedClue(node);
-            FillBandsFromNode(node);
+            NoteNodeChanged(node);
         }
 
         private void HandleDialogueEnded()
@@ -276,7 +277,13 @@ namespace JusticeIsAWeapon.Dialogue
 
             Canvas.ForceUpdateCanvases();
             float viewportHeight = rect.rect.height;
-            float viewportWidth = rect.rect.width;
+            // Measure at the text's own width (its rect already subtracts the
+            // bubble/panel margins). Measuring at the parent rect's width
+            // underestimates the wrapped height, which overflows the masked
+            // bubble bottom once choices shrink it.
+            float viewportWidth = text.rectTransform != null && text.rectTransform.rect.width > 1f
+                ? text.rectTransform.rect.width
+                : rect.rect.width;
             if (viewportHeight <= 1f || viewportWidth <= 1f)
             {
                 return new List<string> { full };
@@ -603,13 +610,12 @@ namespace JusticeIsAWeapon.Dialogue
         }
 
         /// <summary>
-        /// Fills the Alibi / Timeline / Relationship bands from the conversation
-        /// content whenever the player navigates to one of those topics. The
-        /// passage naming convention ("Elena - Alibi", ...) drives detection.
+        /// Node-entry bookkeeping for the Alibi / Timeline / Relationship bands.
         /// Bands are wiped whenever the conversation moves to another suspect
-        /// (or to a non-suspect passage), so old answers never leak over.
+        /// (or to a non-suspect passage), so old answers never leak over. The
+        /// answer itself is recorded only once the topic conversation finishes.
         /// </summary>
-        private void FillBandsFromNode(DialogueNodeSO node)
+        private void NoteNodeChanged(DialogueNodeSO node)
         {
             if (node == null)
             {
@@ -622,20 +628,49 @@ namespace JusticeIsAWeapon.Dialogue
                 _bandSuspectPrefix = prefix;
                 ClearBands();
             }
+            _pendingBandNodeId = IsTopicNode(id) ? id : string.Empty;
+        }
 
-            string full = SanitizeMarkup(CurrentManager()?.CurrentText ?? string.Empty);
-            if (id.EndsWith(" - Alibi", StringComparison.Ordinal))
+        /// <summary>
+        /// Records the topic's answer into its band. Called when the topic
+        /// conversation has been fully read — the final page is showing and
+        /// the "back to clipboard" choices are on screen.
+        /// </summary>
+        private void FillPendingBand()
+        {
+            if (_pendingBandNodeId.Length == 0)
             {
-                SetBand(_alibiContent, ExtractAnswer(id, full));
+                return;
             }
-            else if (id.EndsWith(" - Timeline", StringComparison.Ordinal))
+            DialogueManager manager = CurrentManager();
+            DialogueNodeSO node = manager != null ? manager.CurrentNode : null;
+            if (node == null || node.nodeId != _pendingBandNodeId)
             {
-                SetBand(_timelineContent, ExtractAnswer(id, full));
+                _pendingBandNodeId = string.Empty;
+                return;
             }
-            else if (id.EndsWith(" - Relationship", StringComparison.Ordinal))
+
+            string full = SanitizeMarkup(manager.CurrentText ?? string.Empty);
+            if (node.nodeId.EndsWith(" - Alibi", StringComparison.Ordinal))
             {
-                SetBand(_relationshipContent, ExtractAnswer(id, full));
+                SetBand(_alibiContent, ExtractAnswer(node.nodeId, full));
             }
+            else if (node.nodeId.EndsWith(" - Timeline", StringComparison.Ordinal))
+            {
+                SetBand(_timelineContent, ExtractAnswer(node.nodeId, full));
+            }
+            else if (node.nodeId.EndsWith(" - Relationship", StringComparison.Ordinal))
+            {
+                SetBand(_relationshipContent, ExtractAnswer(node.nodeId, full));
+            }
+            _pendingBandNodeId = string.Empty;
+        }
+
+        private static bool IsTopicNode(string nodeId)
+        {
+            return nodeId.EndsWith(" - Alibi", StringComparison.Ordinal)
+                || nodeId.EndsWith(" - Timeline", StringComparison.Ordinal)
+                || nodeId.EndsWith(" - Relationship", StringComparison.Ordinal);
         }
 
         /// <summary>Extracts the suspect part of a passage id ("Elena - Alibi" and "Interview Elena" → "Elena").</summary>
@@ -885,6 +920,13 @@ namespace JusticeIsAWeapon.Dialogue
             {
                 HidePanel();
             }
+
+            // Record the topic answer once the conversation finishes: the final
+            // page is showing and the "back to clipboard" choices are visible.
+            if (show)
+            {
+                FillPendingBand();
+            }
         }
 
         private void CreateChoiceButton(int index, string label, VerticalLayoutGroup list)
@@ -1126,10 +1168,13 @@ namespace JusticeIsAWeapon.Dialogue
             choicesGO.transform.SetParent(overlayGO.transform, false);
 
             RectTransform choicesRect = choicesGO.GetComponent<RectTransform>();
-            choicesRect.anchorMin = new Vector2(0.5f, 0.5f);
-            choicesRect.anchorMax = new Vector2(0.5f, 0.5f);
-            choicesRect.pivot = new Vector2(0.5f, 0.5f);
-            choicesRect.anchoredPosition = new Vector2(0f, 30f);
+            // Anchor to the narration panel's top edge so the list grows
+            // upward and can never cover the panel's text, no matter how many
+            // choices are active.
+            choicesRect.anchorMin = new Vector2(0.5f, 0.4f);
+            choicesRect.anchorMax = new Vector2(0.5f, 0.4f);
+            choicesRect.pivot = new Vector2(0.5f, 0f);
+            choicesRect.anchoredPosition = new Vector2(0f, 12f);
             choicesRect.sizeDelta = new Vector2(800f, 0f);
 
             choiceList = choicesGO.GetComponent<VerticalLayoutGroup>();
@@ -1462,6 +1507,7 @@ namespace JusticeIsAWeapon.Dialogue
         private void RestartDialogue()
         {
             _bandSuspectPrefix = string.Empty;
+            _pendingBandNodeId = string.Empty;
             ClearBands();
             CurrentManager()?.RestartTree();
         }
