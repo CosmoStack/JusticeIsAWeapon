@@ -671,65 +671,18 @@ namespace JusticeIsAWeapon.Dialogue
             {
                 return;
             }
-            content.text = SummarizeToFit(text, content);
-        }
-
-        /// <summary>
-        /// Dynamically summarizes band text so it always fits its panel: rich
-        /// tags are stripped, then the text is truncated at a word boundary with
-        /// an ellipsis if measuring shows it would overflow.
-        /// </summary>
-        private static string SummarizeToFit(string text, TextMeshProUGUI target)
-        {
-            string plain = Regex.Replace(text, "<[^>]+>", string.Empty).Trim();
-            if (string.IsNullOrEmpty(plain))
+            content.text = text;
+            // The band's content lives under Viewport (child of ScrollArea);
+            // snap back to the top when a new answer lands.
+            Transform viewport = content.transform.parent;
+            if (viewport != null && viewport.parent != null)
             {
-                return plain;
-            }
-
-            Canvas.ForceUpdateCanvases();
-            float width = target.rectTransform.rect.width;
-            RectTransform bandRect = target.transform.parent as RectTransform;
-            // Band height minus the title row (30), band padding (16) and spacing (4).
-            float maxHeight = (bandRect != null ? bandRect.rect.height : 0f) - 30f - 16f - 4f;
-            if (width <= 1f || maxHeight <= 1f)
-            {
-                return plain;
-            }
-
-            if (target.GetPreferredValues(plain, width, 0f).y <= maxHeight)
-            {
-                return plain;
-            }
-
-            int lo = 0;
-            int hi = plain.Length;
-            while (lo < hi)
-            {
-                int mid = (lo + hi + 1) / 2;
-                if (target.GetPreferredValues(plain.Substring(0, mid), width, 0f).y <= maxHeight)
+                ScrollRect scroll = viewport.parent.GetComponent<ScrollRect>();
+                if (scroll != null)
                 {
-                    lo = mid;
-                }
-                else
-                {
-                    hi = mid - 1;
+                    scroll.verticalNormalizedPosition = 1f;
                 }
             }
-
-            int end = plain.LastIndexOf(' ', Mathf.Max(0, lo - 1));
-            if (end < Mathf.Max(1, lo - 12))
-            {
-                end = lo;
-            }
-
-            string withEllipsis = plain.Substring(0, end).TrimEnd() + "\u2026";
-            while (end > 0 && target.GetPreferredValues(withEllipsis, width, 0f).y > maxHeight)
-            {
-                end--;
-                withEllipsis = plain.Substring(0, end).TrimEnd() + "\u2026";
-            }
-            return withEllipsis;
         }
 
         /// <summary>
@@ -1412,7 +1365,7 @@ namespace JusticeIsAWeapon.Dialogue
         /// <summary>Builds one titled info band (Alibi / Timeline / Relationship) with a placeholder message.</summary>
         private TextMeshProUGUI BuildInfoBand(Transform parent, string title)
         {
-            GameObject bandGO = new GameObject(title, typeof(RectTransform), typeof(Image), typeof(RectMask2D), typeof(LayoutElement), typeof(VerticalLayoutGroup));
+            GameObject bandGO = new GameObject(title, typeof(RectTransform), typeof(Image), typeof(LayoutElement), typeof(VerticalLayoutGroup));
             bandGO.transform.SetParent(parent, false);
             bandGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
             bandGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
@@ -1440,8 +1393,32 @@ namespace JusticeIsAWeapon.Dialogue
             titleText.raycastTarget = false;
             titleGO.GetComponent<LayoutElement>().preferredHeight = 30;
 
-            GameObject contentGO = new GameObject("Content", typeof(RectTransform), typeof(TextMeshProUGUI));
-            contentGO.transform.SetParent(bandGO.transform, false);
+            // Scrollable content: long answers can be scrolled inside the band.
+            GameObject scrollGO = new GameObject("ScrollArea", typeof(RectTransform), typeof(Image), typeof(ScrollRect), typeof(LayoutElement));
+            scrollGO.transform.SetParent(bandGO.transform, false);
+            scrollGO.GetComponent<LayoutElement>().flexibleHeight = 1f;
+            scrollGO.GetComponent<LayoutElement>().flexibleWidth = 1f;
+            scrollGO.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+
+            GameObject viewportGO = new GameObject("Viewport", typeof(RectTransform), typeof(RectMask2D));
+            viewportGO.transform.SetParent(scrollGO.transform, false);
+            RectTransform viewportRect = viewportGO.GetComponent<RectTransform>();
+            viewportRect.anchorMin = Vector2.zero;
+            viewportRect.anchorMax = Vector2.one;
+            viewportRect.offsetMin = Vector2.zero;
+            viewportRect.offsetMax = Vector2.zero;
+
+            GameObject contentGO = new GameObject("Content", typeof(RectTransform), typeof(ContentSizeFitter), typeof(TextMeshProUGUI));
+            contentGO.transform.SetParent(viewportGO.transform, false);
+            RectTransform contentRect = contentGO.GetComponent<RectTransform>();
+            contentRect.anchorMin = new Vector2(0f, 1f);
+            contentRect.anchorMax = new Vector2(1f, 1f);
+            contentRect.pivot = new Vector2(0.5f, 1f);
+            contentRect.anchoredPosition = Vector2.zero;
+            contentRect.sizeDelta = Vector2.zero;
+
+            ContentSizeFitter fitter = contentGO.GetComponent<ContentSizeFitter>();
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
             TextMeshProUGUI content = contentGO.GetComponent<TextMeshProUGUI>();
             content.font = Font;
@@ -1451,6 +1428,17 @@ namespace JusticeIsAWeapon.Dialogue
             content.alignment = TextAlignmentOptions.TopLeft;
             content.textWrappingMode = TextWrappingModes.Normal;
             content.raycastTarget = false;
+            content.margin = new Vector4(2f, 0f, 2f, 0f);
+
+            ScrollRect scrollRect = scrollGO.GetComponent<ScrollRect>();
+            scrollRect.viewport = viewportRect;
+            scrollRect.content = contentRect;
+            scrollRect.horizontal = false;
+            scrollRect.vertical = true;
+            scrollRect.movementType = ScrollRect.MovementType.Clamped;
+            scrollRect.inertia = false;
+            scrollRect.scrollSensitivity = 24;
+            scrollRect.verticalNormalizedPosition = 1f;
 
             return content;
         }
