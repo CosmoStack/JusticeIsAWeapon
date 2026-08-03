@@ -17,9 +17,9 @@ MonoBehaviour:
   lineText: "<i>You drag the 'Restricted Corridor Door' onto the interrogation tab,
     preparing to press the witness on who has access to the back rooms.</i>\r\n\r\n<b>Detective
     Miller:</b> \r\n\"Don't bother with that right now. Here's the key for the corridor.
-    Once we're done with the roster, you can investigate the Private Office.\"\r\n\r\n<b>[ITEM
-    REMOVED: The Restricted Corridor Door]</b>\r\n<b>[ITEM ACQUIRED: Restricted Master
-    Key]</b>\r\n\r\n\r\n\r"
+    Once we're done with the roster, you can investigate the Private Office.\"\r\n\r\n<b>ITEM
+    REMOVED: The Restricted Corridor Door</b>\r\n<b>ITEM ACQUIRED: Restricted Master
+    Key</b>\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -34,8 +34,8 @@ MonoBehaviour:
       preparing to press the witness on who has access to the back rooms.</i>\r\n\r\n<b>Detective
       Miller:</b> \r\n\"Don't bother with that right now. Here's the key for the
       corridor. Once we're done with the roster, you can investigate the Private
-      Office.\"\r\n\r\n<b>[ITEM REMOVED: The Restricted Corridor Door]</b>\r\n<b>[ITEM
-      ACQUIRED: Restricted Master Key]</b>\r\n\r\n\r\n\r"
+      Office.\"\r\n\r\n<b>ITEM REMOVED: The Restricted Corridor Door</b>\r\n<b>ITEM
+      ACQUIRED: Restricted Master Key</b>\r\n\r\n\r\n\r"
     links:
     - label: Return to the Roster
       target: Interrogation Room

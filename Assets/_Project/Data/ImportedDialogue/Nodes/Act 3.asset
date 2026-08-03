@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Act 3
   speakerName: 
-  lineText: "<b>[ACT 3: THE NIGHT SHIFT]</b>\r\n\r\nDEMO completed. Leave any suggestions
+  lineText: "<b>ACT 3: THE NIGHT SHIFT</b>\r\n\r\nDEMO completed. Leave any suggestions
     in comments and wishlist for future updates.\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
@@ -24,6 +24,6 @@ MonoBehaviour:
   choices: []
   blocks:
   - condition: 
-    text: "<b>[ACT 3: THE NIGHT SHIFT]</b>\r\n\r\nDEMO completed. Leave any suggestions
+    text: "<b>ACT 3: THE NIGHT SHIFT</b>\r\n\r\nDEMO completed. Leave any suggestions
       in comments and wishlist for future updates.\r\n\r"
     links: []

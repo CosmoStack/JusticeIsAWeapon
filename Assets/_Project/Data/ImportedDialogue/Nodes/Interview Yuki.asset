@@ -16,12 +16,12 @@ MonoBehaviour:
   speakerName: 
   lineText: "The camera settles on Yuki Tanaka across a plain, metal table. She sits
     perfectly straight, her hands folded neatly in front of her, the picture of a
-    professional holding it together after a shock.\r\n\r\n<b>[DEDUCTION CLIPBOARD
-    ACTIVE]</b>\r\n<i>PHYSICAL EVIDENCE</i>\r\n\r\n\r\n\r\n<i>You currently have
-    no physical clues to present. Select a baseline topic for Detective Miller to
-    press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective Miller:</b>\r\n\"Her story
-    is ironclad. We aren't getting anything else out of her without physical proof.\"\r\n\r\n<i>[YUKI
-    TANAKA'S STATEMENT LOGGED]</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
+    professional holding it together after a shock.\r\n\r\n<b>DEDUCTION CLIPBOARD
+    ACTIVE</b>\r\n<i>PHYSICAL EVIDENCE</i>\r\n\r\n\r\n\r\n<i>You currently have no
+    physical clues to present. Select a baseline topic for Detective Miller to press
+    her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective Miller:</b>\r\n\"Her story is ironclad.
+    We aren't getting anything else out of her without physical proof.\"\r\n\r\n<i>YUKI
+    TANAKA'S STATEMENT LOGGED</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -52,8 +52,8 @@ MonoBehaviour:
 
       
 
-      <b>[DEDUCTION
-      CLIPBOARD ACTIVE]</b>
+      <b>DEDUCTION
+      CLIPBOARD ACTIVE</b>
 
       <i>PHYSICAL EVIDENCE</i>
 
@@ -136,8 +136,8 @@ MonoBehaviour:
 
       
 
-      <i>[YUKI
-      TANAKA''S STATEMENT LOGGED]</i>
+      <i>YUKI
+      TANAKA''S STATEMENT LOGGED</i>
 
       
 

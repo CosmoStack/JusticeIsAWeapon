@@ -20,8 +20,8 @@ MonoBehaviour:
     brother is dead on the floor, and you're asking where I was? I was at the gala
     \u2014 accepting a prize he should have been there to take himself. Call the
     entire convention hall; they all watched me on that stage. Do your job and find
-    out who actually did this instead of harassing his family.\"\r\n\r\n''[Investigator's
-    Note:]'' It's a completely ironclad public alibi. Hundreds of high-society witnesses
+    out who actually did this instead of harassing his family.\"\r\n\r\n<b>Investigator's
+    Note:</b> It's a completely ironclad public alibi. Hundreds of high-society witnesses
     saw him on that stage. We can't touch his whereabouts for the time of the murder.\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
@@ -39,8 +39,8 @@ MonoBehaviour:
       brother is dead on the floor, and you're asking where I was? I was at the gala
       \u2014 accepting a prize he should have been there to take himself. Call the
       entire convention hall; they all watched me on that stage. Do your job and
-      find out who actually did this instead of harassing his family.\"\r\n\r\n''[Investigator's
-      Note:]'' It's a completely ironclad public alibi. Hundreds of high-society
+      find out who actually did this instead of harassing his family.\"\r\n\r\n<b>Investigator's
+      Note:</b> It's a completely ironclad public alibi. Hundreds of high-society
       witnesses saw him on that stage. We can't touch his whereabouts for the time
       of the murder.\r\n\r\n\r\n\r"
     links:

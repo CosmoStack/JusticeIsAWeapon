@@ -203,7 +203,7 @@ namespace JusticeIsAWeapon.Dialogue
 
             // Determine the display mode BEFORE activating a panel: pagination
             // measures real rects, so the layout must be active while measuring.
-            string full = manager.CurrentText ?? string.Empty;
+            string full = SanitizeMarkup(manager.CurrentText ?? string.Empty);
             List<Turn> turns = full.Length > 0 ? ParseTurns(full) : new List<Turn>();
             _isConversation = turns.Count > 0;
             ShowPanel();
@@ -623,7 +623,7 @@ namespace JusticeIsAWeapon.Dialogue
                 ClearBands();
             }
 
-            string full = CurrentManager()?.CurrentText ?? string.Empty;
+            string full = SanitizeMarkup(CurrentManager()?.CurrentText ?? string.Empty);
             if (id.EndsWith(" - Alibi", StringComparison.Ordinal))
             {
                 SetBand(_alibiContent, ExtractAnswer(id, full));
@@ -639,6 +639,21 @@ namespace JusticeIsAWeapon.Dialogue
         }
 
         /// <summary>Extracts the suspect part of a passage id ("Elena - Alibi" and "Interview Elena" → "Elena").</summary>
+        /// <summary>
+        /// Runtime fallback for markup that failed to convert at import time
+        /// (e.g. ''[Investigator's Note:]'' — apostrophes inside the label break
+        /// the importer's old regex). Converts leftover ''...'' to bold so the
+        /// raw brackets never leak into the UI.
+        /// </summary>
+        private static string SanitizeMarkup(string text)
+        {
+            if (string.IsNullOrEmpty(text) || !text.Contains("''", StringComparison.Ordinal))
+            {
+                return text;
+            }
+            return Regex.Replace(text, "''(.+?)''", "<b>$1</b>");
+        }
+
         private static string SuspectPrefix(string nodeId)
         {
             if (nodeId.StartsWith("Interview ", StringComparison.Ordinal))

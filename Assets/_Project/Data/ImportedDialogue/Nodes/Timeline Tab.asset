@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Timeline Tab
   speakerName: 
-  lineText: " |  |  |  |  | <b>[TIMELINE]</b>\r\n\r"
+  lineText: " |  |  |  |  | <b>TIMELINE</b>\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -33,7 +33,7 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: d80698b1f55418049be8833bbc5125c0, type: 2}
   blocks:
   - condition: 
-    text: " |  |  |  |  | <b>[TIMELINE]</b>\r\n\r"
+    text: " |  |  |  |  | <b>TIMELINE</b>\r\n\r"
     links:
     - label: EXIT
       target: Gallery Exterior

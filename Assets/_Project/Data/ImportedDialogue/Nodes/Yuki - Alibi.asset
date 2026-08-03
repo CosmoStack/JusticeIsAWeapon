@@ -18,7 +18,7 @@ MonoBehaviour:
     \r\n\"Where were you when the incident occurred last night?\"\r\n\r\n<b>Yuki
     Tanaka:</b> \r\n\"I wasn't here. I was supposed to work late on the gala files,
     but around 5 o'clock, Marcus told me to go home and get some rest. I left the
-    gallery and went straight to my apartment.\"\r\n\r\n''[Investigator's Note:]''
+    gallery and went straight to my apartment.\"\r\n\r\n<b>Investigator's Note:</b>
     If Marcus sent her home, it creates a perfectly clean break in her timeline.
     Without security logs or a witness to prove she came back to the gallery later
     that night, this alibi is a dead end.\r\n\r\n\r\n\r"
@@ -36,7 +36,7 @@ MonoBehaviour:
       \r\n\"Where were you when the incident occurred last night?\"\r\n\r\n<b>Yuki
       Tanaka:</b> \r\n\"I wasn't here. I was supposed to work late on the gala files,
       but around 5 o'clock, Marcus told me to go home and get some rest. I left the
-      gallery and went straight to my apartment.\"\r\n\r\n''[Investigator's Note:]''
+      gallery and went straight to my apartment.\"\r\n\r\n<b>Investigator's Note:</b>
       If Marcus sent her home, it creates a perfectly clean break in her timeline.
       Without security logs or a witness to prove she came back to the gallery later
       that night, this alibi is a dead end.\r\n\r\n\r\n\r"
