@@ -53,6 +53,15 @@ namespace JusticeIsAWeapon.Cinematic
         private void Awake()
         {
             _canvasGroup = GetComponent<CanvasGroup>();
+
+            // Guard against a null/empty easing curve (e.g. if the Inspector
+            // never serialized the default). Without this, Evaluate() throws
+            // on the first frame and the fade freezes at alpha 0.
+            if (easingCurve == null || easingCurve.length == 0)
+            {
+                easingCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+            }
+
             _rectTransform = transform as RectTransform;
         }
 
