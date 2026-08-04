@@ -16,12 +16,12 @@ MonoBehaviour:
   speakerName: 
   lineText: "The camera cuts to Victor Hasting, the Chief Security Officer. He's
     a large, rigid man sitting with his arms crossed. He looks more annoyed by the
-    disruption to his security protocols than devastated by his boss's death.\r\n\r\n<b>[DEDUCTION
-    CLIPBOARD ACTIVE]</b>\r\n\r\n\r\n\r\n<i>You currently have no physical clues
-    to present. Select a baseline topic for Detective Miller to press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective
+    disruption to his security protocols than devastated by his boss's death.\r\n\r\n<b>DEDUCTION
+    CLIPBOARD ACTIVE</b>\r\n\r\n\r\n\r\n<i>You currently have no physical clues to
+    present. Select a baseline topic for Detective Miller to press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective
     Miller:</b>\r\n\"He's completely walled up behind his own security protocols.
-    We need the actual logs to punch a hole in this.\"\r\n\r\n<i>[VICTOR HASTING'S
-    STATEMENT LOGGED]</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
+    We need the actual logs to punch a hole in this.\"\r\n\r\n<i>VICTOR HASTING'S
+    STATEMENT LOGGED</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -52,8 +52,8 @@ MonoBehaviour:
 
       
 
-      <b>[DEDUCTION
-      CLIPBOARD ACTIVE]</b>
+      <b>DEDUCTION
+      CLIPBOARD ACTIVE</b>
 
 '
     links: []
@@ -134,8 +134,8 @@ MonoBehaviour:
 
       
 
-      <i>[VICTOR
-      HASTING''S STATEMENT LOGGED]</i>
+      <i>VICTOR
+      HASTING''S STATEMENT LOGGED</i>
 
       
 

@@ -49,6 +49,7 @@ namespace JusticeIsAWeapon.Dialogue
         private readonly List<string> _visited = new List<string>();
         private readonly Dictionary<string, bool> _vars = new Dictionary<string, bool>();
         private readonly StringBuilder _builder = new StringBuilder(512);
+        private DialogueNodeSO _treeStartNode;
 
         private void Awake()
         {
@@ -79,7 +80,51 @@ namespace JusticeIsAWeapon.Dialogue
             _visited.Clear();
             _vars.Clear();
             IsActive = true;
+            _treeStartNode = tree.root;
             EnterNode(tree.root);
+        }
+
+        /// <summary>
+        /// Starts (or restarts) a dialogue tree from a specific node instead of
+        /// the tree root. Used by the test driver to jump straight to an interview.
+        /// </summary>
+        public void StartTreeAt(DialogueTreeSO tree, DialogueNodeSO startNode)
+        {
+            if (tree == null)
+            {
+                Debug.LogError("[DialogueManager] StartTreeAt called with no tree.");
+                return;
+            }
+            if (startNode == null)
+            {
+                Debug.LogError($"[DialogueManager] StartTreeAt called with no start node for tree '{tree.name}'.");
+                return;
+            }
+
+            CurrentTree = tree;
+            _visited.Clear();
+            _vars.Clear();
+            IsActive = true;
+            _treeStartNode = startNode;
+            EnterNode(startNode);
+        }
+
+        /// <summary>Replays the tree from wherever it was started (used by the Restart button).</summary>
+        public void RestartTree()
+        {
+            if (CurrentTree == null)
+            {
+                return;
+            }
+            DialogueNodeSO start = _treeStartNode != null ? _treeStartNode : CurrentTree.root;
+            if (start == null)
+            {
+                return;
+            }
+            _visited.Clear();
+            _vars.Clear();
+            IsActive = true;
+            EnterNode(start);
         }
 
         /// <summary>Selects one of the currently available choices and advances to its target node.</summary>

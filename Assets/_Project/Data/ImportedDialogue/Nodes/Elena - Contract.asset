@@ -19,8 +19,8 @@ MonoBehaviour:
     Management liquidation contract, dated yesterday.\"\r\n\r\n<b>Elena Vance:</b>\r\n\"Standard
     contingency paperwork. As a stakeholder, it is my fiduciary duty to prepare for
     all financial outcomes, including bankruptcy. A drafted proposal is not a crime,
-    Inspector.\"\r\n\r\n''[Investigator's Note:]'' There's definitely something more
-    to this story. She was clearly hiding something.\r\n\r\n\r\n\r"
+    Inspector.\"\r\n\r\n<b>Investigator's Note:</b> There's definitely something
+    more to this story. She was clearly hiding something.\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -36,7 +36,7 @@ MonoBehaviour:
       Management liquidation contract, dated yesterday.\"\r\n\r\n<b>Elena Vance:</b>\r\n\"Standard
       contingency paperwork. As a stakeholder, it is my fiduciary duty to prepare
       for all financial outcomes, including bankruptcy. A drafted proposal is not
-      a crime, Inspector.\"\r\n\r\n''[Investigator's Note:]'' There's definitely
+      a crime, Inspector.\"\r\n\r\n<b>Investigator's Note:</b> There's definitely
       something more to this story. She was clearly hiding something.\r\n\r\n\r\n\r"
     links:
     - label: Back to Elena's Clipboard

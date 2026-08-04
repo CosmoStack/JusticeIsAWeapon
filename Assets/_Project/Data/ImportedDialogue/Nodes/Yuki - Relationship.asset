@@ -19,10 +19,10 @@ MonoBehaviour:
     curator. Was there any tension between you two?\"\r\n\r\n<b>Yuki Tanaka:</b>
     \r\n\"Strictly professional. Marcus was highly demanding, especially with the
     gala approaching. We were all under immense pressure to ensure everything was
-    perfect, but that was just the nature of the job.\"\r\n\r\n''[Investigator's
-    Note:]'' She's keeping it strictly about the work. It's a standard, careful answer.
-    There's no visible friction to press her on without something tangible to contradict
-    her.\r\n\r\n\r\n\r"
+    perfect, but that was just the nature of the job.\"\r\n\r\n<b>Investigator's
+    Note:</b> She's keeping it strictly about the work. It's a standard, careful
+    answer. There's no visible friction to press her on without something tangible
+    to contradict her.\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -38,9 +38,10 @@ MonoBehaviour:
       Was there any tension between you two?\"\r\n\r\n<b>Yuki Tanaka:</b> \r\n\"Strictly
       professional. Marcus was highly demanding, especially with the gala approaching.
       We were all under immense pressure to ensure everything was perfect, but that
-      was just the nature of the job.\"\r\n\r\n''[Investigator's Note:]'' She's keeping
-      it strictly about the work. It's a standard, careful answer. There's no visible
-      friction to press her on without something tangible to contradict her.\r\n\r\n\r\n\r"
+      was just the nature of the job.\"\r\n\r\n<b>Investigator's Note:</b> She's
+      keeping it strictly about the work. It's a standard, careful answer. There's
+      no visible friction to press her on without something tangible to contradict
+      her.\r\n\r\n\r\n\r"
     links:
     - label: Back to Yuki's Clipboard
       target: Interview Yuki

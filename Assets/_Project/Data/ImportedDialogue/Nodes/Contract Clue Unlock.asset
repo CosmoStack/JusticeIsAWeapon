@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Contract Clue Unlock
   speakerName: 
-  lineText: "We must interrogate with Elena to talk about the contract.\r\n\r\n<b>[CLUE
-    COLLECTED: Asset Liquidation Contract]</b>\r\n\r\n\r\n\r"
+  lineText: "We must interrogate with Elena to talk about the contract.\r\n\r\n<b>CLUE
+    COLLECTED: Asset Liquidation Contract</b>\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -26,8 +26,8 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: aa3b8443a3bc4f74c98bdbe391f43acc, type: 2}
   blocks:
   - condition: 
-    text: "We must interrogate with Elena to talk about the contract.\r\n\r\n<b>[CLUE
-      COLLECTED: Asset Liquidation Contract]</b>\r\n\r\n\r\n\r"
+    text: "We must interrogate with Elena to talk about the contract.\r\n\r\n<b>CLUE
+      COLLECTED: Asset Liquidation Contract</b>\r\n\r\n\r\n\r"
     links:
     - label: CONTINUE
       target: Private Office
