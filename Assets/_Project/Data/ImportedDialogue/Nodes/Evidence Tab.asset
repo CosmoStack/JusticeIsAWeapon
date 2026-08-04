@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Evidence Tab
   speakerName: 
-  lineText: " |  |  |  | <b>[EVIDENCE]</b> | \r\n\r"
+  lineText: " |  |  |  | <b>EVIDENCE</b> | \r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -33,7 +33,7 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
   blocks:
   - condition: 
-    text: " |  |  |  | <b>[EVIDENCE]</b> | \r\n\r"
+    text: " |  |  |  | <b>EVIDENCE</b> | \r\n\r"
     links:
     - label: EXIT
       target: Gallery Exterior

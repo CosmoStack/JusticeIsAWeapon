@@ -504,7 +504,8 @@ namespace JusticeIsAWeapon.Editor
             {
                 return string.Empty;
             }
-            string result = Regex.Replace(text, @"''([^'']*)''", "<b>$1</b>");
+            // Non-greedy: allows apostrophes inside the label (e.g. ''[Investigator's Note:]'').
+            string result = Regex.Replace(text, @"''(.+?)''", "<b>$1</b>");
             result = Regex.Replace(result, @"//([^/]*)//", "<i>$1</i>");
             result = Regex.Replace(result, @"~~([^~]*)~~", "<s>$1</s>");
             return result;

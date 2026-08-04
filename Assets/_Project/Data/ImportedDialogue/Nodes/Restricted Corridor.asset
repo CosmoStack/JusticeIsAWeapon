@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Restricted Corridor
   speakerName: 
-  lineText: "<b>[ACT 2: Unlocking the Paper Trail]</b>\r\n\r\n | \r\n\r\nA narrow
-    6-foot-wide restricted corridor connecting a security booth and archive room
-    to a private office and a doorway to back alley. Heavy modern electronic-keypad
-    security door at one end, dim overhead strip lighting, cold gray-blue tones with
-    deep shadows pooling in the corners. Claustrophobic framing, muted color palette,
-    faint rain-shadow patterns from a distant window, cinematic noir lighting, comic
-    art style.\r\n\r\nWhere do you want to go?\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r"
+  lineText: "<b>ACT 2: Unlocking the Paper Trail</b>\r\n\r\n | \r\n\r\nA narrow 6-foot-wide
+    restricted corridor connecting a security booth and archive room to a private
+    office and a doorway to back alley. Heavy modern electronic-keypad security door
+    at one end, dim overhead strip lighting, cold gray-blue tones with deep shadows
+    pooling in the corners. Claustrophobic framing, muted color palette, faint rain-shadow
+    patterns from a distant window, cinematic noir lighting, comic art style.\r\n\r\nWhere
+    do you want to go?\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -43,7 +43,7 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 28bdde99b79a7d1469e88f4dcfad43b2, type: 2}
   blocks:
   - condition: (history:) does not contain "Restricted Corridor"
-    text: '<b>[ACT 2: Unlocking the Paper Trail]</b>
+    text: '<b>ACT 2: Unlocking the Paper Trail</b>
 
       
 

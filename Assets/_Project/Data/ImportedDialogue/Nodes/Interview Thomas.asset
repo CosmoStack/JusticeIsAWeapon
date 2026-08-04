@@ -16,13 +16,12 @@ MonoBehaviour:
   speakerName: 
   lineText: "The camera shifts to Thomas Webb. He looks like a man vibrating out
     of his skin\u2014sweating, pacing slightly even while seated, and openly hostile.
-    He is using his grief as a blunt instrument to keep you both at bay.\r\n\r\n<b>[DEDUCTION
-    CLIPBOARD ACTIVE]</b>\r\n\r\n\r\n\r\n<i>You currently have no physical clues
-    to present. Select a baseline topic for Detective Miller to press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective
+    He is using his grief as a blunt instrument to keep you both at bay.\r\n\r\n<b>DEDUCTION
+    CLIPBOARD ACTIVE</b>\r\n\r\n\r\n\r\n<i>You currently have no physical clues to
+    present. Select a baseline topic for Detective Miller to press her on.</i>\r\n\r\n\r\n\r\n\r\n<b>Detective
     Miller:</b>\r\n\"He's loud, but he's safe behind a room full of witnesses. Until
     we have paper proving he had a reason to want Marcus dead, pushing him is just
-    going to get us a harassment complaint.\"\r\n\r\n<i>[THOMAS WEBB'S STATEMENT
-    LOGGED]</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
+    going to get us a harassment complaint.\"\r\n\r\n<i>THOMAS WEBB'S STATEMENT LOGGED</i>\r\n\r\n\r\n\r\n\r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
   clueRevealed: {fileID: 0}
@@ -49,8 +48,8 @@ MonoBehaviour:
   - condition: 
     text: "The camera shifts to Thomas Webb. He looks like a man vibrating out of
       his skin\u2014sweating, pacing slightly even while seated, and openly hostile.
-      He is using his grief as a blunt instrument to keep you both at bay.\r\n\r\n<b>[DEDUCTION
-      CLIPBOARD ACTIVE]</b>\r\n"
+      He is using his grief as a blunt instrument to keep you both at bay.\r\n\r\n<b>DEDUCTION
+      CLIPBOARD ACTIVE</b>\r\n"
     links: []
   - condition: (history:) contains "The Restricted Corridor Door" and (history:)
       does not contain "Miller - Key Handoff"
@@ -130,8 +129,8 @@ MonoBehaviour:
 
       
 
-      <i>[THOMAS
-      WEBB''S STATEMENT LOGGED]</i>
+      <i>THOMAS
+      WEBB''S STATEMENT LOGGED</i>
 
       
 

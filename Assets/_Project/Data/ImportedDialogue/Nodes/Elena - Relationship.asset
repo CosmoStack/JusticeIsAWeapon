@@ -20,8 +20,8 @@ MonoBehaviour:
     the same city... there had to be friction.\"\r\n\r\n<b>Elena Vance:</b> \r\n\"It
     is a devastating loss for the art community. Marcus and I had a perfectly fine
     working relationship. My statements regarding the gallery's portfolio are on
-    file with Detective Miller. If you'll excuse me, I have a board meeting to salvage.\"\r\n\r\n''[Investigator's
-    Note:]'' There is a total lack of humanity in her response. She's already treating
+    file with Detective Miller. If you'll excuse me, I have a board meeting to salvage.\"\r\n\r\n<b>Investigator's
+    Note:</b> There is a total lack of humanity in her response. She's already treating
     her ex-husband's death as a logistical problem to manage.\r\n \r\n\r\n\r"
   category: 0
   requiredClue: {fileID: 0}
@@ -40,7 +40,7 @@ MonoBehaviour:
       is a devastating loss for the art community. Marcus and I had a perfectly fine
       working relationship. My statements regarding the gallery's portfolio are on
       file with Detective Miller. If you'll excuse me, I have a board meeting to
-      salvage.\"\r\n\r\n''[Investigator's Note:]'' There is a total lack of humanity
+      salvage.\"\r\n\r\n<b>Investigator's Note:</b> There is a total lack of humanity
       in her response. She's already treating her ex-husband's death as a logistical
       problem to manage.\r\n \r\n\r\n\r"
     links:

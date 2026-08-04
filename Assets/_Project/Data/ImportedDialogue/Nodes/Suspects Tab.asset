@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Suspects Tab
   speakerName: 
-  lineText: " |  |  | <b>[SUSPECTS]</b> |  | \r\n\r\nNo suspects have been gathered
+  lineText: " |  |  | <b>SUSPECTS</b> |  | \r\n\r\nNo suspects have been gathered
     so far.<u><b>Yuki Tanaka</b></u>\r\n<b>Role:</b> Assistant Curator \r\n<b>Alibi:</b>
     She was at home at the time of murder.N/A\r\n<b>Timeline:</b> \r\n- Found the
     body- Found the body at 7:35 AM with Victor.N/A<u><b>Victor Hasting</b></u>\r\n\r\n\r\n<b>Role:</b>
@@ -41,7 +41,7 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: ef2c27083bad38a4693c4c232696f66b, type: 2}
   blocks:
   - condition: 
-    text: " |  |  | <b>[SUSPECTS]</b> |  | \r\n\r\n"
+    text: " |  |  | <b>SUSPECTS</b> |  | \r\n\r\n"
     links:
     - label: EXIT
       target: Gallery Exterior

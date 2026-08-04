@@ -69,6 +69,7 @@ namespace JusticeIsAWeapon.Editor
             runtimeGO.AddComponent<DialogueUIController>();
             TestDialogueDriver driver = runtimeGO.AddComponent<TestDialogueDriver>();
             driver.dialogueTree = tree;
+            driver.startNodeId = "Interview Elena";
 
             EditorSceneManager.SaveScene(scene, ScenePath);
             AssetDatabase.SaveAssets();

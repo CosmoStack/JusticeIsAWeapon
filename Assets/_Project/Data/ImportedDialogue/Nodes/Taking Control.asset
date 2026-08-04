@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.DialogueNodeSO
   nodeId: Taking Control
   speakerName: 
-  lineText: "<b>[ACT 1]</b>\r\n<b>Location:</b> <i>Outside the Marcus Art Gallery.
+  lineText: "<b>ACT 1</b>\r\n<b>Location:</b> <i>Outside the Marcus Art Gallery.
     Cold, dreary palette. Flashing blue police lights. Detective Miller is waiting
     by the yellow tape.</i>\r\n\r\n<b>Detective Miller:</b>\r\n\"Glad you made it.
     Oversight wasn't kidding when they said they were pairing us up. We need to move
@@ -31,11 +31,11 @@ MonoBehaviour:
     nextNode: {fileID: 11400000, guid: 892d0c5cff9e02d408a95ffc896a8a05, type: 2}
   blocks:
   - condition: 
-    text: "<b>[ACT 1]</b>\r\n<b>Location:</b> <i>Outside the Marcus Art Gallery.
-      Cold, dreary palette. Flashing blue police lights. Detective Miller is waiting
-      by the yellow tape.</i>\r\n\r\n<b>Detective Miller:</b>\r\n\"Glad you made
-      it. Oversight wasn't kidding when they said they were pairing us up. We need
-      to move fast.\"\r\n\r\n\r\n\r\n\r"
+    text: "<b>ACT 1</b>\r\n<b>Location:</b> <i>Outside the Marcus Art Gallery. Cold,
+      dreary palette. Flashing blue police lights. Detective Miller is waiting by
+      the yellow tape.</i>\r\n\r\n<b>Detective Miller:</b>\r\n\"Glad you made it.
+      Oversight wasn't kidding when they said they were pairing us up. We need to
+      move fast.\"\r\n\r\n\r\n\r\n\r"
     links:
     - label: '"What''s the situation?"'
       target: The Evidence
