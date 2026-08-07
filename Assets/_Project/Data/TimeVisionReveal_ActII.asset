@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ae09abc6e55c88499ec32117c8b4230, type: 3}
+  m_Name: TimeVisionReveal_ActII
+  m_EditorClassIdentifier: Assembly-CSharp::JusticeIsAWeapon.Data.VisionStageDataSO
+  stage: 0
+  description: 
+  narrativeSummary: 
+  grantedClue: {fileID: 11400000, guid: efdbb7320210395449f2ded3cf142ba7, type: 2}
+  comicSequence: {fileID: 0}
+  chargeCost: 1
+  isUnlockedByDefault: 1
+  requiredClues: []
+  qualityThreshold: 1
+  sfxCueId: 

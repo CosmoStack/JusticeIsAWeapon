@@ -115,7 +115,7 @@ namespace JusticeIsAWeapon.Core
 
             TriggerScreenEffect();
 
-            comicSequencePlayer.Play(stage.comicSequence);
+            //comicSequencePlayer.Play(stage.comicSequence);
 
             GrantStageClue(stage);
         }
